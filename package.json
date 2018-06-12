@@ -1,0 +1,17 @@
+{
+  "name": "schedule_app",
+  "version": "1.0.0",
+  "description": "A web application that helps organize your schedule.",
+  "main": "index.js",
+  "scripts": {
+    "compile:sass": "node-sass resources/sass/main.scss resources/css/style.css -w"
+  },
+  "author": "Sayan Sivakumaran",
+  "license": "ISC",
+  "devDependencies": {
+    "node-sass": "^4.9.0"
+  },
+  "dependencies": {
+    "hoek": "^5.0.3"
+  }
+}
