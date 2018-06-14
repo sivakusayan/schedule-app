@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0;">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,400" rel="stylesheet"> 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link href="resources/css/style.css" type="text/css" rel="stylesheet">
@@ -13,9 +13,24 @@
     <body>
         <div id="overlay" class="overlayOFF"></div>
         <div class="newEventUI">
+            <button id="btnBack" class="newEventUI__back"><i class="far fa-times-circle"></i></button>
             <form id="newEventForm" class="newEventUI__form">
-                <div class="newEventUI">
-                    <input type="text" placeholder="Pick name">
+                <div class="NewEventUI__name">
+                    <label>Pick name </label>
+                    <input type="text" placeholder="Pick name" required>
+                </div>
+                <div class="newEventUI__times" required>
+                    <label>Start time</label>
+                    <input type="time">
+                    <label>End time</label>
+                    <input type="time">
+                </div>
+                <div class="newEventUI__notes" required>
+                    <label>Notes</label>
+                    <textarea></textarea>
+                </div>
+                <div class="newEventUI__submit" required>
+                    <input type="submit">
                 </div>
             </form>
         </div>
@@ -43,22 +58,22 @@
                 <h1 class="menu__currentDay">MONDAY</h1>
             </div>
             <div class="menu__buttonContainer">
-                <div id="btnNew" class="menu__button">
+                <button id="btnNew" class="menu__button">
                     <i class="far fa-plus-square"></i>
                     <span>New Event</span>
-                </div>
-                <div id="btnClone" class="menu__button">
+                </button>
+                <button id="btnClone" class="menu__button">
                     <i class="far fa-clone"></i>
                     <span>Clone Routine</span>
-                </div>
-                <div id="btnReset" class="menu__button">
+                </button>
+                <button id="btnReset" class="menu__button">
                     <i class="fas fa-undo-alt"></i>
                     <span>Reset Routine</span>
-                </div>
-                <div id="btnStats" class="menu__button">
+                </button>
+                <button id="btnStats" class="menu__button">
                     <i class="fas fa-signal"></i>
                     <span>Statistics</span>
-                </div>
+                </button>
             </div>
         </nav>
         <section class="routineContainer">

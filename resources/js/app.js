@@ -20,7 +20,10 @@ var UIController = (function () {
     
     DOMobjects = {
         week: document.querySelector('.week'),
-        overlay: document.getElementById('overlay')
+        overlay: document.getElementById('overlay'),
+        btnNew: document.getElementById('btnNew'),
+        btnNewBack: document.querySelector('.newEventUI__back'),
+        newEventUI: document.querySelector('.newEventUI')
     };
     
     return {
@@ -30,12 +33,17 @@ var UIController = (function () {
         
         darkenScreen: function () {
             DOMobjects.overlay.classList.remove('overlayOFF');
-            DOMobjects.overlayoverlay.classList.add('overlayON');
+            DOMobjects.overlay.classList.add('overlayON');
         },
         
         lightenScreen: function () {
             DOMobjects.overlay.classList.remove('overlayON');
-            DOMobjects.overlayoverlay.classList.add('overlayOFF');
+            DOMobjects.overlay.classList.add('overlayFADE');
+            
+            setTimeout(function () {
+                DOMobjects.overlay.classList.remove('overlayFADE');
+                DOMobjects.overlay.classList.add('overlayOFF');
+            }, 300);
         }
     };
     
@@ -53,8 +61,19 @@ var eventController = (function (schedCtrl, UICtrl) {
     setupEventListeners = function () {
         var DOMobjects = UICtrl.getDOMobjects();
         
+        DOMobjects.btnNew.addEventListener('click', function () {
+            UICtrl.darkenScreen();
+            DOMobjects.newEventUI.style.visibility = 'visible';
+            DOMobjects.newEventUI.style.opacity = 1;
+        });
+        
+        DOMobjects.btnNewBack.addEventListener('click', function () {
+            UICtrl.lightenScreen();
+            DOMobjects.newEventUI.style.visibility = 'hidden';
+            DOMobjects.newEventUI.style.opacity = 0;
+        });
+        
         DOMobjects.week.addEventListener('click', function (event) {
-    
             if (event.target.tagName === 'BUTTON') {
                 document.querySelector('.activeDay').classList.remove('activeDay');
                 event.target.classList.add('activeDay');
