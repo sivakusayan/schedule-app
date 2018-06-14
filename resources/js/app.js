@@ -19,7 +19,7 @@ var UIController = (function () {
     var DOMobjects;
     
     DOMobjects = {
-        week: document.querySelector('.nav__week'),
+        week: document.querySelector('.week'),
         overlay: document.getElementById('overlay')
     };
     

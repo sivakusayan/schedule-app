@@ -11,15 +11,34 @@ $color-grey: #f6f6f6;
 $color-shadow: #939393;
 $color-black: #000;
 
+/*-----------------------------------------------------*/
+/* MIXINS */
+/*-----------------------------------------------------*/
+
+@mixin center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin daysFormat {
+    text-transform: uppercase;
+    color: $color-malibuBlue;
+    text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
+    font-weight: 200;
+}
+
+/*-----------------------------------------------------*/
+/* BASIC SETUP */
+/*-----------------------------------------------------*/
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*-----------------------------------------------------*/
-/* BASIC SETUP */
-/*-----------------------------------------------------*/
 
 html {
     font-size: 60%;
@@ -47,7 +66,7 @@ button {
 
 .overlayON {
     opacity: 0.6;
-    z-index: 200;
+    z-index: 300;
 }
 
 .overlayOFF {
@@ -56,10 +75,61 @@ button {
 }
 
 /*-----------------------------------------------------*/
-/* BUTTON NAVBAR */
+/* DAYS LIST */
 /*-----------------------------------------------------*/
 
-.nav {
+.weekContainer {
+    background-color: $color-olympicBlue;
+    width: 100%;
+    height: 10rem;
+    position: absolute;
+    z-index: 200;
+}
+
+.week {
+    display: flex;
+    justify-content: center;
+
+    li {
+        list-style: none;
+    };
+    
+    &__day {
+        background-color: $color-royalBlue;
+        font-family: inherit;
+        font-size: 2.5rem;
+        border: .1rem solid transparent;
+        margin: 3rem 1rem; 
+        padding: .3rem;
+        width: 12rem;
+        opacity: 0.5;
+        transition: opacity 0.3s, background-color 0.3s, border 0.3s, transform 0.6s;
+
+        &:hover:not(.active) {
+            opacity: 1;
+            cursor: pointer;
+        }  
+
+        &:focus {
+            outline: none;
+        }
+        
+        @include daysFormat;
+    }
+}
+
+.activeDay {
+    opacity: 1;
+    background-color: darken($color-royalBlue, 10%);
+    transform: translateY(15%);
+}
+
+/*-----------------------------------------------------*/
+/* STICKY MENU */
+/*-----------------------------------------------------*/
+
+
+.menu {
     height: 20rem;
     box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
     position: sticky;
@@ -70,62 +140,21 @@ button {
     margin-bottom: 5rem;
     z-index: 100;
     
-    &__weekContainer {
-        background-color: $color-olympicBlue;
-        width: 100%;
-        height: 10rem;
+    &__mobile {
         position: relative;
+        height: 10rem;
+        background-color: $color-olympicBlue;
     }
     
     &__currentDay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 4rem;
-        background-color: $color-royalBlue;
-        text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
         background-color: darken($color-royalBlue, 10%);
-        color: $color-malibuBlue;
-        font-weight: 200;
+        font-size: 4rem;
         padding: .6rem;
         width: 30rem;
         text-align: center;
-        display: none;
-    }
-    
-    &__week {
-        display: flex;
-        justify-content: center;
         
-        li {
-            list-style: none;
-        };
-    }
-    
-    &__day {
-        font-family: inherit;
-        font-size: 2.5rem;
-        text-transform: uppercase;
-        color: $color-malibuBlue;
-        background-color: $color-royalBlue;
-        border: .1rem solid transparent;
-        margin: 3rem 1rem; 
-        padding: .3rem;
-        width: 12rem;
-        text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
-        font-weight: 200;
-        opacity: 0.5;
-        transition: opacity 0.3s, background-color 0.3s, border 0.3s, transform 0.6s;
-        
-        &:hover:not(.active) {
-            opacity: 1;
-            cursor: pointer;
-        }  
-        
-        &:focus {
-            outline: none;
-        }
+        @include center;
+        @include daysFormat;
     }
     
     &__buttonContainer {
@@ -143,7 +172,6 @@ button {
         display: flex;
         color: $color-azure;
         align-items: center;
-        justify-content: center;
         opacity: 0.5;
         transition: opacity 0.3s;
       
@@ -166,10 +194,48 @@ button {
     }
 }
 
-.activeDay {
-    opacity: 1;
-    background-color: darken($color-royalBlue, 10%);
-    transform: translateY(15%);
+/*-----------------------------------------------------*/
+/* NEW EVENT UI */
+/*-----------------------------------------------------*/
+
+.newEventUI {
+    height: 700px;
+    width: 700px;
+    background-color: white;
+    z-index: 400;
+    display: none;
+    
+    @include center;
+}
+
+/*-----------------------------------------------------*/
+/* CLONE ROUTINE UI */
+/*-----------------------------------------------------*/
+
+.cloneRoutineUI {
+    display: none;
+    
+    @include center;
+}
+
+/*-----------------------------------------------------*/
+/* RESERT ROUTINE UI */
+/*-----------------------------------------------------*/
+
+.resetRoutineUI {
+    display: none;
+    
+    @include center;
+}
+
+/*-----------------------------------------------------*/
+/* STATISTICS UI */
+/*-----------------------------------------------------*/
+
+.statisticsUI {
+    display: none;
+    
+    @include center;
 }
 
 /*-----------------------------------------------------*/
@@ -206,10 +272,8 @@ button {
             width: 70%;
             color: $color-royalBlue;
             font-size: 1.5rem;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            
+            @include center;
         }
     }
     
@@ -218,10 +282,6 @@ button {
     }
     
     &__name p{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         text-transform: uppercase;
         background-color: $color-olympicBlue;
         font-size: 2rem;
@@ -229,6 +289,8 @@ button {
         padding: 2rem;
         box-shadow: 0 0 1rem $color-shadow;
         color: $color-malibuBlue;
+        
+        @include center;
     }
     
     &__time {
