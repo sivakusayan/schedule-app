@@ -55,11 +55,11 @@
         transform: translateX(15%);
     }
     
-    .nav__button {
+    .menu__button {
         margin: 0 1.5rem;
-    }
+    }    
     
-    .nav__button span {
+    .menu__button span {
         font-size: 1.5rem;
     }
     
@@ -77,5 +77,15 @@
 @media only screen and (max-width: 400px) {
     html {
         font-size: 40%;
+    }
+
+    .menu__button {
+        display: flex;
+        flex-direction: column;
+        transform: translateY(-1.4rem)
+    }   
+    
+    .menu__button i{
+        margin-bottom: 1rem;
     }
 }
