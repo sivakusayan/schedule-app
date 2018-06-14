@@ -20,28 +20,58 @@
     html {
         font-size: 42%;
     }
+
 }
 
 @media only screen and (max-width: 700px) {
     html {
-        font-size: 35%;
+        font-size: 55%;
+    }
+    
+    .nav__week {
+        position: sticky;
+        flex-direction: column;
+        background-color: #fff;
+        width: 20rem;
+        box-shadow: 0 0 1rem;
+        z-index: 300;
+    }
+    
+    .nav__day {
+        margin: 1.5rem;
+    }
+    
+    .activeDay {
+        transform: translateX(15%);
+    }
+    
+    .nav__button {
+        margin: 0 1.5rem;
+    }
+    
+    .nav__button span {
+        font-size: 1.5rem;
+    }
+    
+    .routine {
+        width: 80%;
     }
 }
 
 @media only screen and (max-width: 600px) {
     html {
-        font-size: 30%;
+        font-size: 50%;
     }
 }
 
 @media only screen and (max-width: 500px) {
     html {
-        font-size: 25%;
+        font-size: 45%;
     }
 }
 
 @media only screen and (max-width: 400px) {
     html {
-        font-size: 20%;
+        font-size: 40%;
     }
 }
