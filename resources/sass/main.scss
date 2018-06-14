@@ -24,7 +24,7 @@ $color-black: #000;
 }
 
 @mixin hide {
-    visibility: none;
+    visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s;
 }
@@ -97,7 +97,7 @@ button {
     z-index: 300;
 }
 
-.overlayFADE {
+.overlayFADE { /*Temp state to keep overlay on top while fading*/
     opacity: 0;
     z-index: 300;
 }
@@ -110,6 +110,8 @@ button {
 /*-----------------------------------------------------*/
 /* DAYS LIST */
 /*-----------------------------------------------------*/
+
+/* Separated from Menu class to ease switching to mobile layout */
 
 .weekContainer {
     background-color: $color-olympicBlue;

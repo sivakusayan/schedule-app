@@ -16,7 +16,7 @@ var scheduleController = (function () {
 var UIController = (function () {
     'use strict';
     
-    var DOMobjects;
+    var DOMobjects, darkenScreen, lightenScreen;
     
     DOMobjects = {
         week: document.querySelector('.week'),
@@ -26,25 +26,40 @@ var UIController = (function () {
         newEventUI: document.querySelector('.newEventUI')
     };
     
+    darkenScreen = function () {
+        DOMobjects.overlay.classList.remove('overlayOFF');
+        DOMobjects.overlay.classList.add('overlayON');
+    };
+        
+    lightenScreen = function () {
+        DOMobjects.overlay.classList.remove('overlayON');
+        DOMobjects.overlay.classList.add('overlayFADE');
+
+        setTimeout(function () {
+            DOMobjects.overlay.classList.remove('overlayFADE');
+            DOMobjects.overlay.classList.add('overlayOFF');
+        }, 300);
+    };
+    
     return {
         getDOMobjects: function () {
             return DOMobjects;
         },
         
-        darkenScreen: function () {
-            DOMobjects.overlay.classList.remove('overlayOFF');
-            DOMobjects.overlay.classList.add('overlayON');
+        fadeIn: function (obj) {
+            darkenScreen();
+            obj.style.visibility = 'visible';
+            obj.style.opacity = 1;
         },
         
-        lightenScreen: function () {
-            DOMobjects.overlay.classList.remove('overlayON');
-            DOMobjects.overlay.classList.add('overlayFADE');
-            
+        fadeOut: function (obj) {
+            lightenScreen();
+            obj.style.opacity = 0;
             setTimeout(function () {
-                DOMobjects.overlay.classList.remove('overlayFADE');
-                DOMobjects.overlay.classList.add('overlayOFF');
+                obj.style.visibility = 'hidden';
             }, 300);
         }
+    
     };
     
 }());
@@ -59,18 +74,15 @@ var eventController = (function (schedCtrl, UICtrl) {
     var setupEventListeners;
     
     setupEventListeners = function () {
-        var DOMobjects = UICtrl.getDOMobjects();
+        var DOMobjects;
+        
+        DOMobjects = UICtrl.getDOMobjects();
         
         DOMobjects.btnNew.addEventListener('click', function () {
-            UICtrl.darkenScreen();
-            DOMobjects.newEventUI.style.visibility = 'visible';
-            DOMobjects.newEventUI.style.opacity = 1;
+            UICtrl.fadeIn(DOMobjects.newEventUI);
         });
-        
         DOMobjects.btnNewBack.addEventListener('click', function () {
-            UICtrl.lightenScreen();
-            DOMobjects.newEventUI.style.visibility = 'hidden';
-            DOMobjects.newEventUI.style.opacity = 0;
+            UICtrl.fadeOut(DOMobjects.newEventUI);
         });
         
         DOMobjects.week.addEventListener('click', function (event) {

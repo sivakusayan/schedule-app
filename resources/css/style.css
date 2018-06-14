@@ -39,6 +39,7 @@ button {
   z-index: 300; }
 
 .overlayFADE {
+  /*Temp state to keep overlay on top while fading*/
   opacity: 0;
   z-index: 300; }
 
@@ -49,6 +50,7 @@ button {
 /*-----------------------------------------------------*/
 /* DAYS LIST */
 /*-----------------------------------------------------*/
+/* Separated from Menu class to ease switching to mobile layout */
 .weekContainer {
   background-color: #0091CC;
   width: 100%;
@@ -191,7 +193,7 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
-  visibility: none;
+  visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s; }
   .newEventUI__back {
@@ -238,7 +240,7 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
-  visibility: none;
+  visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s; }
 
@@ -252,7 +254,7 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
-  visibility: none;
+  visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s; }
 
@@ -266,7 +268,7 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
-  visibility: none;
+  visibility: hidden;
   opacity: 0;
   transition: opacity 0.3s; }
 
