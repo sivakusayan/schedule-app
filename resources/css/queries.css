@@ -12,7 +12,26 @@
 
 @media only screen and (max-width: 900px) {
     html {
-        font-size: 65%;
+        font-size: 47%;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    html {
+        font-size: 44%;
+    }
+
+}
+
+@media only screen and (max-width: 700px) {
+    html {
+        font-size: 36%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: 50%;
     }
     
     .weekContainer {
@@ -46,23 +65,6 @@
     
     .routine {
         width: 80%;
-    }
-
-}
-
-@media only screen and (max-width: 800px) {
-    html {
-        font-size: 60%;
-    }
-
-@media only screen and (max-width: 700px) {
-    html {
-        font-size: 55%;
-    }
-
-@media only screen and (max-width: 600px) {
-    html {
-        font-size: 50%;
     }
 }
 
