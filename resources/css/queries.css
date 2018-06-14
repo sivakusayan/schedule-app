@@ -12,13 +12,9 @@
 
 @media only screen and (max-width: 900px) {
     html {
-        font-size: 47%;
+        font-size: 65%;
     }
-}
-
-@media only screen and (max-width: 800px) {
-    html {
-        font-size: 60%;
+    
     }
     
     .weekContainer {
@@ -55,6 +51,11 @@
     }
 
 }
+
+@media only screen and (max-width: 800px) {
+    html {
+        font-size: 60%;
+    }
 
 @media only screen and (max-width: 700px) {
     html {

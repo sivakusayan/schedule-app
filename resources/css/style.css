@@ -141,8 +141,8 @@ button {
 /* NEW EVENT UI */
 /*-----------------------------------------------------*/
 .newEventUI {
-  height: 700px;
-  width: 700px;
+  height: 70rem;
+  width: 70rem;
   background-color: white;
   z-index: 400;
   display: none;
