@@ -68,7 +68,7 @@ button {
     background-color: #005A7F;
     font-family: inherit;
     font-size: 2.5rem;
-    border: .1rem solid transparent;
+    border: none;
     margin: 3rem 1rem;
     padding: .3rem;
     width: 12rem;
@@ -167,6 +167,7 @@ button {
   z-index: 400;
   box-shadow: 0 0 5rem;
   border: 15px solid #005A7F;
+  border-radius: 1rem;
   position: relative;
   position: absolute;
   bottom: 50%;
@@ -204,13 +205,14 @@ button {
     .newEventUI__name label, .newEventUI__startTime label, .newEventUI__endTime label, .newEventUI__notes label {
       display: inline-block;
       color: #4CCBFF;
-      margin-right: 1.2rem;
-      width: 12rem;
-      font-size: 2rem;
+      margin-right: 2rem;
+      width: 10rem;
+      font-size: 1.7rem;
       text-align: center;
       background-color: #005A7F;
       padding: 0.5rem;
-      font-weight: 200; }
+      font-weight: 200;
+      border-radius: 1rem; }
     .newEventUI__name input, .newEventUI__startTime input, .newEventUI__endTime input, .newEventUI__notes input {
       border: none;
       border-bottom: 1px solid #00B3FF;
@@ -241,7 +243,7 @@ button {
   .newEventUI__submit {
     text-align: center; }
     .newEventUI__submit input {
-      margin-top: 0rem;
+      margin-top: 1rem;
       border: none;
       color: #fff;
       background: #0091CC;
@@ -302,7 +304,7 @@ button {
   width: 100%; }
 
 .eventContainer {
-  width: 58%;
+  width: 65%;
   margin: 2rem auto; }
 
 .eventContainer:nth-child(odd) .event {
@@ -341,7 +343,10 @@ button {
     background-color: #0091CC;
     font-size: 2rem;
     text-align: center;
-    padding: 2rem;
+    width: 20rem;
+    max-height: 12rem;
+    padding: 1.5rem;
+    overflow: none;
     -webkit-box-shadow: 0 0 1rem #939393;
     box-shadow: 0 0 1rem #939393;
     color: #4CCBFF;

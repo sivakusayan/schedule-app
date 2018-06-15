@@ -138,7 +138,7 @@ button {
         background-color: $color-royalBlue;
         font-family: inherit;
         font-size: 2.5rem;
-        border: .1rem solid transparent;
+        border: none;
         margin: 3rem 1rem; 
         padding: .3rem;
         width: 12rem;
@@ -240,6 +240,7 @@ button {
     z-index: 400;
     box-shadow: 0 0 5rem;
     border: 15px solid $color-royalBlue;
+    border-radius: 1rem;
     position: relative;    
     
     @include center;
@@ -271,13 +272,14 @@ button {
         label {
             display: inline-block;
             color: $color-malibuBlue;
-            margin-right: 1.2rem;
-            width: 12rem;
-            font-size: 2rem;
+            margin-right: 2rem;
+            width: 10rem;
+            font-size: 1.7rem;
             text-align: center;
             background-color: $color-royalBlue;
             padding: 0.5rem;
             font-weight: 200;
+            border-radius: 1rem;
         }
         
         input {
@@ -321,7 +323,7 @@ button {
         text-align: center;
         
         input {
-           margin-top: 0rem;
+           margin-top: 1rem;
             border: none;
             color: $color-white;
             background: $color-olympicBlue;
@@ -382,7 +384,7 @@ button {
 }
 
 .eventContainer {
-    width: 58%;
+    width: 65%;
     margin: 2rem auto;
 }
 
@@ -429,11 +431,13 @@ button {
         background-color: $color-olympicBlue;
         font-size: 2rem;
         text-align: center;
-        padding: 2rem;
+        width: 20rem;
+        max-height: 12rem;
+        padding: 1.5rem;
+        overflow: none;
         -webkit-box-shadow: 0 0 1rem $color-shadow;
         box-shadow: 0 0 1rem $color-shadow;
         color: $color-malibuBlue;
-        
         @include center;
     }
     
