@@ -199,7 +199,6 @@ button {
       outline: none; }
   .newEventUI__form {
     width: 82%;
-    margin: 0 auto;
     padding: 1rem;
     flex-direction: column; }
   .newEventUI__name, .newEventUI__startTime, .newEventUI__endTime, .newEventUI__notes {

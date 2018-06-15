@@ -152,6 +152,12 @@ var eventController = (function (schedCtrl, UICtrl) {
     return {
         init: function () {
             setupEventListeners();
+
+            if (/*@cc_on!@*/false || !!document.documentMode) {
+                DOMobjects.startTimeInput.setAttribute("title", "Military time XX:XX");
+                DOMobjects.endTimeInput.setAttribute("title", "Military time XX:XX");
+            }
+
         }
     };
 }(scheduleController, UIController));
