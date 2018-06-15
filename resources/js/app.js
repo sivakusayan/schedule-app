@@ -7,9 +7,50 @@
 var scheduleController = (function () {
     'use strict';
     
+    var id_generator, Event, eventDatabase, daysOfWeek, toTwelveHourTime;
+    
+    id_generator = 0;
+    
+    Event = function (name, startTime, endTime, notes, id) {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTIme = endTime;
+        this.notes = notes;
+        this.id = id;
+    };
+    
+    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    eventDatabase = {
+        Monday: [],
+        Tuesday: [],
+        Wednesday: [],
+        Thursday: [],
+        Friday: [],
+        Saturday: [],
+        Sunday: []
+    };
+    
+    toTwelveHourTime = function (militaryTime) {
+        
+    };
+    
     return {
-        validateTime: function (obj) {
-            return obj.startTime < obj.endTime;
+        validateTime: function (eventObj) {
+            return eventObj.startTime < eventObj.endTime;
+        },
+        
+        addToDatabase: function (name, startTime, endTime, notes) {
+            var eventObj, event_id;
+            event_id = id_generator;
+            id_generator += 1;
+            
+            eventObj = new Event(name, toTwelveHourTime(startTime), toTwelveHourTime(endTime), notes, event_id);
+            eventDatabase[daysOfWeek[0]].push(eventObj);
+        },
+        
+        getDatabase: function () {
+            return eventDatabase;
         }
     };
     
@@ -58,17 +99,17 @@ var UIController = (function () {
             return DOMobjects;
         },
         
-        fadeIn: function (obj) {
+        fadeIn: function (domObj) {
             darkenScreen();
-            obj.style.visibility = 'visible';
-            obj.style.opacity = 1;
+            domObj.style.visibility = 'visible';
+            domObj.style.opacity = 1;
         },
         
-        fadeOut: function (obj) {
+        fadeOut: function (domObj) {
             lightenScreen();
-            obj.style.opacity = 0;
+            domObj.style.opacity = 0;
             setTimeout(function () {
-                obj.style.visibility = 'hidden';
+                domObj.style.visibility = 'hidden';
             }, 300);
         },
         
@@ -79,6 +120,10 @@ var UIController = (function () {
                 endTime: DOMobjects.endTimeInput.value,
                 notes: DOMobjects.notesInput.value
             };
+        },
+        
+        displayEvents: function (database) {
+            
         }
     };
     
@@ -142,11 +187,13 @@ var eventController = (function (schedCtrl, UICtrl) {
     };
     
     addEvent = function (obj) {
-        //2. Transfer data to schedule controller
-        //3. Update schedule controller
-        //4. Transfer data from schedule controller to UI controller
-        //5. Update UI
-
+        var eventDatabase;
+        //1. Transfer data to schedule controller
+        schedCtrl.addToDatabase(obj.name, obj.startTime, obj.endTime, obj.notes);
+        //2. Transfer data from schedule controller to UI controller
+        eventDatabase = schedCtrl.getDatabase();
+        //3. Update UI
+        UICtrl.displayEvents(eventDatabase);
     };
     
     return {
