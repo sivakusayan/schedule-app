@@ -84,7 +84,6 @@ var eventController = (function (schedCtrl, UICtrl) {
         DOMobjects.btnNewBack.addEventListener('click', function () {
             UICtrl.fadeOut(DOMobjects.newEventUI);
         });
-        
         DOMobjects.week.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
                 document.querySelector('.activeDay').classList.remove('activeDay');

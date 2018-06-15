@@ -15,21 +15,23 @@
         <div class="newEventUI">
             <button id="btnBack" class="newEventUI__back"><i class="far fa-times-circle"></i></button>
             <form id="newEventForm" class="newEventUI__form">
-                <div class="NewEventUI__name">
-                    <label>Pick name </label>
-                    <input type="text" placeholder="Pick name" required>
+                <div class="newEventUI__name">
+                    <label for="name">Name</label> 
+                    <input id="name" type="text" required>
                 </div>
-                <div class="newEventUI__times" required>
-                    <label>Start time</label>
-                    <input type="time">
-                    <label>End time</label>
-                    <input type="time">
+                <div class="newEventUI__startTime">
+                    <label for="startTime">Start time</label>
+                    <input id="startTime" type="time" required>
                 </div>
-                <div class="newEventUI__notes" required>
+                <div class="newEventUI__endTime">
+                    <label for "endTime">End time</label>
+                    <input id="endTime" type="time" required>
+                </div>
+                <div class="newEventUI__notes">
                     <label>Notes</label>
-                    <textarea></textarea>
+                    <textarea maxlength="70"></textarea>
                 </div>
-                <div class="newEventUI__submit" required>
+                <div class="newEventUI__submit">
                     <input type="submit">
                 </div>
             </form>
@@ -82,7 +84,7 @@
                 <div class="event">
                     <div>
                         <div class="event__notes hasNote">
-                            <p>Ham and Cheese on Bagel on the fanciest goddamn ham that you can fuck</p>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m</p>
                         </div>
                     </div>
                     <div>

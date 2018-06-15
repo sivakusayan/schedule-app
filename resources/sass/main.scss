@@ -23,6 +23,12 @@ $color-black: #000;
     transform: translate(50%, 50%);
 }
 
+@mixin centerChildren {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @mixin hide {
     visibility: hidden;
     opacity: 0;
@@ -45,10 +51,10 @@ $color-black: #000;
     border: none;
     
     &:hover {
-            cursor: pointer;
-            opacity: 1;
-            color: darken($color-azure, 15%);           
-        } 
+        cursor: pointer;
+        opacity: 1;
+        color: darken($color-azure, 15%);
+    } 
     
     &:focus {
         outline: none;
@@ -104,7 +110,7 @@ button {
 
 .overlayOFF {
     opacity: 0;
-    z-index: 0;
+    z-index: -1;
 }
 
 /*-----------------------------------------------------*/
@@ -122,12 +128,7 @@ button {
 }
 
 .week {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+    @include centerChildren;
 
     li {
         list-style: none;
@@ -174,17 +175,8 @@ button {
 
 .menu {
     height: 20rem;
-    -webkit-box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
     box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
-    position: -webkit-sticky;
-    position: sticky;
     top: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-direction: column;
     flex-direction: column;
     background-color: $color-white;
     margin-bottom: 5rem;
@@ -210,28 +202,15 @@ button {
     &__buttonContainer {
         width: 100%;
         height: 10rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
+        
+        @include centerChildren;
+        justify-content: none;
     }
     
     &__button {
         height: 5rem;
         margin: 0 4rem;
         padding: .5rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        color: $color-azure;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        align-items: center;
       
         i {
             font-size: 3.5rem;
@@ -245,6 +224,7 @@ button {
         }
         
         @include menuButton;
+        @include centerChildren;
         
     }
 }
@@ -254,11 +234,12 @@ button {
 /*-----------------------------------------------------*/
 
 .newEventUI {
-    height: 70rem;
-    width: 70rem;
+    height: 54rem;
+    width: 47rem;
     background-color: white;
     z-index: 400;
-    border: 8px solid $color-olympicBlue;
+    box-shadow: 0 0 5rem;
+    border: 15px solid $color-royalBlue;
     position: relative;    
     
     @include center;
@@ -266,32 +247,97 @@ button {
     
     &__back {
         position: absolute;
-        font-size: 4rem;
-        top: 2%;
-        right: 2%;
+        font-size: 3rem;
+        top: 3%;
+        right: 3%;
         
         @include menuButton;
     }
     
     &__form {
-        width: 80%;
+        width: 82%;
         margin: 0 auto;
-        padding: 6rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
+        margin-top: 3rem;
+        padding: 1rem;
         flex-direction: column;
-        align-content: center;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        justify-content: center;
     }
     
-    &__name {
-        display: flex;
-        justify-content: center;
-        background-color: yellow;
+    &__name,
+    &__startTime,
+    &__endTime,
+    &__notes {
+        margin: 3rem 0;
+        
+        label {
+            display: inline-block;
+            color: $color-malibuBlue;
+            margin-right: 1.2rem;
+            width: 12rem;
+            font-size: 2rem;
+            text-align: center;
+            background-color: $color-royalBlue;
+            padding: 0.5rem;
+            font-weight: 200;
+        }
+        
+        input {
+            border: none;
+            border-bottom: 1px solid $color-azure;
+            font-family: 'Nunito', sans-serif;
+            color: $color-olympicBlue;
+            font-size: 1.8rem;
+        }
+        
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px lighten($color-azure, 45%) inset;
+        }
+        
+        textarea{
+            border: 1px solid $color-azure;
+            vertical-align: bottom;
+            font-family: 'Nunito', sans-serif;
+            color: $color-olympicBlue;
+            resize: none;
+            height: 12rem;
+            width: 20rem;
+            padding: 1rem;
+            font-size: 1.8rem;
+        }
+    
+        input:focus,
+        textarea:focus{
+            outline: none;
+            background-color: lighten($color-azure, 45%);
+        }
     }
+    
+    &__notes {
+        label {
+            vertical-align: top;
+        }
+    }
+    
+    &__submit {
+        text-align: center;
+        
+        input {
+           margin-top: 0rem;
+            border: none;
+            color: $color-white;
+            background: $color-olympicBlue;
+            padding: 1rem 3rem;
+            text-transform: uppercase;
+            font-size: 2rem;
+            
+            transition: background-color 0.3s;
+        }
+        
+        input:hover {
+            background-color: $color-royalBlue;
+            cursor: pointer;
+        }
+    }
+ 
 }
 
 /*-----------------------------------------------------*/
@@ -336,7 +382,7 @@ button {
 }
 
 .eventContainer {
-    width: 55%;
+    width: 58%;
     margin: 2rem auto;
 }
 
@@ -351,18 +397,11 @@ button {
 .event {
     height: 15rem;
     margin: 3rem 0;
-    -webkit-box-shadow: 0 .3rem 1rem $color-shadow;
     box-shadow: 0 .3rem 1rem $color-shadow;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-    -webkit-transition: -webkit-box-shadow 0.3s;
-    transition: -webkit-box-shadow 0.3s;
     transition: box-shadow 0.3s;
-    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+
+    @include centerChildren;
+    align-items: stretch;
 
     > div {
         width: 33%;
