@@ -234,8 +234,8 @@ button {
 /*-----------------------------------------------------*/
 
 .newEventUI {
-    height: 54rem;
-    width: 47rem;
+    height: 60rem;
+    width: 52rem;
     background-color: white;
     z-index: 400;
     box-shadow: 0 0 5rem;
@@ -244,6 +244,7 @@ button {
     position: relative;    
     
     @include center;
+    @include centerChildren;
     @include hide;
     
     &__back {
@@ -258,7 +259,6 @@ button {
     &__form {
         width: 82%;
         margin: 0 auto;
-        margin-top: 3rem;
         padding: 1rem;
         flex-direction: column;
     }
@@ -417,6 +417,7 @@ button {
             width: 70%;
             color: $color-royalBlue;
             font-size: 1.5rem;
+            word-wrap: break-word;
             
             @include center;
         }

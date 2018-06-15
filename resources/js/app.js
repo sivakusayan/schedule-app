@@ -7,6 +7,12 @@
 var scheduleController = (function () {
     'use strict';
     
+    return {
+        validateTime: function (obj) {
+            return obj.startTime < obj.endTime;
+        }
+    };
+    
 }());
 
 /*-----------------------------------------------------------------------------*/
@@ -22,8 +28,14 @@ var UIController = (function () {
         week: document.querySelector('.week'),
         overlay: document.getElementById('overlay'),
         btnNew: document.getElementById('btnNew'),
-        btnNewBack: document.querySelector('.newEventUI__back'),
-        newEventUI: document.querySelector('.newEventUI')
+        btnNewBack: document.getElementById('btnNewBack'),
+        newEventUI: document.querySelector('.newEventUI'),
+        newEventForm: document.getElementById('newEventForm'),
+        nameInput: document.getElementById('nameInput'),
+        startTimeInput: document.getElementById('startTimeInput'),
+        endTimeInput: document.getElementById('endTimeInput'),
+        notesInput: document.getElementById('notesInput'),
+        newEventSubmit: document.querySelector('.newEventUI__submit')
     };
     
     darkenScreen = function () {
@@ -58,8 +70,16 @@ var UIController = (function () {
             setTimeout(function () {
                 obj.style.visibility = 'hidden';
             }, 300);
+        },
+        
+        getInputData: function () {
+            return {
+                name: DOMobjects.nameInput.value,
+                startTime: DOMobjects.startTimeInput.value,
+                endTime: DOMobjects.endTimeInput.value,
+                notes: DOMobjects.notesInput.value
+            };
         }
-    
     };
     
 }());
@@ -71,27 +91,62 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var setupEventListeners;
+    var setupEventListeners, addEvent, DOMobjects, setValidationMessage;
+    
+    DOMobjects = UICtrl.getDOMobjects();
+    
+    setValidationMessage = function () {
+        var EventObj;
+        EventObj = UICtrl.getInputData();
+
+        if (!schedCtrl.validateTime(EventObj)) {
+            DOMobjects.endTimeInput.setCustomValidity('End time should be after the Start time.');
+        } else {
+            DOMobjects.endTimeInput.setCustomValidity('');
+        }
+    };
     
     setupEventListeners = function () {
-        var DOMobjects;
         
-        DOMobjects = UICtrl.getDOMobjects();
+        /*-------------------------MENU BUTTONS--------------------------------*/
         
         DOMobjects.btnNew.addEventListener('click', function () {
             UICtrl.fadeIn(DOMobjects.newEventUI);
         });
         DOMobjects.btnNewBack.addEventListener('click', function () {
             UICtrl.fadeOut(DOMobjects.newEventUI);
+            
+            setTimeout(function () {
+                DOMobjects.newEventForm.reset();
+            }, 300);
         });
+        /*------------------------FORM VALIDATION------------------------------*/
+        
+        DOMobjects.endTimeInput.addEventListener('input', setValidationMessage);
+        DOMobjects.startTimeInput.addEventListener('input', setValidationMessage);
+        DOMobjects.newEventForm.addEventListener('submit', function () {
+            var EventObj;
+            EventObj = UICtrl.getInputData();
+            
+            addEvent(EventObj);
+        });
+        
+        /*-------------------------WEEK BUTTONS--------------------------------*/
+        
         DOMobjects.week.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
                 document.querySelector('.activeDay').classList.remove('activeDay');
                 event.target.classList.add('activeDay');
             }
         });
-        
-        
+    };
+    
+    addEvent = function (obj) {
+        //2. Transfer data to schedule controller
+        //3. Update schedule controller
+        //4. Transfer data from schedule controller to UI controller
+        //5. Update UI
+
     };
     
     return {

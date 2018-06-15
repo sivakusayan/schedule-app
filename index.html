@@ -13,23 +13,23 @@
     <body>
         <div id="overlay" class="overlayOFF"></div>
         <div class="newEventUI">
-            <button id="btnBack" class="newEventUI__back"><i class="far fa-times-circle"></i></button>
-            <form id="newEventForm" class="newEventUI__form">
+            <button id="btnNewBack" class="newEventUI__back"><i class="far fa-times-circle"></i></button>
+            <form id="newEventForm" class="newEventUI__form" onsubmit="return false" autocomplete="off">
                 <div class="newEventUI__name">
                     <label for="name">Name</label> 
-                    <input id="name" type="text" maxlength="30" required>
+                    <input id="nameInput" type="text" maxlength="30" required>
                 </div>
                 <div class="newEventUI__startTime">
                     <label for="startTime">Start time</label>
-                    <input id="startTime" type="time" required>
+                    <input id="startTimeInput" type="time" pattern="[0-2][0-4]:[0-5][0-9]" title="Military time XX:XX" required>
                 </div>
                 <div class="newEventUI__endTime">
                     <label for="endTime">End time</label>
-                    <input id="endTime" type="time" required>
+                    <input id="endTimeInput" type="time" pattern="[0-2][0-4]:[0-5][0-9]" title="Military time XX:XX" required>
                 </div>
                 <div class="newEventUI__notes">
                     <label>Notes</label>
-                    <textarea maxlength="70"></textarea>
+                    <textarea id="notesInput" maxlength="100"></textarea>
                 </div>
                 <div class="newEventUI__submit">
                     <input type="submit">
@@ -84,7 +84,9 @@
                 <div class="event">
                     <div>
                         <div class="event__notes hasNote">
-                            <p>Ham and Cheese on Bagel on the fanciest goddamn ham that you can fuck</p>
+                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m
+
+</p>
                         </div>
                     </div>
                     <div>
