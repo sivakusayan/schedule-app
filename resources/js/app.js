@@ -227,7 +227,7 @@ var UIController = (function () {
         
         fadeIn: function (domObj) {
             darkenScreen();
-            domObj.style.visibility = 'visible';
+            domObj.style.transform = 'translate(50%, 50%)';
             domObj.style.opacity = 1;
         },
         
@@ -235,7 +235,7 @@ var UIController = (function () {
             lightenScreen();
             domObj.style.opacity = 0;
             setTimeout(function () {
-                domObj.style.visibility = 'hidden';
+                domObj.style.transform = 'translateX(-300%)';
             }, 300);
         },
         
@@ -249,9 +249,9 @@ var UIController = (function () {
         },
 
         resetEventForm: function () { 
-            DOMobjects.newEventForm.reset();
             DOMobjects.startTimeInput.setCustomValidity('');
             DOMobjects.endTimeInput.setCustomValidity('');
+            DOMobjects.newEventForm.reset();
         },
         
         updateHTMLDatabase: function (eventDatabase) {
@@ -310,6 +310,7 @@ var eventController = (function (schedCtrl, UICtrl) {
         if (validityCheck[1] === 1) {
             timeInputs[1].setCustomValidity('');
         }
+
     };
     
     setupEventListeners = function () {
