@@ -386,12 +386,12 @@ button {
 /*-----------------------------------------------------*/
 
 .routineContainer {
-    width: 100%;
+    width: 65%;
+    margin: 0 auto;
 }
 
 .eventContainer {
-    width: 65%;
-    margin: 2rem auto;
+    margin: 2rem 0;
 }
 
 .eventContainer:nth-child(odd) { 
@@ -412,7 +412,6 @@ button {
     align-items: stretch;
 
     > div {
-        width: 33%;
         position: relative;
     }
      
@@ -512,4 +511,25 @@ button {
             color: darken($color-olympicBlue, 15%);
         }
     }   
+}
+
+.hasNote {
+    width: 100%;
+    
+    .event > div {
+        width: 33%;
+    }
+    
+    .event__notes {
+        border-right: .3rem dotted $color-azure; 
+    }
+}
+
+.noNote {
+    width: 66.7%;
+    margin-left: auto;
+    
+    .event > div {
+        width: 50%;
+    }
 }

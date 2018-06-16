@@ -1,10 +1,10 @@
 /*eslint-env browser*/
 
 /*-----------------------------------------------------------------------------*/
-/* SCHEDULE DATA CONTROLLER */
+/* SCHEDULE CONTROLLER */
 /*-----------------------------------------------------------------------------*/
 
-var scheduleDataController = (function () {
+var scheduleController = (function () {
     'use strict';
     
     var Event, eventDatabase, reservedTimeSlots, daysOfWeek;
@@ -89,7 +89,6 @@ var scheduleDataController = (function () {
             eventObj = new Event(name, startTime, endTime, notes);
             if (eventDatabase[daysOfWeek[0]].length === 0) {
                 eventDatabase[daysOfWeek[0]].push(eventObj);
-                console.log(eventDatabase[daysOfWeek[0]]);
             } else { //Linear search to keep database in order
                 var indexToInsert;
                 indexToInsert = 0;
@@ -107,7 +106,7 @@ var scheduleDataController = (function () {
             reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
         },
         
-        getDatabase: function () {
+        getEventDatabase: function () {
             return eventDatabase;
         }
     };
@@ -121,19 +120,31 @@ var scheduleDataController = (function () {
 var UIController = (function () {
     'use strict';
     
-    var DOMobjects, eventHTMLDatabase, addToHTMLDatabase, daysOfWeek, darkenScreen, lightenScreen, toStandardTime;
+    var DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, daysOfWeek, darkenScreen, lightenScreen, toStandardTime;
     
-    addToHTMLDatabase = function (name, startTime, endTime, notes) {
+    dataToHTML = function (eventObj) {
         var HTML, newHTML;
 
-        HTML = '<div class="eventContainer"><div class="event"><div><div class="event__notes hasNote"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
-
-        newHTML = HTML.replace('%notes%', notes);
-        newHTML = newHTML.replace('%name%', name);
-        newHTML = newHTML.replace('%startTime%', startTime);
-        newHTML = newHTML.replace('%endTime%', endTime);
-
-        eventHTMLDatabase[daysOfWeek[0]].push(newHTML);
+        HTML = '<div class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
+        
+        newHTML = HTML.replace('%name%', eventObj.name);
+        newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
+        newHTML = newHTML.replace('%endTime%', toStandardTime(eventObj.endTime));
+        
+        console.log(eventObj.notes);
+        console.log(typeof eventObj.notes);
+        
+        if (eventObj.notes.length > 0) {
+            newHTML = newHTML.replace('%noteDetect%', 'hasNote');
+            newHTML = newHTML.replace('%notes%', eventObj.notes);
+            console.log('has note event')
+        } else {
+            newHTML = newHTML.replace('%noteDetect%', 'noNote');
+            newHTML = newHTML.replace('<div><div class="event__notes"><p>%notes%</p></div></div>', '');
+            console.log('no note event')
+        }
+        
+        return newHTML;
     };
 
     DOMobjects = {
@@ -147,7 +158,8 @@ var UIController = (function () {
         startTimeInput: document.getElementById('startTimeInput'),
         endTimeInput: document.getElementById('endTimeInput'),
         notesInput: document.getElementById('notesInput'),
-        newEventSubmit: document.querySelector('.newEventUI__submit')
+        newEventSubmit: document.querySelector('.newEventUI__submit'),
+        routineContainer: document.querySelector('.routineContainer')
     };
     
     daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -160,7 +172,19 @@ var UIController = (function () {
         Friday: [],
         Saturday: [],
         Sunday: []
-    }
+    };
+    
+    resetEventHTMLDatabase = function () {
+        eventHTMLDatabase = {
+            Monday: [],
+            Tuesday: [],
+            Wednesday: [],
+            Thursday: [],
+            Friday: [],
+            Saturday: [],
+            Sunday: []
+        };
+    };
     
     darkenScreen = function () {
         DOMobjects.overlay.classList.remove('overlayOFF');
@@ -184,13 +208,13 @@ var UIController = (function () {
         minutes = militaryTime.split(':')[1];
         
         if (hours > 12) {
-            standardTime = hours % 12 + ':' + minutes + 'PM';
+            standardTime = hours % 12 + ':' + minutes + ' PM';
         } else if (hours === 12) {
-            standardTime = hours + ':' + minutes + 'PM';
+            standardTime = hours + ':' + minutes + ' PM';
         } else if (hours === 0) {
-            standardTime = hours + 12 + ':' + minutes + 'AM';
+            standardTime = hours + 12 + ':' + minutes + ' AM';
         } else if (hours <= 12) {
-            standardTime = hours + ':' + minutes + 'AM';
+            standardTime = hours + ':' + minutes + ' AM';
         }
         
         return standardTime;
@@ -230,8 +254,21 @@ var UIController = (function () {
             DOMobjects.endTimeInput.setCustomValidity('');
         },
         
+        updateHTMLDatabase: function (eventDatabase) {
+            resetEventHTMLDatabase();
+            for (var i = 0; i < eventDatabase[daysOfWeek[0]].length; i++) {
+                var eventHTML = dataToHTML(eventDatabase[daysOfWeek[0]][i]);
+                eventHTMLDatabase[daysOfWeek[0]].push(eventHTML);
+            }
+        },
+        
         displayEvents: function () {
-            
+            while(DOMobjects.routineContainer.firstChild) {
+                DOMobjects.routineContainer.removeChild(DOMobjects.routineContainer.firstChild);
+            }
+            for (var i = 0; i < eventHTMLDatabase[daysOfWeek[0]].length ; i++) {
+                DOMobjects.routineContainer.insertAdjacentHTML('beforeend', eventHTMLDatabase[daysOfWeek[0]][i]);
+            }
         }
     };
     
@@ -313,9 +350,11 @@ var eventController = (function (schedCtrl, UICtrl) {
         schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes);
         schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime);
         //2. Transfer data to UI controller
-        
+        eventDatabase = schedCtrl.getEventDatabase();
+        UICtrl.updateHTMLDatabase(eventDatabase);
         //3. Update UI
         UICtrl.displayEvents();
+        //4. Reset Form
         UICtrl.fadeOut(DOMobjects.newEventUI);
         UICtrl.resetEventForm();
     };
@@ -331,7 +370,7 @@ var eventController = (function (schedCtrl, UICtrl) {
 
         }
     };
-}(scheduleDataController, UIController));
+}(scheduleController, UIController));
 
 eventController.init();
     

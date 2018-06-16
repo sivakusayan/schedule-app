@@ -306,11 +306,11 @@ button {
 /* ROUTINE DISPLAY */
 /*-----------------------------------------------------*/
 .routineContainer {
-  width: 100%; }
+  width: 65%;
+  margin: 0 auto; }
 
 .eventContainer {
-  width: 65%;
-  margin: 2rem auto; }
+  margin: 2rem 0; }
 
 .eventContainer:nth-child(odd) .event {
   background-color: #f6f6f6; }
@@ -328,7 +328,6 @@ button {
   align-items: center;
   align-items: stretch; }
   .event > div {
-    width: 33%;
     position: relative; }
   .event__notes {
     height: 100%; }
@@ -406,3 +405,16 @@ button {
       cursor: pointer; }
     .event:hover .event__settings:hover {
       color: #005b80; }
+
+.hasNote {
+  width: 100%; }
+  .hasNote .event > div {
+    width: 33%; }
+  .hasNote .event__notes {
+    border-right: 0.3rem dotted #00B3FF; }
+
+.noNote {
+  width: 66.7%;
+  margin-left: auto; }
+  .noNote .event > div {
+    width: 50%; }
