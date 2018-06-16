@@ -1,22 +1,19 @@
 /*eslint-env browser*/
 
 /*-----------------------------------------------------------------------------*/
-/* SCHEDULE CONTROLLER */
+/* SCHEDULE DATA CONTROLLER */
 /*-----------------------------------------------------------------------------*/
 
-var scheduleController = (function () {
+var scheduleDataController = (function () {
     'use strict';
     
-    var id_generator, Event, eventDatabase, reservedTimeSlots, daysOfWeek, toStandardTime;
+    var Event, eventDatabase, reservedTimeSlots, daysOfWeek;
     
-    id_generator = 0;
-    
-    Event = function (name, startTime, endTime, notes, id) {
+    Event = function (name, startTime, endTime, notes) {
         this.name = name;
         this.startTime = startTime;
-        this.endTIme = endTime;
+        this.endTime = endTime;
         this.notes = notes;
-        this.id = id;
     };
     
     daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -39,25 +36,6 @@ var scheduleController = (function () {
         Friday: [],
         Saturday: [],
         Sunday: []
-    };
-    
-    toStandardTime = function (militaryTime) {
-        var hours, minutes, standardTime;
-        
-        hours = Number(militaryTime.split(':')[0]);
-        minutes = militaryTime.split(':')[1];
-        
-        if (hours > 12) {
-            standardTime = hours % 12 + ':' + minutes + 'PM';
-        } else if (hours === 12) {
-            standardTime = hours + ':' + minutes + 'PM';
-        } else if (hours === 0) {
-            standardTime = hours + 12 + ':' + minutes + 'AM';
-        } else if (hours <= 12) {
-            standardTime = hours + ':' + minutes + 'AM';
-        }
-        
-        return standardTime;
     };
     
     return {
@@ -105,13 +83,24 @@ var scheduleController = (function () {
             return true;
         },
         
-        addToDatabase: function (name, startTime, endTime, notes) {
-            var eventObj, event_id;
-            event_id = id_generator;
-            id_generator += 1;
+        addToEventDatabase: function (name, startTime, endTime, notes) {
+            var eventObj;
             
-            eventObj = new Event(name, toStandardTime(startTime), toStandardTime(endTime), notes, event_id);
-            eventDatabase[daysOfWeek[0]].push(eventObj);
+            eventObj = new Event(name, startTime, endTime, notes);
+            if (eventDatabase[daysOfWeek[0]].length === 0) {
+                eventDatabase[daysOfWeek[0]].push(eventObj);
+                console.log(eventDatabase[daysOfWeek[0]]);
+            } else { //Linear search to keep database in order
+                var indexToInsert;
+                indexToInsert = 0;
+                
+                for (var i = 0; i < eventDatabase[daysOfWeek[0]].length; i++) {
+                    if (eventObj.startTime > eventDatabase[daysOfWeek[0]][i].startTime) {
+                        indexToInsert += 1;
+                    }
+                }
+                eventDatabase[daysOfWeek[0]].splice(indexToInsert, 0, eventObj);   
+            }
         },
         
         recordTimeSlot: function (startTime, endTime) {
@@ -132,8 +121,21 @@ var scheduleController = (function () {
 var UIController = (function () {
     'use strict';
     
-    var DOMobjects, darkenScreen, lightenScreen;
+    var DOMobjects, eventHTMLDatabase, addToHTMLDatabase, daysOfWeek, darkenScreen, lightenScreen, toStandardTime;
     
+    addToHTMLDatabase = function (name, startTime, endTime, notes) {
+        var HTML, newHTML;
+
+        HTML = '<div class="eventContainer"><div class="event"><div><div class="event__notes hasNote"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
+
+        newHTML = HTML.replace('%notes%', notes);
+        newHTML = newHTML.replace('%name%', name);
+        newHTML = newHTML.replace('%startTime%', startTime);
+        newHTML = newHTML.replace('%endTime%', endTime);
+
+        eventHTMLDatabase[daysOfWeek[0]].push(newHTML);
+    };
+
     DOMobjects = {
         week: document.querySelector('.week'),
         overlay: document.getElementById('overlay'),
@@ -148,6 +150,18 @@ var UIController = (function () {
         newEventSubmit: document.querySelector('.newEventUI__submit')
     };
     
+    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    
+    eventHTMLDatabase = {
+        Monday: [],
+        Tuesday: [],
+        Wednesday: [],
+        Thursday: [],
+        Friday: [],
+        Saturday: [],
+        Sunday: []
+    }
+    
     darkenScreen = function () {
         DOMobjects.overlay.classList.remove('overlayOFF');
         DOMobjects.overlay.classList.add('overlayON');
@@ -161,6 +175,25 @@ var UIController = (function () {
             DOMobjects.overlay.classList.remove('overlayFADE');
             DOMobjects.overlay.classList.add('overlayOFF');
         }, 300);
+    };
+    
+    toStandardTime = function (militaryTime) {
+        var hours, minutes, standardTime;
+        
+        hours = Number(militaryTime.split(':')[0]);
+        minutes = militaryTime.split(':')[1];
+        
+        if (hours > 12) {
+            standardTime = hours % 12 + ':' + minutes + 'PM';
+        } else if (hours === 12) {
+            standardTime = hours + ':' + minutes + 'PM';
+        } else if (hours === 0) {
+            standardTime = hours + 12 + ':' + minutes + 'AM';
+        } else if (hours <= 12) {
+            standardTime = hours + ':' + minutes + 'AM';
+        }
+        
+        return standardTime;
     };
     
     return {
@@ -197,10 +230,8 @@ var UIController = (function () {
             DOMobjects.endTimeInput.setCustomValidity('');
         },
         
-        constructHTML: function (database) {
-            var html, newHtml;
+        displayEvents: function () {
             
-            html = '<div class="eventContainer"><div class="event"><div><div class="event__notes hasNote"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><span class="event__start">%timeStart%</span><span class="event__end">%timeEnd%</span></div></div></div></div>';
         }
     };
     
@@ -279,13 +310,12 @@ var eventController = (function (schedCtrl, UICtrl) {
         
         eventObj = UICtrl.getInputData();
         //1. Transfer data to schedule controller
-        schedCtrl.addToDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes);
+        schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes);
         schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime);
-        //2. Transfer data from schedule controller to UI controller
-        eventDatabase = schedCtrl.getDatabase();
-        //3. Update UI
-        UICtrl.constructHTML(eventDatabase);
+        //2. Transfer data to UI controller
         
+        //3. Update UI
+        UICtrl.displayEvents();
         UICtrl.fadeOut(DOMobjects.newEventUI);
         UICtrl.resetEventForm();
     };
@@ -301,7 +331,7 @@ var eventController = (function (schedCtrl, UICtrl) {
 
         }
     };
-}(scheduleController, UIController));
+}(scheduleDataController, UIController));
 
 eventController.init();
     
