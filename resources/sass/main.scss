@@ -181,6 +181,8 @@ button {
     background-color: $color-white;
     margin-bottom: 5rem;
     z-index: 100;
+    position: sticky;
+    top: 0;
     
     &__mobile {
         position: relative;
@@ -234,8 +236,8 @@ button {
 /*-----------------------------------------------------*/
 
 .newEventUI {
-    height: 60rem;
-    width: 52rem;
+    height: 63rem;
+    width: 50rem;
     background-color: white;
     z-index: 400;
     box-shadow: 0 0 5rem;
@@ -266,7 +268,7 @@ button {
     &__startTime,
     &__endTime,
     &__notes {
-        margin: 3rem 0;
+        margin: 6rem 0;
         
         label {
             display: inline-block;
@@ -287,6 +289,7 @@ button {
             font-family: 'Nunito', sans-serif;
             color: $color-olympicBlue;
             font-size: 1.8rem;
+            
         }
         
         input:-webkit-autofill {
@@ -312,6 +315,10 @@ button {
         }
     }
     
+    &__name {
+        margin-top: 2rem;
+    }
+    
     &__notes {
         label {
             vertical-align: top;
@@ -322,7 +329,7 @@ button {
         text-align: center;
         
         input {
-           margin-top: 1rem;
+           margin-top: 0rem;
             border: none;
             color: $color-white;
             background: $color-olympicBlue;

@@ -103,7 +103,9 @@ button {
   flex-direction: column;
   background-color: #fff;
   margin-bottom: 5rem;
-  z-index: 100; }
+  z-index: 100;
+  position: sticky;
+  top: 0; }
   .menu__mobile {
     position: relative;
     height: 10rem;
@@ -161,8 +163,8 @@ button {
 /* NEW EVENT UI */
 /*-----------------------------------------------------*/
 .newEventUI {
-  height: 60rem;
-  width: 52rem;
+  height: 63rem;
+  width: 50rem;
   background-color: white;
   z-index: 400;
   box-shadow: 0 0 5rem;
@@ -202,7 +204,7 @@ button {
     padding: 1rem;
     flex-direction: column; }
   .newEventUI__name, .newEventUI__startTime, .newEventUI__endTime, .newEventUI__notes {
-    margin: 3rem 0; }
+    margin: 6rem 0; }
     .newEventUI__name label, .newEventUI__startTime label, .newEventUI__endTime label, .newEventUI__notes label {
       display: inline-block;
       color: #4CCBFF;
@@ -239,12 +241,14 @@ button {
     .newEventUI__notes textarea:focus {
       outline: none;
       background-color: #e6f7ff; }
+  .newEventUI__name {
+    margin-top: 2rem; }
   .newEventUI__notes label {
     vertical-align: top; }
   .newEventUI__submit {
     text-align: center; }
     .newEventUI__submit input {
-      margin-top: 1rem;
+      margin-top: 0rem;
       border: none;
       color: #fff;
       background: #0091CC;
