@@ -125,7 +125,7 @@ var UIController = (function () {
     dataToHTML = function (eventObj) {
         var HTML, newHTML;
 
-        HTML = '<div class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
+        HTML = '<div class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><button class="event__close"><i class="fas fa-times-circle"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
         
         newHTML = HTML.replace('%name%', eventObj.name);
         newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
@@ -137,11 +137,9 @@ var UIController = (function () {
         if (eventObj.notes.length > 0) {
             newHTML = newHTML.replace('%noteDetect%', 'hasNote');
             newHTML = newHTML.replace('%notes%', eventObj.notes);
-            console.log('has note event')
         } else {
             newHTML = newHTML.replace('%noteDetect%', 'noNote');
             newHTML = newHTML.replace('<div><div class="event__notes"><p>%notes%</p></div></div>', '');
-            console.log('no note event')
         }
         
         return newHTML;
