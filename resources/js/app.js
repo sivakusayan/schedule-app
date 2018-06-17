@@ -125,13 +125,13 @@ var UIController = (function () {
     dataToHTML = function (eventObj, index) {
         var HTML, newHTML;
 
-        HTML = '<div id="%event_index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button id="%settings_index%" class="event__settings"><i class="fas fa-cog"></i></button><button id="%delete_index%" class="event__delete"><i class="fas fa-times-circle"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
+        HTML = '<div id="%event_index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__config"><i id="%config_index%" class="fas fa-cog"></i></button><button class="event__delete"><i id="%delete_index%" class="fas fa-times-circle"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
         
         newHTML = HTML.replace('%name%', eventObj.name);
         newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
         newHTML = newHTML.replace('%endTime%', toStandardTime(eventObj.endTime));
         newHTML = newHTML.replace('%event_index%', 'event_' + index);
-        newHTML = newHTML.replace('%settings_index%', 'settings_' + index);
+        newHTML = newHTML.replace('%config_index%', 'config_' + index);
         newHTML = newHTML.replace('%delete_index%', 'delete_' + index);
         
         if (eventObj.notes.length > 0) {
@@ -147,7 +147,9 @@ var UIController = (function () {
 
     DOMobjects = {
         week: document.querySelector('.week'),
+        
         overlay: document.getElementById('overlay'),
+        
         btnNew: document.getElementById('btnNew'),
         btnNewBack: document.getElementById('btnNewBack'),
         newEventUI: document.querySelector('.newEventUI'),
@@ -157,6 +159,16 @@ var UIController = (function () {
         endTimeInput: document.getElementById('endTimeInput'),
         notesInput: document.getElementById('notesInput'),
         newEventSubmit: document.querySelector('.newEventUI__submit'),
+        
+        btnConfigBack: document.getElementById('btnConfigBack'),
+        configEventUI: document.querySelector('.configEventUI'),
+        configEventForm: document.getElementById('configEventForm'),
+        nameConfigInput: document.getElementById('nameConfigInput'),
+        startTimeConfigInput: document.getElementById('startTimeConfigInput'),
+        endTimeConfigInput: document.getElementById('endTimeConfigInput'),
+        notesConfigInput: document.getElementById('notesConfigInput'),
+        configEventSubmit: document.querySelector('.configEventUI__submit'),
+        
         routineContainer: document.querySelector('.routineContainer')
     };
     
@@ -245,8 +257,15 @@ var UIController = (function () {
                 notes: DOMobjects.notesInput.value
             };
         },
+        
+        setConfigData: function (name, startTime, endTime, notes) {
+            DOMobjects.nameConfigInput.value = name;
+            DOMobjects.startTimeConfigInput.value = startTime;
+            DOMobjects.endTimeConfigInput.value = endTime;
+            DOMobjects.notesConfigInput.value = notes;
+        },
 
-        resetEventForm: function () { 
+        resetNewEventForm: function () { 
             DOMobjects.startTimeInput.setCustomValidity('');
             DOMobjects.endTimeInput.setCustomValidity('');
             DOMobjects.newEventForm.reset();
@@ -279,9 +298,10 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var setupEventListeners, addEvent, DOMobjects, setValidationMessage;
+    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, setupConfigureForm, DOMobjects, setValidationMessage;
     
     DOMobjects = UICtrl.getDOMobjects();
+    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     
     setValidationMessage = function () {
         var timeInputs, validityCheck;
@@ -339,6 +359,28 @@ var eventController = (function (schedCtrl, UICtrl) {
                 event.target.classList.add('activeDay');
             }
         });
+        
+        /*-------------------------EVENT BUTTONS--------------------------------*/
+        
+        DOMobjects.routineContainer.addEventListener('click', function (event) {
+            
+            if (event.target.tagName === 'I') {
+                var buttonType, index;
+                buttonType = event.target.getAttribute('id').split('_')[0]; 
+                index = event.target.getAttribute('id').split('_')[1]; 
+                
+                if (buttonType === 'config') {
+                    setupConfigureForm(index);
+                    UICtrl.fadeIn(DOMobjects.configEventUI);
+                } else if (buttonType === 'delete') {
+                    deleteEvent(index);
+                }
+            }
+        });
+        
+        DOMobjects.btnConfigBack.addEventListener('click', function (event) {
+            UICtrl.fadeOut(DOMobjects.newEventUI);                                        
+        });
     };
     
     addEvent = function () {
@@ -356,6 +398,17 @@ var eventController = (function (schedCtrl, UICtrl) {
         //4. Reset Form
         UICtrl.fadeOut(DOMobjects.newEventUI);
         UICtrl.resetEventForm();
+    };
+    
+    setupConfigureForm = function (index) {
+        var event, eventDatabase;
+        eventDatabase = schedCtrl.getEventDatabase();
+        event = eventDatabase[daysOfWeek[0]][index];
+        UICtrl.setConfigData(event.name, event.startTime, event.endTime, event.notes);
+    };
+    
+    deleteEvent = function () {
+        
     };
     
     return {

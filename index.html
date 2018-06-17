@@ -32,7 +32,31 @@
                     <textarea id="notesInput" maxlength="60"></textarea>
                 </div>
                 <div class="newEventUI__submit">
-                    <input type="submit">
+                    <input type="submit" value="Add Event">
+                </div>
+            </form>
+        </div>
+        <div class="configEventUI">
+            <button id="btnConfigBack" class="configEventUI__back"><i class="far fa-times-circle"></i></button>
+            <form id="configEventForm" class="configEventUI__form" onsubmit="return false" autocomplete="off">
+                <div class="configEventUI__name">
+                    <label for="name">Name</label> 
+                    <input id="nameConfigInput" type="text" maxlength="30" required>
+                </div>
+                <div class="configEventUI__startTime">
+                    <label for="startTime">Start time</label>
+                    <input id="startTimeConfigInput" type="time" pattern="[0-2][0-3]:[0-5][0-9]" required>
+                </div>
+                <div class="configEventUI__endTime">
+                    <label for="endTime">End time</label>
+                    <input id="endTimeConfigInput" type="time" pattern="[0-2][0-3]:[0-5][0-9]" required>
+                </div>
+                <div class="configEventUI__notes">
+                    <label>Notes</label>
+                    <textarea id="notesConfigInput" maxlength="60"></textarea>
+                </div>
+                <div class="configEventUI__submit">
+                    <input type="submit" value="Edit Event">
                 </div>
             </form>
         </div>

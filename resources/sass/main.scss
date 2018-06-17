@@ -349,6 +349,123 @@ button {
 }
 
 /*-----------------------------------------------------*/
+/* NEW EVENT UI */
+/*-----------------------------------------------------*/
+
+.configEventUI {
+    height: 63rem;
+    width: 50rem;
+    background-color: white;
+    z-index: 400;
+    box-shadow: 0 0 5rem;
+    border: 15px solid $color-royalBlue;
+    border-radius: 1rem;
+    position: relative; 
+    
+    @include center;
+    @include centerChildren;
+    @include hide;
+    
+    &__back {
+        position: absolute;
+        font-size: 3rem;
+        top: 3%;
+        right: 3%;
+        
+        @include menuButton;
+    }
+    
+    &__form {
+        width: 82%;
+        padding: 1rem;
+        flex-direction: column;
+    }
+    
+    &__name,
+    &__startTime,
+    &__endTime,
+    &__notes {
+        margin: 6rem 0;
+        
+        label {
+            display: inline-block;
+            color: $color-malibuBlue;
+            margin-right: 2rem;
+            width: 10rem;
+            font-size: 1.7rem;
+            text-align: center;
+            background-color: $color-royalBlue;
+            padding: 0.5rem;
+            font-weight: 200;
+            border-radius: 1rem;
+        }
+        
+        input {
+            border: none;
+            border-bottom: 1px solid $color-azure;
+            font-family: 'Nunito', sans-serif;
+            color: $color-olympicBlue;
+            font-size: 1.8rem;
+            
+        }
+        
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0 30px lighten($color-azure, 45%) inset;
+        }
+        
+        textarea{
+            border: 1px solid $color-azure;
+            vertical-align: bottom;
+            font-family: 'Nunito', sans-serif;
+            color: $color-olympicBlue;
+            resize: none;
+            height: 12rem;
+            width: 20rem;
+            padding: 1rem;
+            font-size: 1.8rem;
+        }
+    
+        input:focus,
+        textarea:focus{
+            outline: none;
+            background-color: lighten($color-azure, 45%);
+        }
+    }
+    
+    &__name {
+        margin-top: 2rem;
+    }
+    
+    &__notes {
+        label {
+            vertical-align: top;
+        }
+    }
+    
+    &__submit {
+        text-align: center;
+        
+        input {
+           margin-top: 0rem;
+            border: none;
+            color: $color-white;
+            background: $color-olympicBlue;
+            padding: 1rem 3rem;
+            text-transform: uppercase;
+            font-size: 2rem;
+            
+            transition: background-color 0.3s;
+        }
+        
+        input:hover {
+            background-color: $color-royalBlue;
+            cursor: pointer;
+        }
+    }
+ 
+}
+
+/*-----------------------------------------------------*/
 /* CLONE ROUTINE UI */
 /*-----------------------------------------------------*/
 
@@ -473,7 +590,7 @@ button {
         color: $color-royalBlue;
     }
     
-    &__settings,
+    &__config,
     &__delete {
         position: absolute;
         background: none;
@@ -490,7 +607,7 @@ button {
         opacity: 0;
     }
      
-    &__settings:focus,
+    &__config:focus,
     &__delete:focus {
         outline: none;     
     }
@@ -499,7 +616,7 @@ button {
         -webkit-box-shadow: 0 0 3rem $color-royalBlue;
         box-shadow: 0 0 3rem $color-royalBlue;
         
-        .event__settings {
+        .event__config {
             -webkit-transform: rotate(180deg);
             transform: rotate(180deg);
             opacity: 1;
@@ -513,13 +630,13 @@ button {
             cursor: pointer;
         }
         
-        .event__settings:hover,
+        .event__config:hover,
         .event__delete:hover {
             color: darken($color-olympicBlue, 15%);
         }
     }
     
-    &__settings {
+    &__config {
         top: 35%;
         left: 25;
     }
