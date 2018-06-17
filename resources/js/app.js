@@ -107,11 +107,29 @@ var scheduleController = (function () {
         },
         
         recordTimeSlot: function (startTime, endTime) {
-            reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
+            
+            if (reservedTimeSlots[daysOfWeek[0]].length === 0) {
+                reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
+            } else { //Linear search to keep timeslots in order
+                var indexToInsert;
+                indexToInsert = 0;
+                
+                for (var i = 0; i < reservedTimeSlots[daysOfWeek[0]].length; i++) {
+                    if (startTime > reservedTimeSlots[daysOfWeek[0]][i][0]) {
+                        indexToInsert += 1;
+                    }
+                }
+                reservedTimeSlots[daysOfWeek[0]].splice(indexToInsert, 0, [startTime, endTime]);   
+            }
+            
+            console.log('A time slot has been added.');
+            console.log(reservedTimeSlots);
         },
         
         deleteTimeSlot: function (index) {
             reservedTimeSlots[daysOfWeek[0]].splice(index, 1);
+            console.log('A time slot has been deleted.');
+            console.log(reservedTimeSlots);
         },
         
         getEventDatabase: function () {
