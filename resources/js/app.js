@@ -122,17 +122,17 @@ var UIController = (function () {
     
     var DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, daysOfWeek, darkenScreen, lightenScreen, toStandardTime;
     
-    dataToHTML = function (eventObj) {
+    dataToHTML = function (eventObj, index) {
         var HTML, newHTML;
 
-        HTML = '<div class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button class="event__settings"><i class="fas fa-cog"></i></button><button class="event__close"><i class="fas fa-times-circle"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
+        HTML = '<div id="%event_index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__notes"><p>%notes%</p></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__time"><button id="%settings_index%" class="event__settings"><i class="fas fa-cog"></i></button><button id="%delete_index%" class="event__delete"><i class="fas fa-times-circle"></i></button><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div></div></div>';
         
         newHTML = HTML.replace('%name%', eventObj.name);
         newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
         newHTML = newHTML.replace('%endTime%', toStandardTime(eventObj.endTime));
-        
-        console.log(eventObj.notes);
-        console.log(typeof eventObj.notes);
+        newHTML = newHTML.replace('%event_index%', 'event_' + index);
+        newHTML = newHTML.replace('%settings_index%', 'settings_' + index);
+        newHTML = newHTML.replace('%delete_index%', 'delete_' + index);
         
         if (eventObj.notes.length > 0) {
             newHTML = newHTML.replace('%noteDetect%', 'hasNote');
@@ -255,7 +255,7 @@ var UIController = (function () {
         updateHTMLDatabase: function (eventDatabase) {
             resetEventHTMLDatabase();
             for (var i = 0; i < eventDatabase[daysOfWeek[0]].length; i++) {
-                var eventHTML = dataToHTML(eventDatabase[daysOfWeek[0]][i]);
+                var eventHTML = dataToHTML(eventDatabase[daysOfWeek[0]][i], i);
                 eventHTMLDatabase[daysOfWeek[0]].push(eventHTML);
             }
         },

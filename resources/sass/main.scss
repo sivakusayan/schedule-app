@@ -474,7 +474,7 @@ button {
     }
     
     &__settings,
-    &__close {
+    &__delete {
         position: absolute;
         background: none;
         border: none;
@@ -491,7 +491,7 @@ button {
     }
      
     &__settings:focus,
-    &__close:focus {
+    &__delete:focus {
         outline: none;     
     }
      
@@ -506,7 +506,7 @@ button {
             cursor: pointer;
         }
         
-        .event__close {
+        .event__delete {
             -webkit-transform: rotate(270deg);
             transform: rotate(-270deg);
             opacity: 1;
@@ -514,7 +514,7 @@ button {
         }
         
         .event__settings:hover,
-        .event__close:hover {
+        .event__delete:hover {
             color: darken($color-olympicBlue, 15%);
         }
     }
@@ -524,7 +524,7 @@ button {
         left: 25;
     }
     
-    &__close {
+    &__delete {
         top: 35%;
         left: 25%;
     }

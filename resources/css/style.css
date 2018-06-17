@@ -377,7 +377,7 @@ button {
   .event__end {
     bottom: 0;
     color: #005A7F; }
-  .event__settings, .event__close {
+  .event__settings, .event__delete {
     position: absolute;
     background: none;
     border: none;
@@ -391,7 +391,7 @@ button {
     display: -ms-flexbox;
     display: flex;
     opacity: 0; }
-  .event__settings:focus, .event__close:focus {
+  .event__settings:focus, .event__delete:focus {
     outline: none; }
   .event:hover {
     -webkit-box-shadow: 0 0 3rem #005A7F;
@@ -401,18 +401,18 @@ button {
       transform: rotate(180deg);
       opacity: 1;
       cursor: pointer; }
-    .event:hover .event__close {
+    .event:hover .event__delete {
       -webkit-transform: rotate(270deg);
       transform: rotate(-270deg);
       opacity: 1;
       cursor: pointer; }
     .event:hover .event__settings:hover,
-    .event:hover .event__close:hover {
+    .event:hover .event__delete:hover {
       color: #005b80; }
   .event__settings {
     top: 35%;
     left: 25; }
-  .event__close {
+  .event__delete {
     top: 35%;
     left: 25%; }
 
