@@ -102,6 +102,10 @@ var scheduleController = (function () {
             }
         },
         
+        deleteFromEventDatabase: function (index) {
+            eventDatabase[daysOfWeek[0]].splice(index, 1);
+        },
+        
         recordTimeSlot: function (startTime, endTime) {
             reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
         },
@@ -298,7 +302,7 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, setupConfigureForm, DOMobjects, setValidationMessage;
+    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, configureEvent, DOMobjects, setValidationMessage;
     
     DOMobjects = UICtrl.getDOMobjects();
     daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -309,12 +313,12 @@ var eventController = (function (schedCtrl, UICtrl) {
         validityCheck = [1,1]
 
         for (var i = 0; i < 2; i++) {
-            if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i)) {
-                timeInputs[i].setCustomValidity('You can\'t have overlapping event times.');
-                validityCheck[i] = 0;
-            } else if (!schedCtrl.validateTimeFormat(timeInputs)) {
+            if (!schedCtrl.validateTimeFormat(timeInputs)) {
                 timeInputs[1].setCustomValidity('End time should be after the Start time.'); 
                 validityCheck[1] = 0;
+            } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i)) {
+                timeInputs[i].setCustomValidity('You can\'t have overlapping event times.');
+                validityCheck[i] = 0;
             } else if (!schedCtrl.validateNoSubEvents(timeInputs)) {
                 timeInputs[1].setCustomValidity('You can\'t have overlapping event times.'); 
                 validityCheck[1] = 0;
@@ -342,14 +346,19 @@ var eventController = (function (schedCtrl, UICtrl) {
             UICtrl.fadeOut(DOMobjects.newEventUI);
             
             setTimeout(function () {
-                UICtrl.resetEventForm();
+                UICtrl.resetNewEventForm();
             }, 300);
         });
         /*------------------------FORM VALIDATION------------------------------*/
         
         DOMobjects.endTimeInput.addEventListener('input', setValidationMessage);
         DOMobjects.startTimeInput.addEventListener('input', setValidationMessage);
-        DOMobjects.newEventForm.addEventListener('submit', addEvent);
+        DOMobjects.newEventForm.addEventListener('submit', function () {
+            var eventObj;
+            eventObj = UICtrl.getInputData();
+            
+            addEvent(eventObj);
+        });
         
         /*-------------------------WEEK BUTTONS--------------------------------*/
         
@@ -365,28 +374,27 @@ var eventController = (function (schedCtrl, UICtrl) {
         DOMobjects.routineContainer.addEventListener('click', function (event) {
             
             if (event.target.tagName === 'I') {
-                var buttonType, index;
+                var buttonType;
                 buttonType = event.target.getAttribute('id').split('_')[0]; 
-                index = event.target.getAttribute('id').split('_')[1]; 
+                selectedEventIndex = event.target.getAttribute('id').split('_')[1]; 
                 
                 if (buttonType === 'config') {
-                    setupConfigureForm(index);
+                    setupConfigureForm(selectedEventIndex);
                     UICtrl.fadeIn(DOMobjects.configEventUI);
                 } else if (buttonType === 'delete') {
-                    deleteEvent(index);
+                    deleteEvent(selectedEventIndex);
                 }
             }
         });
         
-        DOMobjects.btnConfigBack.addEventListener('click', function (event) {
-            UICtrl.fadeOut(DOMobjects.newEventUI);                                        
+        DOMobjects.btnConfigBack.addEventListener('click', function () {
+            schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
+            UICtrl.fadeOut(DOMobjects.configEventUI); 
         });
     };
     
-    addEvent = function () {
-        var eventObj, eventDatabase;
-        
-        eventObj = UICtrl.getInputData();
+    addEvent = function (eventObj) {
+        var eventDatabase;
         //1. Transfer data to schedule controller
         schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes);
         schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime);
@@ -397,18 +405,29 @@ var eventController = (function (schedCtrl, UICtrl) {
         UICtrl.displayEvents();
         //4. Reset Form
         UICtrl.fadeOut(DOMobjects.newEventUI);
-        UICtrl.resetEventForm();
+        UICtrl.resetNewEventForm();
     };
     
     setupConfigureForm = function (index) {
-        var event, eventDatabase;
+        var eventDatabase;
         eventDatabase = schedCtrl.getEventDatabase();
-        event = eventDatabase[daysOfWeek[0]][index];
-        UICtrl.setConfigData(event.name, event.startTime, event.endTime, event.notes);
+        selectedEvent = eventDatabase[daysOfWeek[0]][index];
+        UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
+        schedCtrl.deleteFromEventDatabase(index);
     };
     
-    deleteEvent = function () {
+    configureEvent = function (index) {
         
+    };
+    
+    deleteEvent = function (index) {
+        var newEventDatabase;
+        
+        schedCtrl.deleteFromEventDatabase(index);
+        
+        newEventDatabase = schedCtrl.getEventDatabase();
+        UICtrl.updateHTMLDatabase(newEventDatabase);
+        UICtrl.displayEvents();   
     };
     
     return {
