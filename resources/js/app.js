@@ -110,6 +110,10 @@ var scheduleController = (function () {
             reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
         },
         
+        deleteTimeSlot: function (index) {
+            reservedTimeSlots[daysOfWeek[0]].splice(index, 1);
+        },
+        
         getEventDatabase: function () {
             return eventDatabase;
         }
@@ -268,6 +272,15 @@ var UIController = (function () {
             DOMobjects.endTimeConfigInput.value = endTime;
             DOMobjects.notesConfigInput.value = notes;
         },
+        
+        getConfigData: function () {
+            return {
+                name: DOMobjects.nameConfigInput.value,
+                startTime: DOMobjects.startTimeConfigInput.value,
+                endTime: DOMobjects.endTimeConfigInput.value,
+                notes: DOMobjects.notesConfigInput.value
+            }
+        },
 
         resetNewEventForm: function () { 
             DOMobjects.startTimeInput.setCustomValidity('');
@@ -302,14 +315,13 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, configureEvent, DOMobjects, setValidationMessage;
+    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage;
     
     DOMobjects = UICtrl.getDOMobjects();
     daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     
-    setValidationMessage = function () {
-        var timeInputs, validityCheck;
-        timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
+    setValidationMessage = function (timeInputs) {
+        var validityCheck;
         validityCheck = [1,1]
 
         for (var i = 0; i < 2; i++) {
@@ -351,13 +363,22 @@ var eventController = (function (schedCtrl, UICtrl) {
         });
         /*------------------------FORM VALIDATION------------------------------*/
         
-        DOMobjects.endTimeInput.addEventListener('input', setValidationMessage);
-        DOMobjects.startTimeInput.addEventListener('input', setValidationMessage);
+        DOMobjects.startTimeInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
+            setValidationMessage(timeInputs);
+        });
+        DOMobjects.endTimeInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
+            setValidationMessage(timeInputs);
+        });
         DOMobjects.newEventForm.addEventListener('submit', function () {
             var eventObj;
             eventObj = UICtrl.getInputData();
-            
-            addEvent(eventObj);
+            addEvent(eventObj); 
+            UICtrl.fadeOut(DOMobjects.newEventUI);
+            UICtrl.resetNewEventForm();
         });
         
         /*-------------------------WEEK BUTTONS--------------------------------*/
@@ -390,9 +411,28 @@ var eventController = (function (schedCtrl, UICtrl) {
         DOMobjects.btnConfigBack.addEventListener('click', function () {
             schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
             UICtrl.fadeOut(DOMobjects.configEventUI); 
+            DOMobjects.endTimeConfigInput.setCustomValidity('');
+            DOMobjects.startTimeConfigInput.setCustomValidity('');
         });
-    };
+        DOMobjects.startTimeConfigInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+            setValidationMessage(timeInputs);
+        });
+        DOMobjects.endTimeConfigInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+            setValidationMessage(timeInputs);
+        });
+        DOMobjects.configEventForm.addEventListener('submit', function () {
+            var configuredEventObj;
+            configuredEventObj = UICtrl.getConfigData();
+            addEvent(configuredEventObj);
+            
+            UICtrl.fadeOut(DOMobjects.configEventUI);
+        });
     
+    };
     addEvent = function (eventObj) {
         var eventDatabase;
         //1. Transfer data to schedule controller
@@ -403,9 +443,6 @@ var eventController = (function (schedCtrl, UICtrl) {
         UICtrl.updateHTMLDatabase(eventDatabase);
         //3. Update UI
         UICtrl.displayEvents();
-        //4. Reset Form
-        UICtrl.fadeOut(DOMobjects.newEventUI);
-        UICtrl.resetNewEventForm();
     };
     
     setupConfigureForm = function (index) {
@@ -413,11 +450,9 @@ var eventController = (function (schedCtrl, UICtrl) {
         eventDatabase = schedCtrl.getEventDatabase();
         selectedEvent = eventDatabase[daysOfWeek[0]][index];
         UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
+
         schedCtrl.deleteFromEventDatabase(index);
-    };
-    
-    configureEvent = function (index) {
-        
+        schedCtrl.deleteTimeSlot(index);
     };
     
     deleteEvent = function (index) {
