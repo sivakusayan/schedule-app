@@ -7,7 +7,7 @@
 var scheduleController = (function () {
     'use strict';
     
-    var Event, eventDatabase, reservedTimeSlots, daysOfWeek;
+    var Event, eventDatabase, reservedTimeSlots;
     
     Event = function (name, startTime, endTime, notes) {
         this.name = name;
@@ -16,26 +16,24 @@ var scheduleController = (function () {
         this.notes = notes;
     };
     
-    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    
     eventDatabase = {
-        Monday: [],
-        Tuesday: [],
-        Wednesday: [],
-        Thursday: [],
-        Friday: [],
-        Saturday: [],
-        Sunday: []
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: []
     };
     
     reservedTimeSlots = {
-        Monday: [],
-        Tuesday: [],
-        Wednesday: [],
-        Thursday: [],
-        Friday: [],
-        Saturday: [],
-        Sunday: []
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: []
     };
     
     return {
@@ -47,9 +45,9 @@ var scheduleController = (function () {
             }
         },
         
-        validateNoTimeOverlap: function (time, type) {
+        validateNoTimeOverlap: function (time, type, activeDay) {
             var timeSlots;
-            timeSlots = reservedTimeSlots[daysOfWeek[0]];
+            timeSlots = reservedTimeSlots[activeDay];
             
             //Type 0 if startTime, Type 1 if endTime
             if (type === 0) {
@@ -69,9 +67,9 @@ var scheduleController = (function () {
             return true;
         },
         
-        validateNoSubEvents: function (timeInputs) {
+        validateNoSubEvents: function (timeInputs, activeDay) {
             var timeSlots;
-            timeSlots = reservedTimeSlots[daysOfWeek[0]];
+            timeSlots = reservedTimeSlots[activeDay];
             
             //Index 0 is startTime, Index 1 is endTime
             for (var i = 0; i < timeSlots.length; i++) {
@@ -83,53 +81,48 @@ var scheduleController = (function () {
             return true;
         },
         
-        addToEventDatabase: function (name, startTime, endTime, notes) {
+        addToEventDatabase: function (name, startTime, endTime, notes, activeDay) {
             var eventObj;
             
             eventObj = new Event(name, startTime, endTime, notes);
-            if (eventDatabase[daysOfWeek[0]].length === 0) {
-                eventDatabase[daysOfWeek[0]].push(eventObj);
+            if (eventDatabase[activeDay].length === 0) {
+                eventDatabase[activeDay].push(eventObj);
             } else { //Linear search to keep database in order
                 var indexToInsert;
                 indexToInsert = 0;
                 
-                for (var i = 0; i < eventDatabase[daysOfWeek[0]].length; i++) {
-                    if (eventObj.startTime > eventDatabase[daysOfWeek[0]][i].startTime) {
+                for (var i = 0; i < eventDatabase[activeDay].length; i++) {
+                    if (eventObj.startTime > eventDatabase[activeDay][i].startTime) {
                         indexToInsert += 1;
                     }
                 }
-                eventDatabase[daysOfWeek[0]].splice(indexToInsert, 0, eventObj);   
+                eventDatabase[activeDay].splice(indexToInsert, 0, eventObj);   
             }
         },
         
-        deleteFromEventDatabase: function (index) {
-            eventDatabase[daysOfWeek[0]].splice(index, 1);
+        deleteFromEventDatabase: function (index, activeDay) {
+            eventDatabase[activeDay].splice(index, 1);
         },
         
-        recordTimeSlot: function (startTime, endTime) {
+        recordTimeSlot: function (startTime, endTime, activeDay) {
             
-            if (reservedTimeSlots[daysOfWeek[0]].length === 0) {
-                reservedTimeSlots[daysOfWeek[0]].push([startTime, endTime]);
+            if (reservedTimeSlots[activeDay].length === 0) {
+                reservedTimeSlots[activeDay].push([startTime, endTime]);
             } else { //Linear search to keep timeslots in order
                 var indexToInsert;
                 indexToInsert = 0;
                 
-                for (var i = 0; i < reservedTimeSlots[daysOfWeek[0]].length; i++) {
-                    if (startTime > reservedTimeSlots[daysOfWeek[0]][i][0]) {
+                for (var i = 0; i < reservedTimeSlots[activeDay].length; i++) {
+                    if (startTime > reservedTimeSlots[activeDay][i][0]) {
                         indexToInsert += 1;
                     }
                 }
-                reservedTimeSlots[daysOfWeek[0]].splice(indexToInsert, 0, [startTime, endTime]);   
+                reservedTimeSlots[activeDay].splice(indexToInsert, 0, [startTime, endTime]);   
             }
-            
-            console.log('A time slot has been added.');
-            console.log(reservedTimeSlots);
         },
         
-        deleteTimeSlot: function (index) {
-            reservedTimeSlots[daysOfWeek[0]].splice(index, 1);
-            console.log('A time slot has been deleted.');
-            console.log(reservedTimeSlots);
+        deleteTimeSlot: function (index, activeDay) {
+            reservedTimeSlots[activeDay].splice(index, 1);
         },
         
         getEventDatabase: function () {
@@ -146,7 +139,7 @@ var scheduleController = (function () {
 var UIController = (function () {
     'use strict';
     
-    var DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, daysOfWeek, darkenScreen, lightenScreen, toStandardTime;
+    var DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, darkenScreen, lightenScreen, toStandardTime;
     
     dataToHTML = function (eventObj, index) {
         var HTML, newHTML;
@@ -186,6 +179,8 @@ var UIController = (function () {
         notesInput: document.getElementById('notesInput'),
         newEventSubmit: document.querySelector('.newEventUI__submit'),
         
+        btnReset: document.getElementById('btnReset'),
+        
         btnConfigBack: document.getElementById('btnConfigBack'),
         configEventUI: document.querySelector('.configEventUI'),
         configEventForm: document.getElementById('configEventForm'),
@@ -198,28 +193,18 @@ var UIController = (function () {
         routineContainer: document.querySelector('.routineContainer')
     };
     
-    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-    
     eventHTMLDatabase = {
-        Monday: [],
-        Tuesday: [],
-        Wednesday: [],
-        Thursday: [],
-        Friday: [],
-        Saturday: [],
-        Sunday: []
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: []
     };
     
-    resetEventHTMLDatabase = function () {
-        eventHTMLDatabase = {
-            Monday: [],
-            Tuesday: [],
-            Wednesday: [],
-            Thursday: [],
-            Friday: [],
-            Saturday: [],
-            Sunday: []
-        };
+    resetEventHTMLDatabase = function (activeDay) {
+        eventHTMLDatabase[activeDay] = [];
     };
     
     darkenScreen = function () {
@@ -306,20 +291,20 @@ var UIController = (function () {
             DOMobjects.newEventForm.reset();
         },
         
-        updateHTMLDatabase: function (eventDatabase) {
-            resetEventHTMLDatabase();
-            for (var i = 0; i < eventDatabase[daysOfWeek[0]].length; i++) {
-                var eventHTML = dataToHTML(eventDatabase[daysOfWeek[0]][i], i);
-                eventHTMLDatabase[daysOfWeek[0]].push(eventHTML);
+        updateHTMLDatabase: function (eventDatabase, activeDay) {
+            resetEventHTMLDatabase(activeDay);
+            for (var i = 0; i < eventDatabase[activeDay].length; i++) {
+                var eventHTML = dataToHTML(eventDatabase[activeDay][i], i);
+                eventHTMLDatabase[activeDay].push(eventHTML);
             }
         },
         
-        displayEvents: function () {
+        displayEvents: function (activeDay) {
             while(DOMobjects.routineContainer.firstChild) {
                 DOMobjects.routineContainer.removeChild(DOMobjects.routineContainer.firstChild);
             }
-            for (var i = 0; i < eventHTMLDatabase[daysOfWeek[0]].length ; i++) {
-                DOMobjects.routineContainer.insertAdjacentHTML('beforeend', eventHTMLDatabase[daysOfWeek[0]][i]);
+            for (var i = 0; i < eventHTMLDatabase[activeDay].length ; i++) {
+                DOMobjects.routineContainer.insertAdjacentHTML('beforeend', eventHTMLDatabase[activeDay][i]);
             }
         }
     };
@@ -333,10 +318,9 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var daysOfWeek, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage;
+    var activeDay, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage;
     
     DOMobjects = UICtrl.getDOMobjects();
-    daysOfWeek = ['Monday', 'Tuesday', 'Wedensday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     
     setValidationMessage = function (timeInputs) {
         var validityCheck;
@@ -346,10 +330,10 @@ var eventController = (function (schedCtrl, UICtrl) {
             if (!schedCtrl.validateTimeFormat(timeInputs)) {
                 timeInputs[1].setCustomValidity('End time should be after the Start time.'); 
                 validityCheck[1] = 0;
-            } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i)) {
+            } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
                 timeInputs[i].setCustomValidity('You can\'t have overlapping event times.');
                 validityCheck[i] = 0;
-            } else if (!schedCtrl.validateNoSubEvents(timeInputs)) {
+            } else if (!schedCtrl.validateNoSubEvents(timeInputs, activeDay)) {
                 timeInputs[1].setCustomValidity('You can\'t have overlapping event times.'); 
                 validityCheck[1] = 0;
             }
@@ -379,6 +363,8 @@ var eventController = (function (schedCtrl, UICtrl) {
                 UICtrl.resetNewEventForm();
             }, 300);
         });
+        
+        DOMobjects
         /*------------------------FORM VALIDATION------------------------------*/
         
         DOMobjects.startTimeInput.addEventListener('input', function () {
@@ -403,8 +389,16 @@ var eventController = (function (schedCtrl, UICtrl) {
         
         DOMobjects.week.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
+                activeDay = event.target.textContent;
+                
                 document.querySelector('.activeDay').classList.remove('activeDay');
                 event.target.classList.add('activeDay');
+                
+                DOMobjects.routineContainer.style.opacity = 0;
+                setTimeout(function () {
+                    UICtrl.displayEvents(activeDay);
+                    DOMobjects.routineContainer.style.opacity = 1;
+                }, 400)
             }
         });
         
@@ -427,7 +421,7 @@ var eventController = (function (schedCtrl, UICtrl) {
         });
         
         DOMobjects.btnConfigBack.addEventListener('click', function () {
-            schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
+            schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes, activeDay);
             UICtrl.fadeOut(DOMobjects.configEventUI); 
             DOMobjects.endTimeConfigInput.setCustomValidity('');
             DOMobjects.startTimeConfigInput.setCustomValidity('');
@@ -454,38 +448,39 @@ var eventController = (function (schedCtrl, UICtrl) {
     addEvent = function (eventObj) {
         var eventDatabase;
         //1. Transfer data to schedule controller
-        schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes);
-        schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime);
+        schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes, activeDay);
+        schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay);
         //2. Transfer data to UI controller
         eventDatabase = schedCtrl.getEventDatabase();
-        UICtrl.updateHTMLDatabase(eventDatabase);
+        UICtrl.updateHTMLDatabase(eventDatabase, activeDay);
         //3. Update UI
-        UICtrl.displayEvents();
+        UICtrl.displayEvents(activeDay);
     };
     
     setupConfigureForm = function (index) {
         var eventDatabase;
         eventDatabase = schedCtrl.getEventDatabase();
-        selectedEvent = eventDatabase[daysOfWeek[0]][index];
+        selectedEvent = eventDatabase[activeDay][index];
         UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes);
 
-        schedCtrl.deleteFromEventDatabase(index);
-        schedCtrl.deleteTimeSlot(index);
+        schedCtrl.deleteFromEventDatabase(index, activeDay);
+        schedCtrl.deleteTimeSlot(index, activeDay);
     };
     
     deleteEvent = function (index) {
         var newEventDatabase;
         
-        schedCtrl.deleteFromEventDatabase(index);
+        schedCtrl.deleteFromEventDatabase(index, activeDay);
         
         newEventDatabase = schedCtrl.getEventDatabase();
-        UICtrl.updateHTMLDatabase(newEventDatabase);
-        UICtrl.displayEvents();   
+        UICtrl.updateHTMLDatabase(newEventDatabase, activeDay);
+        UICtrl.displayEvents(activeDay);   
     };
     
     return {
         init: function () {
             setupEventListeners();
+            activeDay = 'Mon';
 
             if (/*@cc_on!@*/false || !!document.documentMode) {
                 DOMobjects.startTimeInput.setAttribute("title", "Military time XX:XX");
