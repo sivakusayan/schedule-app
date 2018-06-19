@@ -301,6 +301,9 @@ button {
       cursor: pointer;
       transform: translateY(0.2rem);
       box-shadow: 0 0.2rem 0.2rem #939393; }
+    .newEventUI__submit input:focus,
+    .configEventUI__submit input:focus {
+      outline: none; }
 
 /*-----------------------------------------------------*/
 /* CLONE ROUTINE UI */
@@ -349,7 +352,7 @@ button {
     color: #00B3FF; }
   .cloneRoutineUI .hidden {
     display: none; }
-  .cloneRoutineUI__days {
+  .cloneRoutineUI__daysContainer {
     list-style: none;
     color: #4CCBFF;
     margin-bottom: 4rem;
@@ -359,7 +362,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center; }
-    .cloneRoutineUI__days button {
+    .cloneRoutineUI__daysContainer button {
       font-size: 2rem;
       display: inline-block;
       margin: 1.5rem;
@@ -379,10 +382,10 @@ button {
       border: none;
       transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
       opacity: 0.5; }
-      .cloneRoutineUI__days button:hover:not(.active) {
+      .cloneRoutineUI__daysContainer button:hover:not(.active) {
         opacity: 1;
         cursor: pointer; }
-      .cloneRoutineUI__days button:focus {
+      .cloneRoutineUI__daysContainer button:focus {
         outline: none; }
   .cloneRoutineUI__submit {
     text-align: center; }
@@ -402,6 +405,8 @@ button {
       cursor: pointer;
       transform: translateY(0.2rem);
       box-shadow: 0 0.2rem 0.2rem #939393; }
+    .cloneRoutineUI__submit input:focus {
+      outline: none; }
   .cloneRoutineUI .selected {
     opacity: 1;
     background-color: #00364c;
@@ -413,6 +418,9 @@ button {
 /* RESERT ROUTINE UI */
 /*-----------------------------------------------------*/
 .resetRoutineUI {
+  height: 25rem;
+  width: 40rem;
+  font-size: 2rem;
   background-color: #fff;
   z-index: 400;
   box-shadow: 0 0 5rem;
@@ -447,6 +455,32 @@ button {
       color: #007db3; }
     .resetRoutineUI__back:focus {
       outline: none; }
+  .resetRoutineUI__text {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #00B3FF; }
+  .resetRoutineUI__buttons {
+    text-align: center; }
+    .resetRoutineUI__buttons input {
+      box-shadow: 0 0.2rem 0.5rem #939393;
+      margin-top: 0rem;
+      border: none;
+      color: #fff;
+      background: #0091CC;
+      padding: 1rem 3rem;
+      text-transform: uppercase;
+      font-size: 2rem;
+      border-radius: 1rem;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+    .resetRoutineUI__buttons input:hover {
+      background-color: #005A7F;
+      cursor: pointer;
+      transform: translateY(0.2rem);
+      box-shadow: 0 0.2rem 0.2rem #939393; }
+    .resetRoutineUI__buttons input:focus {
+      outline: none; }
+    .resetRoutineUI__buttons input {
+      margin: 0 2rem; }
 
 /*-----------------------------------------------------*/
 /* ROUTINE DISPLAY */
@@ -454,7 +488,7 @@ button {
 .routineContainer {
   width: 45%;
   margin: 0 auto;
-  transition: opacity .4s;
+  transition: opacity 0.6s;
   opacity: 1; }
 
 .eventContainer {

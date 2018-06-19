@@ -96,6 +96,12 @@ $color-black: #000;
     position: relative; 
 }
 
+@mixin popUpUIText {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: $color-azure;
+}
+
 @mixin submitButton {
     text-align: center;
         
@@ -118,6 +124,10 @@ $color-black: #000;
         cursor: pointer;
         transform: translateY(.2rem);
         box-shadow: 0 .2rem .2rem $color-shadow;
+    }
+    
+    input:focus {
+        outline: none;
     }
 }
 
@@ -393,16 +403,15 @@ button {
     }
     
     &__text {
-        text-align: center;
-        margin-bottom: 3rem;
-        color: $color-azure;
+        
+        @include popUpUIText;
     }
     
     .hidden {
         display: none;
     }
     
-    &__days {
+    &__daysContainer {
         list-style: none; 
         color:  $color-malibuBlue;
         margin-bottom: 4rem;
@@ -443,6 +452,9 @@ button {
 /*-----------------------------------------------------*/
 
 .resetRoutineUI {
+    height: 25rem;
+    width: 40rem;
+    font-size: 2rem;
    
     @include popUpUI;
     @include center;
@@ -457,6 +469,18 @@ button {
         
         @include menuButton;
     }
+    
+    &__text {
+        @include popUpUIText;
+    }
+    
+    &__buttons {
+        @include submitButton;
+        
+        input {
+            margin: 0 2rem;
+        }
+    }
 
 }
 
@@ -467,7 +491,7 @@ button {
 .routineContainer {
     width: 45%;
     margin: 0 auto;
-    transition: opacity .4s;
+    transition: opacity 0.6s;
     opacity: 1;
 }
 

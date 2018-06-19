@@ -17,23 +17,23 @@ var scheduleController = (function () {
     };
     
     eventDatabase = {
-        Mon: [],
-        Tue: [],
-        Wed: [],
-        Thu: [],
-        Fri: [],
-        Sat: [],
-        Sun: []
+        MON: [],
+        TUE: [],
+        WED: [],
+        THU: [],
+        FRI: [],
+        SAT: [],
+        SUN: []
     };
     
     reservedTimeSlots = {
-        Mon: [],
-        Tue: [],
-        Wed: [],
-        Thu: [],
-        Fri: [],
-        Sat: [],
-        Sun: []
+        MON: [],
+        TUE: [],
+        WED: [],
+        THU: [],
+        FRI: [],
+        SAT: [],
+        SUN: []
     };
     
     return {
@@ -104,6 +104,11 @@ var scheduleController = (function () {
             eventDatabase[activeDay].splice(index, 1);
         },
         
+        resetActiveDay: function (activeDay) {
+            eventDatabase[activeDay] = [];
+            reservedTimeSlots[activeDay] = [];
+        },
+        
         recordTimeSlot: function (startTime, endTime, activeDay) {
             
             if (reservedTimeSlots[activeDay].length === 0) {
@@ -123,6 +128,18 @@ var scheduleController = (function () {
         
         deleteTimeSlot: function (index, activeDay) {
             reservedTimeSlots[activeDay].splice(index, 1);
+        },
+        
+        cloneToSelectedDays: function (activeDay, selectedDays) {
+            var activeDayRoutine, activeDayTimeSlots;
+            activeDayRoutine = eventDatabase[activeDay];
+            activeDayTimeSlots = reservedTimeSlots[activeDay];
+            
+            for (var i = 0; i < selectedDays.length; i++) {
+                eventDatabase[selectedDays[i]] = activeDayRoutine;
+                reservedTimeSlots[selectedDays[i]] = activeDayTimeSlots;
+            }
+
         },
         
         getEventDatabase: function () {
@@ -159,11 +176,16 @@ var UIController = (function () {
         btnClone: document.getElementById('btnClone'),
         btnCloneBack: document.getElementById('btnCloneBack'),
         cloneRoutineUI: document.querySelector('.cloneRoutineUI'),
-        cloneRoutineDays: document.querySelector('.cloneRoutineUI__days'),
+        cloneRoutineForm: document.getElementById('cloneRoutineForm'),
+        cloneRoutineDaysContainer: document.querySelector('.cloneRoutineUI__daysContainer'),
+        cloneRoutineDays: document.querySelectorAll('.cloneRoutineUI__day'),
+        cloneRoutineSelectedDays: document.querySelectorAll('.selected'),
         
         btnReset: document.getElementById('btnReset'),
         btnResetBack: document.getElementById('btnResetBack'),
         resetRoutineUI: document.querySelector('.resetRoutineUI'),
+        resetRoutineYes: document.querySelector('.resetRoutineUI__YES'),
+        resetRoutineNo: document.querySelector('.resetRoutineUI__NO'),
         
         btnConfigBack: document.getElementById('btnConfigBack'),
         configEventUI: document.querySelector('.configEventUI'),
@@ -178,13 +200,13 @@ var UIController = (function () {
     };
     
     eventHTMLDatabase = {
-        Mon: [],
-        Tue: [],
-        Wed: [],
-        Thu: [],
-        Fri: [],
-        Sat: [],
-        Sun: []
+        MON: [],
+        TUE: [],
+        WED: [],
+        THU: [],
+        FRI: [],
+        SAT: [],
+        SUN: []
     };
     
     dataToHTML = function (eventObj, index) {
@@ -306,8 +328,20 @@ var UIController = (function () {
             }
         },
         
-        resetCloneForm: function () {
+        getSelectedDays: function () {
+            var selectedDays = [];
             
+            Array.prototype.forEach.call(document.querySelectorAll('.selected'), function(current) {
+                selectedDays.push(current.textContent);
+            });
+            
+            return selectedDays;
+        },
+        
+        resetCloneForm: function () {
+            Array.prototype.forEach.call(document.querySelectorAll('.selected'), function(current) {
+                current.classList.remove('selected');  
+            });
         },
         
         displayEvents: function (activeDay) {
@@ -329,7 +363,7 @@ var UIController = (function () {
 var eventController = (function (schedCtrl, UICtrl) {
     'use strict';
     
-    var activeDay, setupEventListeners, addEvent, deleteEvent, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage;
+    var activeDay, setupEventListeners, updateUI, addEvent, deleteEvent, cloneRoutine, resetRoutine, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage;
     
     DOMobjects = UICtrl.getDOMobjects();
     
@@ -387,10 +421,10 @@ var eventController = (function (schedCtrl, UICtrl) {
             UICtrl.fadeIn(DOMobjects.resetRoutineUI);
         });
         DOMobjects.btnResetBack.addEventListener('click', function () {
-            
+            UICtrl.fadeOut(DOMobjects.resetRoutineUI);
         });
         
-        /*------------------------FORM VALIDATION------------------------------*/
+        /*------------------------FORM BUTTONS------------------------------*/
         
         DOMobjects.startTimeInput.addEventListener('input', function () {
             var timeInputs;
@@ -410,25 +444,61 @@ var eventController = (function (schedCtrl, UICtrl) {
             UICtrl.resetNewEventForm();
         });
         
+        DOMobjects.startTimeConfigInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+            setValidationMessage(timeInputs);
+        });
+        DOMobjects.endTimeConfigInput.addEventListener('input', function () {
+            var timeInputs;
+            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+            setValidationMessage(timeInputs);
+        });
+        DOMobjects.configEventForm.addEventListener('submit', function () {
+            var configuredEventObj;
+            configuredEventObj = UICtrl.getConfigData();
+            addEvent(configuredEventObj);
+            
+            UICtrl.fadeOut(DOMobjects.configEventUI);
+        });
+        
+        DOMobjects.cloneRoutineForm.addEventListener('submit', cloneRoutine);
+        
+        DOMobjects.resetRoutineYes.addEventListener('click', function () {
+            resetRoutine();
+            UICtrl.fadeOut(DOMobjects.resetRoutineUI);
+        });
+        
+        DOMobjects.resetRoutineNo.addEventListener('click', function () {
+            UICtrl.fadeOut(DOMobjects.resetRoutineUI);
+        });
+        
         /*-------------------------WEEK BUTTONS--------------------------------*/
         
         DOMobjects.week.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
+                //Update UI for current day and change clone routine choices
+                document.querySelector('.hidden').classList.remove('hidden');
+                
                 activeDay = event.target.textContent;
+                
+                Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, function (current) {
+                    if (current.textContent === activeDay) {
+                        current.classList.add('hidden');
+                    }
+                });
                 
                 document.querySelector('.activeDay').classList.remove('activeDay');
                 event.target.classList.add('activeDay');
-                
                 DOMobjects.routineContainer.style.opacity = 0;
                 setTimeout(function () {
-                    UICtrl.displayEvents(activeDay);
+                    updateUI();
                     DOMobjects.routineContainer.style.opacity = 1;
-                }, 400)
+                }, 600)
             }
         });
         
-        DOMobjects.cloneRoutineDays.addEventListener('click', function (event) {
-            console.log(event.target.tagName);
+        DOMobjects.cloneRoutineDaysContainer.addEventListener('click', function (event) {
             if (event.target.tagName === 'BUTTON') {
                 event.target.classList.toggle('selected');
             }
@@ -458,35 +528,43 @@ var eventController = (function (schedCtrl, UICtrl) {
             DOMobjects.endTimeConfigInput.setCustomValidity('');
             DOMobjects.startTimeConfigInput.setCustomValidity('');
         });
-        DOMobjects.startTimeConfigInput.addEventListener('input', function () {
-            var timeInputs;
-            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
-            setValidationMessage(timeInputs);
-        });
-        DOMobjects.endTimeConfigInput.addEventListener('input', function () {
-            var timeInputs;
-            timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
-            setValidationMessage(timeInputs);
-        });
-        DOMobjects.configEventForm.addEventListener('submit', function () {
-            var configuredEventObj;
-            configuredEventObj = UICtrl.getConfigData();
-            addEvent(configuredEventObj);
-            
-            UICtrl.fadeOut(DOMobjects.configEventUI);
-        });
     
     };
-    addEvent = function (eventObj) {
+    
+    updateUI = function () {
         var eventDatabase;
+        
+        eventDatabase = schedCtrl.getEventDatabase();
+        UICtrl.updateHTMLDatabase(eventDatabase, activeDay);
+        UICtrl.displayEvents(activeDay);
+    }
+    
+    addEvent = function (eventObj) {
         //1. Transfer data to schedule controller
         schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes, activeDay);
         schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay);
         //2. Transfer data to UI controller
-        eventDatabase = schedCtrl.getEventDatabase();
-        UICtrl.updateHTMLDatabase(eventDatabase, activeDay);
-        //3. Update UI
-        UICtrl.displayEvents(activeDay);
+        updateUI();
+    };
+    
+    deleteEvent = function (index) {
+        schedCtrl.deleteFromEventDatabase(index, activeDay);
+        updateUI();
+    };
+    
+    cloneRoutine = function () {
+        var selectedDays;
+            
+        selectedDays = UICtrl.getSelectedDays();
+        schedCtrl.cloneToSelectedDays(activeDay, selectedDays);
+        updateUI();
+        UICtrl.resetCloneForm();
+        UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
+    };
+    
+    resetRoutine = function () {
+        schedCtrl.resetActiveDay(activeDay);
+        updateUI();
     };
     
     setupConfigureForm = function (index) {
@@ -499,20 +577,10 @@ var eventController = (function (schedCtrl, UICtrl) {
         schedCtrl.deleteTimeSlot(index, activeDay);
     };
     
-    deleteEvent = function (index) {
-        var newEventDatabase;
-        
-        schedCtrl.deleteFromEventDatabase(index, activeDay);
-        
-        newEventDatabase = schedCtrl.getEventDatabase();
-        UICtrl.updateHTMLDatabase(newEventDatabase, activeDay);
-        UICtrl.displayEvents(activeDay);
-    };
-    
     return {
         init: function () {
             setupEventListeners();
-            activeDay = 'Mon';
+            activeDay = 'MON';
 
             if (/*@cc_on!@*/false || !!document.documentMode) {
                 DOMobjects.startTimeInput.setAttribute('title', 'Military time XX:XX');
