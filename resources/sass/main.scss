@@ -35,11 +35,37 @@ $color-black: #000;
     transition: opacity 0.3s;
 }
 
-@mixin daysFormat {
+@mixin dayFormat {
+    box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
     text-transform: uppercase;
     color: $color-malibuBlue;
     text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
     font-weight: 200;
+}
+
+@mixin dayButton {
+    background-color: $color-royalBlue;
+    font-family: inherit;
+    border: none;
+    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
+    opacity: 0.5;
+    
+     &:hover:not(.active) {
+        opacity: 1;
+        cursor: pointer;
+    }  
+
+    &:focus {
+        outline: none;
+    }
+}
+
+@mixin dayButtonActive {
+    opacity: 1;
+    background-color: darken($color-royalBlue, 10%);
+    -webkit-transform: translateY(.3rem);
+    transform: translateY(.3rem);
+    box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
 }
 
 @mixin menuButton {
@@ -58,6 +84,40 @@ $color-black: #000;
     
     &:focus {
         outline: none;
+    }
+}
+
+@mixin popUpUI {
+    background-color: $color-white;
+    z-index: 400;
+    box-shadow: 0 0 5rem;
+    border: 15px solid $color-royalBlue;
+    border-radius: 1rem;
+    position: relative; 
+}
+
+@mixin submitButton {
+    text-align: center;
+        
+    input {
+        box-shadow: 0 .2rem .5rem $color-shadow;
+        margin-top: 0rem;
+        border: none;
+        color: $color-white;
+        background: $color-olympicBlue;
+        padding: 1rem 3rem;
+        text-transform: uppercase;
+        font-size: 2rem;
+        border-radius: 1rem;
+
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+
+    input:hover {
+        background-color: $color-royalBlue;
+        cursor: pointer;
+        transform: translateY(.2rem);
+        box-shadow: 0 .2rem .2rem $color-shadow;
     }
 }
 
@@ -135,37 +195,18 @@ button {
     };
     
     &__day {
-        background-color: $color-royalBlue;
-        font-family: inherit;
         font-size: 2.5rem;
-        border: none;
         margin: 3rem 1rem; 
         padding: .3rem;
         width: 12rem;
-        opacity: 0.5;
-        -webkit-transition: opacity 0.3s, background-color 0.3s, border 0.3s, -webkit-transform .8s;
-        transition: opacity 0.3s, background-color 0.3s, border 0.3s, -webkit-transform .8s;
-        transition: opacity 0.3s, background-color 0.3s, border 0.3s, transform .8s;
-        transition: opacity 0.3s, background-color 0.3s, border 0.3s, transform .8s, -webkit-transform .8s;
-
-        &:hover:not(.active) {
-            opacity: 1;
-            cursor: pointer;
-        }  
-
-        &:focus {
-            outline: none;
-        }
         
-        @include daysFormat;
+        @include dayButton;
+        @include dayFormat;
     }
-}
-
-.activeDay {
-    opacity: 1;
-    background-color: darken($color-royalBlue, 10%);
-    -webkit-transform: translateY(15%);
-    transform: translateY(15%);
+    
+    .activeDay {
+        @include dayButtonActive;
+    }
 }
 
 /*-----------------------------------------------------*/
@@ -198,7 +239,7 @@ button {
         text-align: center;
         
         @include center;
-        @include daysFormat;
+        @include dayFormat;
     }
     
     &__buttonContainer {
@@ -232,136 +273,15 @@ button {
 }
 
 /*-----------------------------------------------------*/
-/* NEW EVENT UI */
+/* NEW EVENT/CONFIG EVENT UI */
 /*-----------------------------------------------------*/
 
-.newEventUI {
-    height: 63rem;
-    width: 50rem;
-    background-color: white;
-    z-index: 400;
-    box-shadow: 0 0 5rem;
-    border: 15px solid $color-royalBlue;
-    border-radius: 1rem;
-    position: relative; 
-    
-    @include center;
-    @include centerChildren;
-    @include hide;
-    
-    &__back {
-        position: absolute;
-        font-size: 3rem;
-        top: 3%;
-        right: 3%;
-        
-        @include menuButton;
-    }
-    
-    &__form {
-        width: 82%;
-        padding: 1rem;
-        flex-direction: column;
-    }
-    
-    &__name,
-    &__startTime,
-    &__endTime,
-    &__notes {
-        margin: 6rem 0;
-        
-        label {
-            display: inline-block;
-            color: $color-malibuBlue;
-            margin-right: 2rem;
-            width: 10rem;
-            font-size: 1.7rem;
-            text-align: center;
-            background-color: $color-royalBlue;
-            padding: 0.5rem;
-            font-weight: 200;
-            border-radius: 1rem;
-        }
-        
-        input {
-            border: none;
-            border-bottom: 1px solid $color-azure;
-            font-family: 'Nunito', sans-serif;
-            color: $color-olympicBlue;
-            font-size: 1.8rem;
-            
-        }
-        
-        input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0 30px lighten($color-azure, 45%) inset;
-        }
-        
-        textarea{
-            border: 1px solid $color-azure;
-            vertical-align: bottom;
-            font-family: 'Nunito', sans-serif;
-            color: $color-olympicBlue;
-            resize: none;
-            height: 12rem;
-            width: 20rem;
-            padding: 1rem;
-            font-size: 1.8rem;
-        }
-    
-        input:focus,
-        textarea:focus{
-            outline: none;
-            background-color: lighten($color-azure, 45%);
-        }
-    }
-    
-    &__name {
-        margin-top: 2rem;
-    }
-    
-    &__notes {
-        label {
-            vertical-align: top;
-        }
-    }
-    
-    &__submit {
-        text-align: center;
-        
-        input {
-           margin-top: 0rem;
-            border: none;
-            color: $color-white;
-            background: $color-olympicBlue;
-            padding: 1rem 3rem;
-            text-transform: uppercase;
-            font-size: 2rem;
-            
-            transition: background-color 0.3s;
-        }
-        
-        input:hover {
-            background-color: $color-royalBlue;
-            cursor: pointer;
-        }
-    }
- 
-}
-
-/*-----------------------------------------------------*/
-/* NEW EVENT UI */
-/*-----------------------------------------------------*/
-
+.newEventUI,
 .configEventUI {
     height: 63rem;
     width: 50rem;
-    background-color: white;
-    z-index: 400;
-    box-shadow: 0 0 5rem;
-    border: 15px solid $color-royalBlue;
-    border-radius: 1rem;
-    position: relative; 
-    
+ 
+    @include popUpUI;
     @include center;
     @include centerChildren;
     @include hide;
@@ -388,6 +308,7 @@ button {
         margin: 6rem 0;
         
         label {
+            box-shadow: 0 .1rem .1rem $color-black;
             display: inline-block;
             color: $color-malibuBlue;
             margin-right: 2rem;
@@ -443,24 +364,7 @@ button {
     }
     
     &__submit {
-        text-align: center;
-        
-        input {
-           margin-top: 0rem;
-            border: none;
-            color: $color-white;
-            background: $color-olympicBlue;
-            padding: 1rem 3rem;
-            text-transform: uppercase;
-            font-size: 2rem;
-            
-            transition: background-color 0.3s;
-        }
-        
-        input:hover {
-            background-color: $color-royalBlue;
-            cursor: pointer;
-        }
+        @include submitButton
     }
  
 }
@@ -470,10 +374,68 @@ button {
 /*-----------------------------------------------------*/
 
 .cloneRoutineUI {
-    display: none;
+    height: 42rem;
+    width: 60rem;
+    font-size: 2rem;
     
+    @include popUpUI;
     @include center;
+    @include centerChildren;
     @include hide;
+    
+    &__back {
+        position: absolute;
+        font-size: 3rem;
+        top: 3%;
+        right: 3%;
+        
+        @include menuButton;
+    }
+    
+    &__text {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: $color-azure;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    &__days {
+        list-style: none; 
+        color:  $color-malibuBlue;
+        margin-bottom: 4rem;
+        display: flex;
+        flex-wrap: wrap;
+        width: 50rem;
+        
+        @include centerChildren;
+        
+        button {
+            font-size: 2rem;
+            display: inline-block;
+            margin: 1.5rem;
+            padding: .5rem 4rem;
+            width: 10rem;
+            box-shadow: 0 .2rem .5rem $color-shadow;
+            
+            @include dayFormat;
+            @include centerChildren;
+            @include dayButton;
+            
+        }
+
+    }
+    
+    &__submit {
+        @include submitButton
+    }
+    
+    .selected {
+        @include dayButtonActive;   
+    }
+
 }
 
 /*-----------------------------------------------------*/
@@ -481,21 +443,21 @@ button {
 /*-----------------------------------------------------*/
 
 .resetRoutineUI {
-    display: none;
-    
+   
+    @include popUpUI;
     @include center;
+    @include centerChildren;
     @include hide;
-}
-
-/*-----------------------------------------------------*/
-/* STATISTICS UI */
-/*-----------------------------------------------------*/
-
-.statisticsUI {
-    display: none;
     
-    @include center;
-    @include hide;
+    &__back {
+        position: absolute;
+        font-size: 3rem;
+        top: 3%;
+        right: 3%;
+        
+        @include menuButton;
+    }
+
 }
 
 /*-----------------------------------------------------*/
@@ -563,6 +525,7 @@ button {
         -webkit-box-shadow: 0 0 1rem $color-shadow;
         box-shadow: 0 0 1rem $color-shadow;
         color: $color-malibuBlue;
+        
         @include center;
     }
     

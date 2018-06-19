@@ -61,12 +61,32 @@
             </form>
         </div>
         <div class="cloneRoutineUI">
-            <form id="cloneRoutineForm"></form>
+            <button id="btnCloneBack" class="cloneRoutineUI__back"><i class="far fa-times-circle"></i></button>
+            <form id="cloneRoutineForm" onsubmit="return false">
+                <div class="cloneRoutineUI__text"><p>Where should we clone this day's routine to?</p></div>
+                <ul class="cloneRoutineUI__days">
+                    <li class="hidden"><button>MON</button></li> 
+                    <li><button type="button">TUE</button></li>
+                    <li><button type="button" >WED</button></li>
+                    <li><button type="button">THU</button></li>
+                    <li><button type="button">FRI</button></li>
+                    <li><button type="button">SAT</button></li>
+                    <li><button type="button">SUN</button></li>
+                </ul>
+                <div class="cloneRoutineUI__submit">
+                    <input type="submit" value="Clone Routine">
+                </div>
+            </form>
         </div>
         <div class="resetRoutineUI">
-        </div>
-        <div class="statsUI">
-            
+            <button id="btnResetBack" class="resetRoutineUI__back"><i class="far fa-times-circle"></i></button>
+            <form id="resetRoutineForm">
+                <div class="resetRoutineUI__text"><p>Are you sure?</p></div>
+                <div class="resetRoutineUI__buttons">
+                    <button class="resetRoutineUI__YES" value="YES"></button>
+                    <button class="resetRoutineUI__NO" value="NO"></button>
+                </div>
+            </form>
         </div>
         <div class="weekContainer">
             <ul class="week">
@@ -95,10 +115,6 @@
                 <button id="btnReset" class="menu__button">
                     <i class="fas fa-undo-alt"></i>
                     <span>Reset Routine</span>
-                </button>
-                <button id="btnStats" class="menu__button">
-                    <i class="fas fa-signal"></i>
-                    <span>Statistics</span>
                 </button>
             </div>
         </nav>

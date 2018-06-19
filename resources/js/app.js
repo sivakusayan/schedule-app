@@ -52,16 +52,16 @@ var scheduleController = (function () {
             //Type 0 if startTime, Type 1 if endTime
             if (type === 0) {
                 for (var i = 0; i < timeSlots.length; i++) {
-                    if (time >= timeSlots[i][0] && time < timeSlots[i][1]) {
-                        return false;    
-                    } 
-                }   
+                    if (timeSlots[i][0] <= time && time < timeSlots[i][1]) {
+                        return false;
+                    }
+                }
             } else if (type === 1) {
                 for (var i = 0; i < timeSlots.length; i++) {
-                    if (time > timeSlots[i][0] && time <= timeSlots[i][1]) {
-                        return false;    
-                    } 
-                }  
+                    if (timeSlots[i][0] < time && time <= timeSlots[i][1]) {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -74,9 +74,9 @@ var scheduleController = (function () {
             //Index 0 is startTime, Index 1 is endTime
             for (var i = 0; i < timeSlots.length; i++) {
                     if (timeInputs[0].value <= timeSlots[i][0] && timeSlots[i][1] <= timeInputs[1].value) {
-                        return false;    
-                    } 
-                }  
+                        return false;
+                    }
+                }
             
             return true;
         },
@@ -96,7 +96,7 @@ var scheduleController = (function () {
                         indexToInsert += 1;
                     }
                 }
-                eventDatabase[activeDay].splice(indexToInsert, 0, eventObj);   
+                eventDatabase[activeDay].splice(indexToInsert, 0, eventObj);
             }
         },
         
@@ -117,7 +117,7 @@ var scheduleController = (function () {
                         indexToInsert += 1;
                     }
                 }
-                reservedTimeSlots[activeDay].splice(indexToInsert, 0, [startTime, endTime]);   
+                reservedTimeSlots[activeDay].splice(indexToInsert, 0, [startTime, endTime]);
             }
         },
         
@@ -140,6 +140,52 @@ var UIController = (function () {
     'use strict';
     
     var DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, darkenScreen, lightenScreen, toStandardTime;
+
+    DOMobjects = {
+        week: document.querySelector('.week'),
+        
+        overlay: document.getElementById('overlay'),
+        
+        btnNew: document.getElementById('btnNew'),
+        btnNewBack: document.getElementById('btnNewBack'),
+        newEventUI: document.querySelector('.newEventUI'),
+        newEventForm: document.getElementById('newEventForm'),
+        nameInput: document.getElementById('nameInput'),
+        startTimeInput: document.getElementById('startTimeInput'),
+        endTimeInput: document.getElementById('endTimeInput'),
+        notesInput: document.getElementById('notesInput'),
+        newEventSubmit: document.querySelector('.newEventUI__submit'),
+        
+        btnClone: document.getElementById('btnClone'),
+        btnCloneBack: document.getElementById('btnCloneBack'),
+        cloneRoutineUI: document.querySelector('.cloneRoutineUI'),
+        cloneRoutineDays: document.querySelector('.cloneRoutineUI__days'),
+        
+        btnReset: document.getElementById('btnReset'),
+        btnResetBack: document.getElementById('btnResetBack'),
+        resetRoutineUI: document.querySelector('.resetRoutineUI'),
+        
+        btnConfigBack: document.getElementById('btnConfigBack'),
+        configEventUI: document.querySelector('.configEventUI'),
+        configEventForm: document.getElementById('configEventForm'),
+        nameConfigInput: document.getElementById('nameConfigInput'),
+        startTimeConfigInput: document.getElementById('startTimeConfigInput'),
+        endTimeConfigInput: document.getElementById('endTimeConfigInput'),
+        notesConfigInput: document.getElementById('notesConfigInput'),
+        configEventSubmit: document.querySelector('.configEventUI__submit'),
+        
+        routineContainer: document.querySelector('.routineContainer')
+    };
+    
+    eventHTMLDatabase = {
+        Mon: [],
+        Tue: [],
+        Wed: [],
+        Thu: [],
+        Fri: [],
+        Sat: [],
+        Sun: []
+    };
     
     dataToHTML = function (eventObj, index) {
         var HTML, newHTML;
@@ -162,45 +208,6 @@ var UIController = (function () {
         }
         
         return newHTML;
-    };
-
-    DOMobjects = {
-        week: document.querySelector('.week'),
-        
-        overlay: document.getElementById('overlay'),
-        
-        btnNew: document.getElementById('btnNew'),
-        btnNewBack: document.getElementById('btnNewBack'),
-        newEventUI: document.querySelector('.newEventUI'),
-        newEventForm: document.getElementById('newEventForm'),
-        nameInput: document.getElementById('nameInput'),
-        startTimeInput: document.getElementById('startTimeInput'),
-        endTimeInput: document.getElementById('endTimeInput'),
-        notesInput: document.getElementById('notesInput'),
-        newEventSubmit: document.querySelector('.newEventUI__submit'),
-        
-        btnReset: document.getElementById('btnReset'),
-        
-        btnConfigBack: document.getElementById('btnConfigBack'),
-        configEventUI: document.querySelector('.configEventUI'),
-        configEventForm: document.getElementById('configEventForm'),
-        nameConfigInput: document.getElementById('nameConfigInput'),
-        startTimeConfigInput: document.getElementById('startTimeConfigInput'),
-        endTimeConfigInput: document.getElementById('endTimeConfigInput'),
-        notesConfigInput: document.getElementById('notesConfigInput'),
-        configEventSubmit: document.querySelector('.configEventUI__submit'),
-        
-        routineContainer: document.querySelector('.routineContainer')
-    };
-    
-    eventHTMLDatabase = {
-        Mon: [],
-        Tue: [],
-        Wed: [],
-        Thu: [],
-        Fri: [],
-        Sat: [],
-        Sun: []
     };
     
     resetEventHTMLDatabase = function (activeDay) {
@@ -285,7 +292,7 @@ var UIController = (function () {
             }
         },
 
-        resetNewEventForm: function () { 
+        resetNewEventForm: function () {
             DOMobjects.startTimeInput.setCustomValidity('');
             DOMobjects.endTimeInput.setCustomValidity('');
             DOMobjects.newEventForm.reset();
@@ -297,6 +304,10 @@ var UIController = (function () {
                 var eventHTML = dataToHTML(eventDatabase[activeDay][i], i);
                 eventHTMLDatabase[activeDay].push(eventHTML);
             }
+        },
+        
+        resetCloneForm: function () {
+            
         },
         
         displayEvents: function (activeDay) {
@@ -328,13 +339,13 @@ var eventController = (function (schedCtrl, UICtrl) {
 
         for (var i = 0; i < 2; i++) {
             if (!schedCtrl.validateTimeFormat(timeInputs)) {
-                timeInputs[1].setCustomValidity('End time should be after the Start time.'); 
+                timeInputs[1].setCustomValidity('End time should be after the Start time.');
                 validityCheck[1] = 0;
             } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
                 timeInputs[i].setCustomValidity('You can\'t have overlapping event times.');
                 validityCheck[i] = 0;
             } else if (!schedCtrl.validateNoSubEvents(timeInputs, activeDay)) {
-                timeInputs[1].setCustomValidity('You can\'t have overlapping event times.'); 
+                timeInputs[1].setCustomValidity('You can\'t have overlapping event times.');
                 validityCheck[1] = 0;
             }
         }
@@ -364,7 +375,21 @@ var eventController = (function (schedCtrl, UICtrl) {
             }, 300);
         });
         
-        DOMobjects
+        DOMobjects.btnClone.addEventListener('click', function () {
+            UICtrl.fadeIn(DOMobjects.cloneRoutineUI);
+        });
+        DOMobjects.btnCloneBack.addEventListener('click', function () {
+            UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
+            UICtrl.resetCloneForm();
+        });
+        
+        DOMobjects.btnReset.addEventListener('click', function () {
+            UICtrl.fadeIn(DOMobjects.resetRoutineUI);
+        });
+        DOMobjects.btnResetBack.addEventListener('click', function () {
+            
+        });
+        
         /*------------------------FORM VALIDATION------------------------------*/
         
         DOMobjects.startTimeInput.addEventListener('input', function () {
@@ -380,7 +405,7 @@ var eventController = (function (schedCtrl, UICtrl) {
         DOMobjects.newEventForm.addEventListener('submit', function () {
             var eventObj;
             eventObj = UICtrl.getInputData();
-            addEvent(eventObj); 
+            addEvent(eventObj);
             UICtrl.fadeOut(DOMobjects.newEventUI);
             UICtrl.resetNewEventForm();
         });
@@ -402,14 +427,21 @@ var eventController = (function (schedCtrl, UICtrl) {
             }
         });
         
+        DOMobjects.cloneRoutineDays.addEventListener('click', function (event) {
+            console.log(event.target.tagName);
+            if (event.target.tagName === 'BUTTON') {
+                event.target.classList.toggle('selected');
+            }
+        });
+        
         /*-------------------------EVENT BUTTONS--------------------------------*/
         
         DOMobjects.routineContainer.addEventListener('click', function (event) {
             
             if (event.target.tagName === 'I') {
                 var buttonType;
-                buttonType = event.target.getAttribute('id').split('_')[0]; 
-                selectedEventIndex = event.target.getAttribute('id').split('_')[1]; 
+                buttonType = event.target.getAttribute('id').split('_')[0];
+                selectedEventIndex = event.target.getAttribute('id').split('_')[1];
                 
                 if (buttonType === 'config') {
                     setupConfigureForm(selectedEventIndex);
@@ -422,7 +454,7 @@ var eventController = (function (schedCtrl, UICtrl) {
         
         DOMobjects.btnConfigBack.addEventListener('click', function () {
             schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes, activeDay);
-            UICtrl.fadeOut(DOMobjects.configEventUI); 
+            UICtrl.fadeOut(DOMobjects.configEventUI);
             DOMobjects.endTimeConfigInput.setCustomValidity('');
             DOMobjects.startTimeConfigInput.setCustomValidity('');
         });
@@ -474,7 +506,7 @@ var eventController = (function (schedCtrl, UICtrl) {
         
         newEventDatabase = schedCtrl.getEventDatabase();
         UICtrl.updateHTMLDatabase(newEventDatabase, activeDay);
-        UICtrl.displayEvents(activeDay);   
+        UICtrl.displayEvents(activeDay);
     };
     
     return {
@@ -483,8 +515,8 @@ var eventController = (function (schedCtrl, UICtrl) {
             activeDay = 'Mon';
 
             if (/*@cc_on!@*/false || !!document.documentMode) {
-                DOMobjects.startTimeInput.setAttribute("title", "Military time XX:XX");
-                DOMobjects.endTimeInput.setAttribute("title", "Military time XX:XX");
+                DOMobjects.startTimeInput.setAttribute('title', 'Military time XX:XX');
+                DOMobjects.endTimeInput.setAttribute('title', 'Military time XX:XX');
             }
 
         }
