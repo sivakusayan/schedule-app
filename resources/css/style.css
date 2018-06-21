@@ -1,4 +1,54 @@
 /*-----------------------------------------------------*/
+/* RESET */
+/*-----------------------------------------------------*/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*-----------------------------------------------------*/
 /* COLORS */
 /*-----------------------------------------------------*/
 /*-----------------------------------------------------*/
@@ -59,8 +109,14 @@ button {
   z-index: 200; }
 
 .week {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center; }
   .week li {
     list-style: none; }
@@ -72,8 +128,12 @@ button {
     background-color: #005A7F;
     font-family: inherit;
     border: none;
+    -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
+    transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
+    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
     opacity: 0.5;
+    -webkit-box-shadow: 0 0.2rem 0.4rem #333333;
     box-shadow: 0 0.2rem 0.4rem #333333;
     text-transform: uppercase;
     color: #4CCBFF;
@@ -89,6 +149,7 @@ button {
     background-color: #00364c;
     -webkit-transform: translateY(0.3rem);
     transform: translateY(0.3rem);
+    -webkit-box-shadow: 0 0.1rem 0.2rem #333333;
     box-shadow: 0 0.1rem 0.2rem #333333; }
 
 /*-----------------------------------------------------*/
@@ -96,12 +157,17 @@ button {
 /*-----------------------------------------------------*/
 .menu {
   height: 20rem;
+  -webkit-box-shadow: 0 0.3rem 2rem #606060;
   box-shadow: 0 0.3rem 2rem #606060;
   top: 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   background-color: #fff;
   margin-bottom: 5rem;
   z-index: 100;
+  position: -webkit-sticky;
   position: sticky;
   top: 0; }
   .menu__mobile {
@@ -119,6 +185,7 @@ button {
     right: 50%;
     -webkit-transform: translate(50%, 50%);
     transform: translate(50%, 50%);
+    -webkit-box-shadow: 0 0.2rem 0.4rem #333333;
     box-shadow: 0 0.2rem 0.4rem #333333;
     text-transform: uppercase;
     color: #4CCBFF;
@@ -127,9 +194,17 @@ button {
   .menu__buttonContainer {
     width: 100%;
     height: 10rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -webkit-box-pack: none;
+    -ms-flex-pack: none;
     justify-content: none; }
   .menu__button {
     height: 5rem;
@@ -141,8 +216,14 @@ button {
     transition: opacity 0.3s;
     background: none;
     border: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center; }
     .menu__button i {
       font-size: 3.5rem;
@@ -167,6 +248,7 @@ button {
   width: 50rem;
   background-color: #fff;
   z-index: 400;
+  -webkit-box-shadow: 0 0 5rem;
   box-shadow: 0 0 5rem;
   border: 15px solid #005A7F;
   border-radius: 1rem;
@@ -176,11 +258,19 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-transform: translateX(-300%);
   transform: translateX(-300%);
   opacity: 0;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
   .newEventUI__back,
   .configEventUI__back {
@@ -206,6 +296,9 @@ button {
   .configEventUI__form {
     width: 82%;
     padding: 1rem;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column; }
   .newEventUI__name, .newEventUI__startTime, .newEventUI__endTime, .newEventUI__notes,
   .configEventUI__name,
@@ -218,6 +311,7 @@ button {
     .configEventUI__startTime label,
     .configEventUI__endTime label,
     .configEventUI__notes label {
+      -webkit-box-shadow: 0 0.1rem 0.1rem #000;
       box-shadow: 0 0.1rem 0.1rem #000;
       display: inline-block;
       color: #4CCBFF;
@@ -285,6 +379,7 @@ button {
     text-align: center; }
     .newEventUI__submit input,
     .configEventUI__submit input {
+      -webkit-box-shadow: 0 0.2rem 0.5rem #939393;
       box-shadow: 0 0.2rem 0.5rem #939393;
       margin-top: 0rem;
       border: none;
@@ -294,12 +389,17 @@ button {
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
     .newEventUI__submit input:hover,
     .configEventUI__submit input:hover {
       background-color: #005A7F;
       cursor: pointer;
+      -webkit-transform: translateY(0.2rem);
       transform: translateY(0.2rem);
+      -webkit-box-shadow: 0 0.2rem 0.2rem #939393;
       box-shadow: 0 0.2rem 0.2rem #939393; }
     .newEventUI__submit input:focus,
     .configEventUI__submit input:focus {
@@ -314,6 +414,7 @@ button {
   font-size: 2rem;
   background-color: #fff;
   z-index: 400;
+  -webkit-box-shadow: 0 0 5rem;
   box-shadow: 0 0 5rem;
   border: 15px solid #005A7F;
   border-radius: 1rem;
@@ -323,11 +424,19 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-transform: translateX(-300%);
   transform: translateX(-300%);
   opacity: 0;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
   .cloneRoutineUI__back {
     position: absolute;
@@ -356,11 +465,20 @@ button {
     list-style: none;
     color: #4CCBFF;
     margin-bottom: 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     width: 50rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center; }
     .cloneRoutineUI__daysContainer button {
       font-size: 2rem;
@@ -368,19 +486,30 @@ button {
       margin: 1.5rem;
       padding: .5rem 4rem;
       width: 10rem;
+      -webkit-box-shadow: 0 0.2rem 0.5rem #939393;
       box-shadow: 0 0.2rem 0.5rem #939393;
+      -webkit-box-shadow: 0 0.2rem 0.4rem #333333;
       box-shadow: 0 0.2rem 0.4rem #333333;
       text-transform: uppercase;
       color: #4CCBFF;
       text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
       font-weight: 200;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
       justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
       align-items: center;
       background-color: #005A7F;
       font-family: inherit;
       border: none;
+      -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
+      transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
       transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
+      transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
       opacity: 0.5; }
       .cloneRoutineUI__daysContainer button:hover:not(.active) {
         opacity: 1;
@@ -390,6 +519,7 @@ button {
   .cloneRoutineUI__submit {
     text-align: center; }
     .cloneRoutineUI__submit input {
+      -webkit-box-shadow: 0 0.2rem 0.5rem #939393;
       box-shadow: 0 0.2rem 0.5rem #939393;
       margin-top: 0rem;
       border: none;
@@ -399,11 +529,16 @@ button {
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
     .cloneRoutineUI__submit input:hover {
       background-color: #005A7F;
       cursor: pointer;
+      -webkit-transform: translateY(0.2rem);
       transform: translateY(0.2rem);
+      -webkit-box-shadow: 0 0.2rem 0.2rem #939393;
       box-shadow: 0 0.2rem 0.2rem #939393; }
     .cloneRoutineUI__submit input:focus {
       outline: none; }
@@ -412,6 +547,7 @@ button {
     background-color: #00364c;
     -webkit-transform: translateY(0.3rem);
     transform: translateY(0.3rem);
+    -webkit-box-shadow: 0 0.1rem 0.2rem #333333;
     box-shadow: 0 0.1rem 0.2rem #333333; }
 
 /*-----------------------------------------------------*/
@@ -423,6 +559,7 @@ button {
   font-size: 2rem;
   background-color: #fff;
   z-index: 400;
+  -webkit-box-shadow: 0 0 5rem;
   box-shadow: 0 0 5rem;
   border: 15px solid #005A7F;
   border-radius: 1rem;
@@ -432,11 +569,19 @@ button {
   right: 50%;
   -webkit-transform: translate(50%, 50%);
   transform: translate(50%, 50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-transform: translateX(-300%);
   transform: translateX(-300%);
   opacity: 0;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
   .resetRoutineUI__back {
     position: absolute;
@@ -462,6 +607,7 @@ button {
   .resetRoutineUI__buttons {
     text-align: center; }
     .resetRoutineUI__buttons input {
+      -webkit-box-shadow: 0 0.2rem 0.5rem #939393;
       box-shadow: 0 0.2rem 0.5rem #939393;
       margin-top: 0rem;
       border: none;
@@ -471,11 +617,16 @@ button {
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; }
+      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
     .resetRoutineUI__buttons input:hover {
       background-color: #005A7F;
       cursor: pointer;
+      -webkit-transform: translateY(0.2rem);
       transform: translateY(0.2rem);
+      -webkit-box-shadow: 0 0.2rem 0.2rem #939393;
       box-shadow: 0 0.2rem 0.2rem #939393; }
     .resetRoutineUI__buttons input:focus {
       outline: none; }
@@ -488,6 +639,7 @@ button {
 .routineContainer {
   width: 45%;
   margin: 0 auto;
+  -webkit-transition: opacity 0.6s;
   transition: opacity 0.6s;
   opacity: 1; }
 
@@ -503,11 +655,23 @@ button {
 .event {
   height: 15rem;
   margin: 3rem 0;
+  -webkit-box-shadow: 0 0.3rem 1rem #939393;
   box-shadow: 0 0.3rem 1rem #939393;
+  -webkit-transition: -webkit-box-shadow 0.3s;
+  transition: -webkit-box-shadow 0.3s;
   transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
   align-items: stretch; }
   .event > div {
     position: relative; }

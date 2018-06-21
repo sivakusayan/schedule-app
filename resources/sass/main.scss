@@ -1,4 +1,57 @@
 /*-----------------------------------------------------*/
+/* RESET */
+/*-----------------------------------------------------*/
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/*-----------------------------------------------------*/
 /* COLORS */
 /*-----------------------------------------------------*/
 
@@ -24,19 +77,28 @@ $color-black: #000;
 }
 
 @mixin centerChildren {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 
 @mixin hide {
-    transform: translateX(-300%);
+    -webkit-transform: translateX(-300%);
+            transform: translateX(-300%);
     opacity: 0;
+    -webkit-transition: opacity 0.3s;
     transition: opacity 0.3s;
 }
 
 @mixin dayFormat {
-    box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
+    -webkit-box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
+            box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
     text-transform: uppercase;
     color: $color-malibuBlue;
     text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
@@ -47,7 +109,10 @@ $color-black: #000;
     background-color: $color-royalBlue;
     font-family: inherit;
     border: none;
+    -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
+    transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
+    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
     opacity: 0.5;
     
      &:hover:not(.active) {
@@ -65,7 +130,8 @@ $color-black: #000;
     background-color: darken($color-royalBlue, 10%);
     -webkit-transform: translateY(.3rem);
     transform: translateY(.3rem);
-    box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
+    -webkit-box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
+            box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
 }
 
 @mixin menuButton {
@@ -90,7 +156,8 @@ $color-black: #000;
 @mixin popUpUI {
     background-color: $color-white;
     z-index: 400;
-    box-shadow: 0 0 5rem;
+    -webkit-box-shadow: 0 0 5rem;
+            box-shadow: 0 0 5rem;
     border: 15px solid $color-royalBlue;
     border-radius: 1rem;
     position: relative; 
@@ -106,7 +173,8 @@ $color-black: #000;
     text-align: center;
         
     input {
-        box-shadow: 0 .2rem .5rem $color-shadow;
+        -webkit-box-shadow: 0 .2rem .5rem $color-shadow;
+                box-shadow: 0 .2rem .5rem $color-shadow;
         margin-top: 0rem;
         border: none;
         color: $color-white;
@@ -116,14 +184,22 @@ $color-black: #000;
         font-size: 2rem;
         border-radius: 1rem;
 
+        -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+
+        transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+
         transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+
+        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
     }
 
     input:hover {
         background-color: $color-royalBlue;
         cursor: pointer;
-        transform: translateY(.2rem);
-        box-shadow: 0 .2rem .2rem $color-shadow;
+        -webkit-transform: translateY(.2rem);
+                transform: translateY(.2rem);
+        -webkit-box-shadow: 0 .2rem .2rem $color-shadow;
+                box-shadow: 0 .2rem .2rem $color-shadow;
     }
     
     input:focus {
@@ -226,12 +302,17 @@ button {
 
 .menu {
     height: 20rem;
-    box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
+    -webkit-box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
+            box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
     top: 0;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     background-color: $color-white;
     margin-bottom: 5rem;
     z-index: 100;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     
@@ -257,7 +338,9 @@ button {
         height: 10rem;
         
         @include centerChildren;
-        justify-content: none;
+        -webkit-box-pack: none;
+            -ms-flex-pack: none;
+                justify-content: none;
     }
     
     &__button {
@@ -308,7 +391,10 @@ button {
     &__form {
         width: 82%;
         padding: 1rem;
-        flex-direction: column;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
     }
     
     &__name,
@@ -318,7 +404,8 @@ button {
         margin: 6rem 0;
         
         label {
-            box-shadow: 0 .1rem .1rem $color-black;
+            -webkit-box-shadow: 0 .1rem .1rem $color-black;
+                    box-shadow: 0 .1rem .1rem $color-black;
             display: inline-block;
             color: $color-malibuBlue;
             margin-right: 2rem;
@@ -415,8 +502,11 @@ button {
         list-style: none; 
         color:  $color-malibuBlue;
         margin-bottom: 4rem;
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
         width: 50rem;
         
         @include centerChildren;
@@ -427,7 +517,8 @@ button {
             margin: 1.5rem;
             padding: .5rem 4rem;
             width: 10rem;
-            box-shadow: 0 .2rem .5rem $color-shadow;
+            -webkit-box-shadow: 0 .2rem .5rem $color-shadow;
+                    box-shadow: 0 .2rem .5rem $color-shadow;
             
             @include dayFormat;
             @include centerChildren;
@@ -491,6 +582,7 @@ button {
 .routineContainer {
     width: 45%;
     margin: 0 auto;
+    -webkit-transition: opacity 0.6s;
     transition: opacity 0.6s;
     opacity: 1;
 }
@@ -510,11 +602,17 @@ button {
 .event {
     height: 15rem;
     margin: 3rem 0;
-    box-shadow: 0 .3rem 1rem $color-shadow;
+    -webkit-box-shadow: 0 .3rem 1rem $color-shadow;
+            box-shadow: 0 .3rem 1rem $color-shadow;
+    -webkit-transition: -webkit-box-shadow 0.3s;
+    transition: -webkit-box-shadow 0.3s;
     transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
 
     @include centerChildren;
-    align-items: stretch;
+    -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+            align-items: stretch;
 
     > div {
         position: relative;
