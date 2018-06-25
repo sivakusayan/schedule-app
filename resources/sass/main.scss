@@ -220,7 +220,7 @@ $color-black: #000;
 
 
 html {
-    font-size: 60%;
+    font-size: 50%;
     font-weight: 400;
     background-color: $color-white;
 }
@@ -233,37 +233,12 @@ button {
     -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 }
 
-#overlay {
-    background-color: $color-black;
-    height: 100vh;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
-}
-
-.overlayON {
-    opacity: 0.6;
-    z-index: 300;
-}
-
-.overlayFADE { /*Temp state to keep overlay on top while fading*/
-    opacity: 0;
-    z-index: 300;
-}
-
-.overlayOFF {
-    opacity: 0;
-    z-index: -1;
-}
-
 /*-----------------------------------------------------*/
 /* DAYS LIST */
 /*-----------------------------------------------------*/
 
-/* Separated from Menu class to ease switching to mobile layout */
+// Lays on top of STICKY MENU's CURRENT DAY DISPLAY 
+// Separated from Menu class to ease switching to mobile layout
 
 .weekContainer {
     background-color: $color-olympicBlue;
@@ -315,6 +290,9 @@ button {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
+
+    //-------------------------------------------------------CURRENT DAY DISPLAY
+    // Only appears on mobile
     
     &__mobile {
         position: relative;
@@ -332,6 +310,8 @@ button {
         @include center;
         @include dayFormat;
     }
+
+    //-------------------------------------------------------BUTTONS
     
     &__buttonContainer {
         width: 100%;
@@ -363,6 +343,36 @@ button {
         @include centerChildren;
         
     }
+}
+
+/*-----------------------------------------------------*/
+/* DARKEN BACKGROUND OVERLAY */
+/*-----------------------------------------------------*/
+
+#overlay {
+    background-color: rgba($color-black, 0.6);
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.overlayON {
+    opacity: 1;
+    z-index: 300;
+}
+
+.overlayFADE { /*Temp state to keep overlay on top while fading*/
+    opacity: 0;
+    z-index: 300;
+}
+
+.overlayOFF {
+    opacity: 0;
+    z-index: -1;
 }
 
 /*-----------------------------------------------------*/
@@ -461,7 +471,7 @@ button {
     }
     
     &__submit {
-        @include submitButton
+        @include submitButton;
     }
  
 }
@@ -529,7 +539,7 @@ button {
     }
     
     &__submit {
-        @include submitButton
+        @include submitButton;
     }
     
     .selected {
@@ -539,7 +549,7 @@ button {
 }
 
 /*-----------------------------------------------------*/
-/* RESERT ROUTINE UI */
+/* RESET ROUTINE UI */
 /*-----------------------------------------------------*/
 
 .resetRoutineUI {
@@ -617,6 +627,8 @@ button {
     > div {
         position: relative;
     }
+
+    //-------------------------------------------------------NOTES SECTION
      
     &__notes {
         height: 100%;
@@ -630,10 +642,8 @@ button {
             @include center;
         }
     }
-    
-    .hasNote {
-        border-right: .3rem dotted $color-azure;
-    }
+
+    //-------------------------------------------------------NAME SECTION
 
     &__name p{
         text-transform: uppercase;
@@ -647,9 +657,12 @@ button {
         -webkit-box-shadow: 0 0 1rem $color-shadow;
         box-shadow: 0 0 1rem $color-shadow;
         color: $color-malibuBlue;
+        word-wrap: break-word;
         
         @include center;
     }
+
+    //-------------------------------------------------------TIME SECTION
     
     &__time {
         position: relative;
@@ -676,6 +689,8 @@ button {
         bottom: 0;
         color: $color-royalBlue;
     }
+
+    //-------------------------------------------------------BUTTON SECTION
     
     &__config,
     &__delete {
@@ -733,6 +748,8 @@ button {
         left: 25%;
     }
 }
+
+//-------------------------------------------------------NOTES MODIFIER
 
 .hasNote {
     width: 100%;
