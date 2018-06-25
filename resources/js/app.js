@@ -226,7 +226,7 @@ var UIController = (function () {
             newHTML = newHTML.replace('%notes%', eventObj.notes);
         } else {
             newHTML = newHTML.replace('%noteDetect%', 'noNote');
-            newHTML = newHTML.replace('<div><div class="event__notes"><p>%notes%</p></div></div>', '');
+            newHTML = newHTML.replace('%notes%', '');
         }
         
         return newHTML;
@@ -582,11 +582,13 @@ var eventController = (function (schedCtrl, UICtrl) {
             setupEventListeners();
             activeDay = 'MON';
             
+            /*
             addEvent({name:'Breakfast', startTime: '07:00', endTime: '07:30', notes: ''});
             addEvent({name:'Workout', startTime: '08:15', endTime: '09:00', notes: '4 sets, 15 reps of each: Glute Bridge, Step Up, Squat, Leg Curl'});
             addEvent({name:'Algorithms Practice', startTime: '09:00', endTime: '11:30', notes: 'Focus on calculating time complexity'});
             addEvent({name:'Lunch', startTime: '11:30', endTime: '12:30', notes: ''});
             addEvent({name:'Calligraphy Club', startTime: '14:00', endTime: '15:30', notes: 'Workshop on flourishing'});
+            */
 
             if (/*@cc_on!@*/false || !!document.documentMode) {
                 DOMobjects.startTimeInput.setAttribute('title', 'Military time XX:XX');

@@ -64,7 +64,7 @@ table {
   box-sizing: border-box; }
 
 html {
-  font-size: 50%;
+  font-size: 55%;
   font-weight: 400;
   background-color: #fff; }
 
@@ -104,6 +104,7 @@ button {
     background-color: #005A7F;
     font-family: inherit;
     border: none;
+    border-radius: 1rem;
     -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
@@ -354,7 +355,8 @@ button {
       height: 12rem;
       width: 20rem;
       padding: 1rem;
-      font-size: 1.8rem; }
+      font-size: 1.8rem;
+      border-radius: 1rem; }
     .newEventUI__name input:focus,
     .newEventUI__name textarea:focus, .newEventUI__startTime input:focus,
     .newEventUI__startTime textarea:focus, .newEventUI__endTime input:focus,
@@ -508,6 +510,7 @@ button {
       background-color: #005A7F;
       font-family: inherit;
       border: none;
+      border-radius: 1rem;
       -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
       transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
       transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
@@ -639,7 +642,7 @@ button {
 /* ROUTINE DISPLAY */
 /*-----------------------------------------------------*/
 .routineContainer {
-  width: 45%;
+  width: 40%;
   margin: 0 auto;
   -webkit-transition: opacity 0.6s;
   transition: opacity 0.6s;
@@ -661,6 +664,7 @@ button {
   box-shadow: 0 0.3rem 1rem #939393;
   -webkit-transition: -webkit-box-shadow 0.3s;
   transition: -webkit-box-shadow 0.3s;
+  border-radius: 1rem;
   transition: box-shadow 0.3s;
   transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
   display: -webkit-box;
@@ -678,7 +682,8 @@ button {
   .event > div {
     position: relative; }
   .event__notes {
-    height: 100%; }
+    height: 100%;
+    display: block; }
     .event__notes p {
       width: 70%;
       color: #005A7F;
@@ -700,6 +705,7 @@ button {
     overflow: none;
     -webkit-box-shadow: 0 0 1rem #939393;
     box-shadow: 0 0 1rem #939393;
+    border-radius: 1rem;
     color: #4CCBFF;
     word-wrap: break-word;
     position: absolute;
@@ -709,21 +715,24 @@ button {
     transform: translate(50%, 50%); }
   .event__time {
     position: relative;
-    height: 100%; }
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; }
     .event__time span {
-      position: absolute;
-      display: block;
-      right: 0;
-      font-size: 3rem;
+      font-size: 2rem;
+      margin: 0 auto;
       font-weight: 600;
-      padding: 2rem;
-      font-family: monospace; }
+      vertical-align: middle;
+      padding: 0.6rem 2rem; }
   .event__start {
     top: 0;
-    color: #00B3FF; }
+    color: #00B3FF;
+    border-right: 3px solid #00B3FF; }
   .event__end {
     bottom: 0;
-    color: #005A7F; }
+    color: #005A7F;
+    border-right: 3px solid #005A7F; }
   .event__config, .event__delete {
     position: absolute;
     background: none;
@@ -758,20 +767,20 @@ button {
       color: #005b80; }
   .event__config {
     top: 35%;
-    left: 25; }
+    right: 60%; }
   .event__delete {
     top: 35%;
-    left: 25%; }
+    right: 30%; }
 
 .hasNote {
   width: 100%; }
-  .hasNote .event > div {
+  .hasNote .event > div:not(:last-child) {
     width: 33%; }
   .hasNote .event__notes {
-    border-right: 0.3rem dotted #00B3FF; }
+    border-top: 0.3rem dotted #00B3FF; }
 
 .noNote {
-  width: 66.7%;
+  width: 100%;
   margin-left: auto; }
-  .noNote .event > div {
-    width: 50%; }
+  .noNote .event > div:not(:last-child) {
+    width: 33%; }

@@ -109,6 +109,7 @@ $color-black: #000;
     background-color: $color-royalBlue;
     font-family: inherit;
     border: none;
+    border-radius: 1rem;
     -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
     transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
@@ -220,7 +221,7 @@ $color-black: #000;
 
 
 html {
-    font-size: 50%;
+    font-size: 55%;
     font-weight: 400;
     background-color: $color-white;
 }
@@ -451,6 +452,7 @@ button {
             width: 20rem;
             padding: 1rem;
             font-size: 1.8rem;
+            border-radius: 1rem;
         }
     
         input:focus,
@@ -590,7 +592,7 @@ button {
 /*-----------------------------------------------------*/
 
 .routineContainer {
-    width: 45%;
+    width: 40%;
     margin: 0 auto;
     -webkit-transition: opacity 0.6s;
     transition: opacity 0.6s;
@@ -616,6 +618,7 @@ button {
             box-shadow: 0 .3rem 1rem $color-shadow;
     -webkit-transition: -webkit-box-shadow 0.3s;
     transition: -webkit-box-shadow 0.3s;
+    border-radius: 1rem;
     transition: box-shadow 0.3s;
     transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
 
@@ -632,6 +635,7 @@ button {
      
     &__notes {
         height: 100%;
+        display: block;
         
         p { 
             width: 70%;
@@ -656,6 +660,7 @@ button {
         overflow: none;
         -webkit-box-shadow: 0 0 1rem $color-shadow;
         box-shadow: 0 0 1rem $color-shadow;
+        border-radius: 1rem;
         color: $color-malibuBlue;
         word-wrap: break-word;
         
@@ -667,15 +672,16 @@ button {
     &__time {
         position: relative;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         
         span {
-            position: absolute;
-            display: block;
-            right: 0;
-            font-size: 3rem;
+            font-size: 2rem;
+            margin: 0 auto;
             font-weight: 600;
-            padding: 2rem;
-            font-family: monospace;
+            vertical-align: middle;
+            padding: 0.6rem 2rem;
         }
         
     }
@@ -683,11 +689,13 @@ button {
     &__start {
         top: 0;
         color: $color-azure;
+        border-right: 3px solid $color-azure;
     }
     
     &__end {
         bottom: 0;
         color: $color-royalBlue;
+        border-right: 3px solid $color-royalBlue;
     }
 
     //-------------------------------------------------------BUTTON SECTION
@@ -740,12 +748,12 @@ button {
     
     &__config {
         top: 35%;
-        left: 25;
+        right: 60%;
     }
     
     &__delete {
         top: 35%;
-        left: 25%;
+        right: 30%;
     }
 }
 
@@ -754,20 +762,20 @@ button {
 .hasNote {
     width: 100%;
     
-    .event > div {
+    .event>div:not(:last-child) {
         width: 33%;
     }
     
     .event__notes {
-        border-right: .3rem dotted $color-azure; 
+        border-top: .3rem dotted $color-azure; 
     }
 }
 
 .noNote {
-    width: 66.7%;
+    width: 100%;
     margin-left: auto;
     
-    .event > div {
-        width: 50%;
+    .event>div:not(:last-child) {
+        width: 33%;
     }
 }
