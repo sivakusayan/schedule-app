@@ -55,14 +55,7 @@ table {
 /* COLORS */
 /*-----------------------------------------------------*/
 
-$color-royalBlue: #005A7F;
-$color-olympicBlue: #0091CC;
-$color-malibuBlue: #4CCBFF;
-$color-azure: #00B3FF;
-$color-white: #fff;
-$color-grey: #f6f6f6;
-$color-shadow: #939393;
-$color-black: #000;
+@import "abstracts/variables";
 
 /*-----------------------------------------------------*/
 /* MIXINS */
@@ -97,16 +90,16 @@ $color-black: #000;
 }
 
 @mixin dayFormat {
-    -webkit-box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
-            box-shadow: 0 .2rem .4rem lighten($color-black, 20%);
+    -webkit-box-shadow: 0 .2rem .4rem $color-grey-dark;
+            box-shadow: 0 .2rem .4rem $color-grey-dark;
     text-transform: uppercase;
-    color: $color-malibuBlue;
-    text-shadow: -.1rem 0 #707070, 0 .1rem #707070, .1rem 0 #707070, 0 -.1rem #707070;
+    color: $color-primary-light;
+    text-shadow: -.1rem 0 $color-grey-medium, 0 .1rem $color-grey-medium, .1rem 0 $color-grey-medium, 0 -.1rem $color-grey-medium;
     font-weight: 200;
 }
 
 @mixin dayButton {
-    background-color: $color-royalBlue;
+    background-color: $color-primary-dark-1;
     font-family: inherit;
     border: none;
     border-radius: 1rem;
@@ -128,15 +121,15 @@ $color-black: #000;
 
 @mixin dayButtonActive {
     opacity: 1;
-    background-color: darken($color-royalBlue, 10%);
+    background-color: $color-primary-dark-2;
     -webkit-transform: translateY(.3rem);
     transform: translateY(.3rem);
-    -webkit-box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
-            box-shadow: 0 .1rem .2rem lighten($color-black, 20%);
+    -webkit-box-shadow: 0 .1rem .2rem $color-grey-dark;
+            box-shadow: 0 .1rem .2rem $color-grey-dark;
 }
 
 @mixin menuButton {
-    color: $color-azure;
+    color: $color-primary-medium-1;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
     transition: opacity 0.3s;
@@ -146,7 +139,7 @@ $color-black: #000;
     &:hover {
         cursor: pointer;
         opacity: 1;
-        color: darken($color-azure, 15%);
+        color: $color-primary-dark-1;
     } 
     
     &:focus {
@@ -159,7 +152,7 @@ $color-black: #000;
     z-index: 400;
     -webkit-box-shadow: 0 0 5rem;
             box-shadow: 0 0 5rem;
-    border: 15px solid $color-royalBlue;
+    border: 15px solid $color-primary-dark-1;
     border-radius: 1rem;
     position: relative; 
 }
@@ -167,19 +160,19 @@ $color-black: #000;
 @mixin popUpUIText {
     text-align: center;
     margin-bottom: 3rem;
-    color: $color-azure;
+    color: $color-primary-medium-1;
 }
 
 @mixin submitButton {
     text-align: center;
         
     input {
-        -webkit-box-shadow: 0 .2rem .5rem $color-shadow;
-                box-shadow: 0 .2rem .5rem $color-shadow;
+        -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
+                box-shadow: 0 .2rem .5rem $color-grey-dark;
         margin-top: 0rem;
         border: none;
         color: $color-white;
-        background: $color-olympicBlue;
+        background: $color-primary-medium-2;
         padding: 1rem 3rem;
         text-transform: uppercase;
         font-size: 2rem;
@@ -195,12 +188,12 @@ $color-black: #000;
     }
 
     input:hover {
-        background-color: $color-royalBlue;
+        background-color: $color-primary-dark-1;
         cursor: pointer;
         -webkit-transform: translateY(.2rem);
                 transform: translateY(.2rem);
-        -webkit-box-shadow: 0 .2rem .2rem $color-shadow;
-                box-shadow: 0 .2rem .2rem $color-shadow;
+        -webkit-box-shadow: 0 .2rem .2rem $color-grey-dark;
+                box-shadow: 0 .2rem .2rem $color-grey-dark;
     }
     
     input:focus {
@@ -231,7 +224,7 @@ body {
 }
 
 button {
-    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
+    -webkit-tap-highlight-color:  rgba($color-black, 0); 
 }
 
 /*-----------------------------------------------------*/
@@ -242,7 +235,7 @@ button {
 // Separated from Menu class to ease switching to mobile layout
 
 .weekContainer {
-    background-color: $color-olympicBlue;
+    background-color: $color-primary-medium-2;
     width: 100%;
     height: 10rem;
     position: fixed;
@@ -278,8 +271,8 @@ button {
 
 .menu {
     height: 20rem;
-    -webkit-box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
-            box-shadow: 0 .3rem 2rem darken($color-shadow,20%);
+    -webkit-box-shadow: 0 .3rem 2rem rgba($color-grey-dark, .8);
+            box-shadow: 0 .3rem 2rem rgba($color-grey-dark, .8);
     top: 0;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -298,11 +291,11 @@ button {
     &__mobile {
         position: relative;
         height: 10rem;
-        background-color: $color-olympicBlue;
+        background-color: $color-primary-medium-2;
     }
     
     &__currentDay {
-        background-color: darken($color-royalBlue, 10%);
+        background-color: darken($color-primary-dark-1, 10%);
         font-size: 4rem;
         padding: .6rem;
         width: 30rem;
@@ -418,12 +411,12 @@ button {
             -webkit-box-shadow: 0 .1rem .1rem $color-black;
                     box-shadow: 0 .1rem .1rem $color-black;
             display: inline-block;
-            color: $color-malibuBlue;
+            color: $color-primary-light;
             margin-right: 2rem;
             width: 10rem;
             font-size: 1.7rem;
             text-align: center;
-            background-color: $color-royalBlue;
+            background-color: $color-primary-dark-1;
             padding: 0.5rem;
             font-weight: 200;
             border-radius: 1rem;
@@ -431,22 +424,19 @@ button {
         
         input {
             border: none;
-            border-bottom: 1px solid $color-azure;
+            border-bottom: 1px solid $color-primary-medium-1;
             font-family: 'Nunito', sans-serif;
-            color: $color-olympicBlue;
+            color: $color-primary-medium-2;
             font-size: 1.8rem;
-            
-        }
-        
-        input:-webkit-autofill {
-            -webkit-box-shadow: 0 0 0 30px lighten($color-azure, 45%) inset;
+            transition: all .3s;
+            border-radius: 3px;
         }
         
         textarea{
-            border: 1px solid $color-azure;
+            border: 1px solid $color-primary-medium-1;
             vertical-align: bottom;
             font-family: 'Nunito', sans-serif;
-            color: $color-olympicBlue;
+            color: $color-primary-medium-2;
             resize: none;
             height: 12rem;
             width: 20rem;
@@ -458,7 +448,7 @@ button {
         input:focus,
         textarea:focus{
             outline: none;
-            background-color: lighten($color-azure, 45%);
+            background-color: rgba($color-primary-medium-1, 0.1); 
         }
     }
     
@@ -512,7 +502,7 @@ button {
     
     &__daysContainer {
         list-style: none; 
-        color:  $color-malibuBlue;
+        color:  $color-primary-light;
         margin-bottom: 4rem;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -529,8 +519,8 @@ button {
             margin: 1.5rem;
             padding: .5rem 4rem;
             width: 10rem;
-            -webkit-box-shadow: 0 .2rem .5rem $color-shadow;
-                    box-shadow: 0 .2rem .5rem $color-shadow;
+            -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
+                    box-shadow: 0 .2rem .5rem $color-grey-dark;
             
             @include dayFormat;
             @include centerChildren;
@@ -604,18 +594,18 @@ button {
 }
 
 .eventContainer:nth-child(odd) { 
-    .event {background-color: $color-grey;}
+    .event {background-color: $color-grey-light-1;}
 }
 
 .eventContainer:nth-child(even) {
-    .event {background-color: darken($color-grey, 8%)};
+    .event {background-color: $color-grey-light-2;}
 }
 
 .event {
     height: 15rem;
     margin: 3rem 0;
-    -webkit-box-shadow: 0 .3rem 1rem $color-shadow;
-            box-shadow: 0 .3rem 1rem $color-shadow;
+    -webkit-box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
+            box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
     -webkit-transition: -webkit-box-shadow 0.3s;
     transition: -webkit-box-shadow 0.3s;
     border-radius: 1rem;
@@ -626,6 +616,7 @@ button {
     -webkit-box-align: stretch;
         -ms-flex-align: stretch;
             align-items: stretch;
+            flex-wrap: wrap;
 
     > div {
         position: relative;
@@ -634,12 +625,12 @@ button {
     //-------------------------------------------------------NOTES SECTION
      
     &__notes {
-        height: 100%;
+        height: 0%;
         display: block;
         
         p { 
             width: 70%;
-            color: $color-royalBlue;
+            color: $color-primary-dark-1;
             font-size: 1.5rem;
             word-wrap: break-word;
             
@@ -651,17 +642,17 @@ button {
 
     &__name p{
         text-transform: uppercase;
-        background-color: $color-olympicBlue;
+        background-color: $color-primary-medium-2;
         font-size: 2rem;
         text-align: center;
         width: 20rem;
         max-height: 12rem;
         padding: 1.5rem;
         overflow: none;
-        -webkit-box-shadow: 0 0 1rem $color-shadow;
-        box-shadow: 0 0 1rem $color-shadow;
+        -webkit-box-shadow: 0 0 1rem $color-grey-dark;
+        box-shadow: 0 0 1rem $color-grey-dark;
         border-radius: 1rem;
-        color: $color-malibuBlue;
+        color: $color-primary-light;
         word-wrap: break-word;
         
         @include center;
@@ -688,14 +679,14 @@ button {
     
     &__start {
         top: 0;
-        color: $color-azure;
-        border-right: 3px solid $color-azure;
+        color: $color-primary-medium-1;
+        border-right: 3px solid $color-primary-medium-1;
     }
     
     &__end {
         bottom: 0;
-        color: $color-royalBlue;
-        border-right: 3px solid $color-royalBlue;
+        color: $color-primary-dark-1;
+        border-right: 3px solid $color-primary-dark-1;
     }
 
     //-------------------------------------------------------BUTTON SECTION
@@ -706,7 +697,7 @@ button {
         background: none;
         border: none;
         font-size: 4rem;
-        color: $color-olympicBlue;
+        color: $color-primary-medium-2;
         -webkit-transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
         transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
         transition: transform 1s, opacity 0.6s, color 0.3s;
@@ -723,8 +714,8 @@ button {
     }
      
     &:hover {
-        -webkit-box-shadow: 0 0 3rem $color-royalBlue;
-        box-shadow: 0 0 3rem $color-royalBlue;
+        -webkit-box-shadow: 0 0 3rem $color-primary-dark-1;
+        box-shadow: 0 0 3rem $color-primary-dark-1;
         
         .event__config {
             -webkit-transform: rotate(180deg);
@@ -742,7 +733,7 @@ button {
         
         .event__config:hover,
         .event__delete:hover {
-            color: darken($color-olympicBlue, 15%);
+            color: $color-primary-dark-1;
         }
     }
     
@@ -762,20 +753,7 @@ button {
 .hasNote {
     width: 100%;
     
-    .event>div:not(:last-child) {
+    .event > div{
         width: 33%;
-    }
-    
-    .event__notes {
-        border-top: .3rem dotted $color-azure; 
-    }
-}
-
-.noNote {
-    width: 100%;
-    margin-left: auto;
-    
-    .event>div:not(:last-child) {
-        width: 33%;
-    }
+    } 
 }
