@@ -91,7 +91,7 @@ button {
 /* DAYS LIST */
 /*-----------------------------------------------------*/
 .weekContainer {
-  background-color: #0091CC;
+  background-image: linear-gradient(to right, #0091CC, #4CCBFF);
   width: 100%;
   height: 10rem;
   position: fixed;
@@ -117,30 +117,25 @@ button {
     background-color: #005A7F;
     font-family: inherit;
     border: none;
-    border-radius: 1rem;
-    -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
+    border-radius: 2rem;
+    transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
     opacity: 0.5;
-    -webkit-box-shadow: 0 0.2rem 0.4rem #333;
-    box-shadow: 0 0.2rem 0.4rem #333;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
     text-transform: uppercase;
-    color: #4CCBFF;
-    text-shadow: -0.1rem 0 #707070, 0 0.1rem #707070, 0.1rem 0 #707070, 0 -0.1rem #707070;
+    color: #fff;
     font-weight: 200; }
-    .week__day:hover:not(.active) {
+    .week__day:hover:not(.selected):not(.activeDay) {
       opacity: 1;
-      cursor: pointer; }
+      cursor: pointer;
+      transform: translateY(-0.2rem);
+      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
     .week__day:focus {
       outline: none; }
   .week .activeDay {
     opacity: 1;
     background-color: #003459;
-    -webkit-transform: translateY(0.3rem);
-    transform: translateY(0.3rem);
-    -webkit-box-shadow: 0 0.1rem 0.2rem #333;
-    box-shadow: 0 0.1rem 0.2rem #333; }
+    transform: translateY(0.2rem);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4); }
 
 /*-----------------------------------------------------*/
 /* STICKY MENU */
@@ -154,7 +149,6 @@ button {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  background-color: #fff;
   margin-bottom: 5rem;
   z-index: 100;
   position: -webkit-sticky;
@@ -175,11 +169,8 @@ button {
     right: 50%;
     -webkit-transform: translate(50%, 50%);
     transform: translate(50%, 50%);
-    -webkit-box-shadow: 0 0.2rem 0.4rem #333;
-    box-shadow: 0 0.2rem 0.4rem #333;
     text-transform: uppercase;
-    color: #4CCBFF;
-    text-shadow: -0.1rem 0 #707070, 0 0.1rem #707070, 0.1rem 0 #707070, 0 -0.1rem #707070;
+    color: #fff;
     font-weight: 200; }
   .menu__buttonContainer {
     width: 100%;
@@ -203,7 +194,7 @@ button {
     color: #00B3FF;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     background: none;
     border: none;
     display: -webkit-box;
@@ -225,7 +216,8 @@ button {
     .menu__button:hover {
       cursor: pointer;
       opacity: 1;
-      color: #005A7F; }
+      color: #005A7F;
+      transform: scale(1.05); }
     .menu__button:focus {
       outline: none; }
 
@@ -297,14 +289,15 @@ button {
     color: #00B3FF;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     background: none;
     border: none; }
     .newEventUI__back:hover,
     .configEventUI__back:hover {
       cursor: pointer;
       opacity: 1;
-      color: #005A7F; }
+      color: #005A7F;
+      transform: scale(1.05); }
     .newEventUI__back:focus,
     .configEventUI__back:focus {
       outline: none; }
@@ -459,13 +452,14 @@ button {
     color: #00B3FF;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     background: none;
     border: none; }
     .cloneRoutineUI__back:hover {
       cursor: pointer;
       opacity: 1;
-      color: #005A7F; }
+      color: #005A7F;
+      transform: scale(1.05); }
     .cloneRoutineUI__back:focus {
       outline: none; }
   .cloneRoutineUI__text {
@@ -501,11 +495,8 @@ button {
       width: 10rem;
       -webkit-box-shadow: 0 0.2rem 0.5rem #333;
       box-shadow: 0 0.2rem 0.5rem #333;
-      -webkit-box-shadow: 0 0.2rem 0.4rem #333;
-      box-shadow: 0 0.2rem 0.4rem #333;
       text-transform: uppercase;
-      color: #4CCBFF;
-      text-shadow: -0.1rem 0 #707070, 0 0.1rem #707070, 0.1rem 0 #707070, 0 -0.1rem #707070;
+      color: #fff;
       font-weight: 200;
       display: -webkit-box;
       display: -ms-flexbox;
@@ -519,15 +510,15 @@ button {
       background-color: #005A7F;
       font-family: inherit;
       border: none;
-      border-radius: 1rem;
-      -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-      transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-      transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
-      transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
-      opacity: 0.5; }
-      .cloneRoutineUI__daysContainer button:hover:not(.active) {
+      border-radius: 2rem;
+      transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
+      opacity: 0.5;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
+      .cloneRoutineUI__daysContainer button:hover:not(.selected):not(.activeDay) {
         opacity: 1;
-        cursor: pointer; }
+        cursor: pointer;
+        transform: translateY(-0.2rem);
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
       .cloneRoutineUI__daysContainer button:focus {
         outline: none; }
   .cloneRoutineUI__submit {
@@ -559,10 +550,10 @@ button {
   .cloneRoutineUI .selected {
     opacity: 1;
     background-color: #003459;
-    -webkit-transform: translateY(0.3rem);
-    transform: translateY(0.3rem);
-    -webkit-box-shadow: 0 0.1rem 0.2rem #333;
-    box-shadow: 0 0.1rem 0.2rem #333; }
+    transform: translateY(0.2rem);
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4); }
+    .cloneRoutineUI .selected:hover {
+      cursor: pointer; }
 
 /*-----------------------------------------------------*/
 /* RESET ROUTINE UI */
@@ -605,13 +596,14 @@ button {
     color: #00B3FF;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     background: none;
     border: none; }
     .resetRoutineUI__back:hover {
       cursor: pointer;
       opacity: 1;
-      color: #005A7F; }
+      color: #005A7F;
+      transform: scale(1.05); }
     .resetRoutineUI__back:focus {
       outline: none; }
   .resetRoutineUI__text {
@@ -674,8 +666,9 @@ button {
   -webkit-transition: -webkit-box-shadow 0.3s;
   transition: -webkit-box-shadow 0.3s;
   border-radius: 1rem;
-  transition: box-shadow 0.3s;
-  transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+  border-right: 10px solid transparent;
+  border-left: 10px solid transparent;
+  transition: box-shadow 0.3s, border-left .3s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -706,17 +699,15 @@ button {
       transform: translate(50%, 50%); }
   .event__name p {
     text-transform: uppercase;
-    background-color: #0091CC;
+    background-image: linear-gradient(to right, #0091CC, #00B3FF);
     font-size: 2rem;
     text-align: center;
     width: 20rem;
     max-height: 12rem;
     padding: 1.5rem;
-    overflow: none;
-    -webkit-box-shadow: 0 0 1rem #333;
-    box-shadow: 0 0 1rem #333;
-    border-radius: 1rem;
-    color: #4CCBFF;
+    overflow: hidden;
+    border-radius: 3rem;
+    color: #fff;
     word-wrap: break-word;
     position: absolute;
     bottom: 50%;
@@ -748,33 +739,26 @@ button {
     background: none;
     border: none;
     font-size: 4rem;
-    color: #0091CC;
-    -webkit-transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
-    transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
-    transition: transform 1s, opacity 0.6s, color 0.3s;
-    transition: transform 1s, opacity 0.6s, color 0.3s, -webkit-transform 1s;
+    color: #00B3FF;
+    transition: all .3s;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    opacity: 0; }
+    opacity: 0;
+    transform: translateY(1.2rem); }
   .event__config:focus, .event__delete:focus {
     outline: none; }
   .event:hover {
-    -webkit-box-shadow: 0 0 3rem #005A7F;
-    box-shadow: 0 0 3rem #005A7F; }
-    .event:hover .event__config {
-      -webkit-transform: rotate(180deg);
-      transform: rotate(180deg);
-      opacity: 1;
-      cursor: pointer; }
+    border-left: 10px solid #4CCBFF; }
+    .event:hover .event__config,
     .event:hover .event__delete {
-      -webkit-transform: rotate(270deg);
-      transform: rotate(-270deg);
+      transform: translateY(0);
       opacity: 1;
       cursor: pointer; }
     .event:hover .event__config:hover,
     .event:hover .event__delete:hover {
-      color: #005A7F; }
+      color: #005A7F;
+      transform: translateY(0) scale(1.1); }
   .event__config {
     top: 35%;
     right: 60%; }

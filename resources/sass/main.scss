@@ -90,11 +90,8 @@ table {
 }
 
 @mixin dayFormat {
-    -webkit-box-shadow: 0 .2rem .4rem $color-grey-dark;
-            box-shadow: 0 .2rem .4rem $color-grey-dark;
     text-transform: uppercase;
-    color: $color-primary-light;
-    text-shadow: -.1rem 0 $color-grey-medium, 0 .1rem $color-grey-medium, .1rem 0 $color-grey-medium, 0 -.1rem $color-grey-medium;
+    color: $color-white;
     font-weight: 200;
 }
 
@@ -102,16 +99,16 @@ table {
     background-color: $color-primary-dark-1;
     font-family: inherit;
     border: none;
-    border-radius: 1rem;
-    -webkit-transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, -webkit-transform .8s, -webkit-box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s;
-    transition: opacity 0.3s, background-color 0.3s, transform .8s, box-shadow .8s, -webkit-transform .8s, -webkit-box-shadow .8s;
+    border-radius: 2rem;
+    transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
     opacity: 0.5;
+    box-shadow: 0 .5rem 1rem rgba($color-black, .3);
     
-     &:hover:not(.active) {
+     &:hover:not(.selected):not(.activeDay) {
         opacity: 1;
         cursor: pointer;
+        transform: translateY(-.2rem);
+        box-shadow: 0 1rem 2rem rgba($color-black, .2);
     }  
 
     &:focus {
@@ -122,17 +119,15 @@ table {
 @mixin dayButtonActive {
     opacity: 1;
     background-color: $color-primary-dark-2;
-    -webkit-transform: translateY(.3rem);
-    transform: translateY(.3rem);
-    -webkit-box-shadow: 0 .1rem .2rem $color-grey-dark;
-            box-shadow: 0 .1rem .2rem $color-grey-dark;
+    transform: translateY(.2rem);
+    box-shadow: 0 .2rem .5rem rgba($color-black, .4);
 }
 
 @mixin menuButton {
     color: $color-primary-medium-1;
     opacity: 0.5;
     -webkit-transition: opacity 0.3s;
-    transition: opacity 0.3s;
+    transition: all 0.3s;
     background: none;
     border: none;
     
@@ -140,6 +135,7 @@ table {
         cursor: pointer;
         opacity: 1;
         color: $color-primary-dark-1;
+        transform: scale(1.05);
     } 
     
     &:focus {
@@ -235,7 +231,7 @@ button {
 // Separated from Menu class to ease switching to mobile layout
 
 .weekContainer {
-    background-color: $color-primary-medium-2;
+    background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-light);
     width: 100%;
     height: 10rem;
     position: fixed;
@@ -278,7 +274,6 @@ button {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    background-color: $color-white;
     margin-bottom: 5rem;
     z-index: 100;
     position: -webkit-sticky;
@@ -535,7 +530,11 @@ button {
     }
     
     .selected {
-        @include dayButtonActive;   
+        @include dayButtonActive;  
+        
+        &:hover {
+            cursor: pointer;
+        }
     }
 
 }
@@ -609,8 +608,9 @@ button {
     -webkit-transition: -webkit-box-shadow 0.3s;
     transition: -webkit-box-shadow 0.3s;
     border-radius: 1rem;
-    transition: box-shadow 0.3s;
-    transition: box-shadow 0.3s, -webkit-box-shadow 0.3s;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    transition: box-shadow 0.3s, border-left .3s;
 
     @include centerChildren;
     -webkit-box-align: stretch;
@@ -642,17 +642,15 @@ button {
 
     &__name p{
         text-transform: uppercase;
-        background-color: $color-primary-medium-2;
+        background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-medium-1);
         font-size: 2rem;
         text-align: center;
         width: 20rem;
         max-height: 12rem;
         padding: 1.5rem;
-        overflow: none;
-        -webkit-box-shadow: 0 0 1rem $color-grey-dark;
-        box-shadow: 0 0 1rem $color-grey-dark;
-        border-radius: 1rem;
-        color: $color-primary-light;
+        overflow: hidden;
+        border-radius: 3rem;
+        color: $color-white;
         word-wrap: break-word;
         
         @include center;
@@ -697,15 +695,13 @@ button {
         background: none;
         border: none;
         font-size: 4rem;
-        color: $color-primary-medium-2;
-        -webkit-transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
-        transition: opacity 0.6s, color 0.3s, -webkit-transform 1s;
-        transition: transform 1s, opacity 0.6s, color 0.3s;
-        transition: transform 1s, opacity 0.6s, color 0.3s, -webkit-transform 1s; 
+        color: $color-primary-medium-1;
+        transition: all .3s;
         display: -webkit-box; 
         display: -ms-flexbox; 
         display: flex;
         opacity: 0;
+        transform: translateY(1.2rem);
     }
      
     &__config:focus,
@@ -714,19 +710,11 @@ button {
     }
      
     &:hover {
-        -webkit-box-shadow: 0 0 3rem $color-primary-dark-1;
-        box-shadow: 0 0 3rem $color-primary-dark-1;
+        border-left: 10px solid $color-primary-light;
         
-        .event__config {
-            -webkit-transform: rotate(180deg);
-            transform: rotate(180deg);
-            opacity: 1;
-            cursor: pointer;
-        }
-        
+        .event__config,
         .event__delete {
-            -webkit-transform: rotate(270deg);
-            transform: rotate(-270deg);
+            transform: translateY(0);
             opacity: 1;
             cursor: pointer;
         }
@@ -734,6 +722,7 @@ button {
         .event__config:hover,
         .event__delete:hover {
             color: $color-primary-dark-1;
+            transform: translateY(0) scale(1.1);
         }
     }
     
