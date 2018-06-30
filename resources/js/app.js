@@ -549,6 +549,7 @@ var eventController = (function (schedCtrl, UICtrl) {
     
     deleteEvent = function (index) {
         schedCtrl.deleteFromEventDatabase(index, activeDay);
+        schedCtrl.deleteTimeSlot(index, activeDay);
         updateUI();
     };
     
