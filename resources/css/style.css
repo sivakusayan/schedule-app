@@ -385,28 +385,27 @@ button {
     text-align: center; }
     .newEventUI__submit input,
     .configEventUI__submit input {
-      -webkit-box-shadow: 0 0.2rem 0.5rem #333;
-      box-shadow: 0 0.2rem 0.5rem #333;
+      -webkit-box-shadow: 0 0.2rem 0.4rem #707070;
+      box-shadow: 0 0.2rem 0.4rem #707070;
       margin-top: 0rem;
       border: none;
       color: #fff;
-      background: #0091CC;
+      background-image: linear-gradient(to right, #003459 33%, #0091CC 66%, #4CCBFF);
+      background-size: 250%;
+      background-position: right;
       padding: 1rem 3rem;
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
+      transition: .3s; }
     .newEventUI__submit input:hover,
     .configEventUI__submit input:hover {
-      background-color: #005A7F;
+      background-position: center;
       cursor: pointer;
-      -webkit-transform: translateY(0.2rem);
-      transform: translateY(0.2rem);
-      -webkit-box-shadow: 0 0.2rem 0.2rem #333;
-      box-shadow: 0 0.2rem 0.2rem #333; }
+      -webkit-transform: translateY(-0.2rem);
+      transform: translateY(-0.2rem);
+      -webkit-box-shadow: 0 0.5rem 0.8rem #707070;
+      box-shadow: 0 0.5rem 0.8rem #707070; }
     .newEventUI__submit input:focus,
     .configEventUI__submit input:focus {
       outline: none; }
@@ -524,27 +523,26 @@ button {
   .cloneRoutineUI__submit {
     text-align: center; }
     .cloneRoutineUI__submit input {
-      -webkit-box-shadow: 0 0.2rem 0.5rem #333;
-      box-shadow: 0 0.2rem 0.5rem #333;
+      -webkit-box-shadow: 0 0.2rem 0.4rem #707070;
+      box-shadow: 0 0.2rem 0.4rem #707070;
       margin-top: 0rem;
       border: none;
       color: #fff;
-      background: #0091CC;
+      background-image: linear-gradient(to right, #003459 33%, #0091CC 66%, #4CCBFF);
+      background-size: 250%;
+      background-position: right;
       padding: 1rem 3rem;
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
+      transition: .3s; }
     .cloneRoutineUI__submit input:hover {
-      background-color: #005A7F;
+      background-position: center;
       cursor: pointer;
-      -webkit-transform: translateY(0.2rem);
-      transform: translateY(0.2rem);
-      -webkit-box-shadow: 0 0.2rem 0.2rem #333;
-      box-shadow: 0 0.2rem 0.2rem #333; }
+      -webkit-transform: translateY(-0.2rem);
+      transform: translateY(-0.2rem);
+      -webkit-box-shadow: 0 0.5rem 0.8rem #707070;
+      box-shadow: 0 0.5rem 0.8rem #707070; }
     .cloneRoutineUI__submit input:focus {
       outline: none; }
   .cloneRoutineUI .selected {
@@ -613,27 +611,26 @@ button {
   .resetRoutineUI__buttons {
     text-align: center; }
     .resetRoutineUI__buttons input {
-      -webkit-box-shadow: 0 0.2rem 0.5rem #333;
-      box-shadow: 0 0.2rem 0.5rem #333;
+      -webkit-box-shadow: 0 0.2rem 0.4rem #707070;
+      box-shadow: 0 0.2rem 0.4rem #707070;
       margin-top: 0rem;
       border: none;
       color: #fff;
-      background: #0091CC;
+      background-image: linear-gradient(to right, #003459 33%, #0091CC 66%, #4CCBFF);
+      background-size: 250%;
+      background-position: right;
       padding: 1rem 3rem;
       text-transform: uppercase;
       font-size: 2rem;
       border-radius: 1rem;
-      -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s; }
+      transition: .3s; }
     .resetRoutineUI__buttons input:hover {
-      background-color: #005A7F;
+      background-position: center;
       cursor: pointer;
-      -webkit-transform: translateY(0.2rem);
-      transform: translateY(0.2rem);
-      -webkit-box-shadow: 0 0.2rem 0.2rem #333;
-      box-shadow: 0 0.2rem 0.2rem #333; }
+      -webkit-transform: translateY(-0.2rem);
+      transform: translateY(-0.2rem);
+      -webkit-box-shadow: 0 0.5rem 0.8rem #707070;
+      box-shadow: 0 0.5rem 0.8rem #707070; }
     .resetRoutineUI__buttons input:focus {
       outline: none; }
     .resetRoutineUI__buttons input {
@@ -650,7 +647,7 @@ button {
   opacity: 1; }
 
 .eventContainer {
-  margin: 2rem 0; }
+  margin: 3rem auto; }
 
 .eventContainer:nth-child(odd) .event {
   background-color: #f6f6f6; }
@@ -660,7 +657,6 @@ button {
 
 .event {
   height: 15rem;
-  margin: 3rem 0;
   -webkit-box-shadow: 0 0.3rem 1rem rgba(112, 112, 112, 0.8);
   box-shadow: 0 0.3rem 1rem rgba(112, 112, 112, 0.8);
   -webkit-transition: -webkit-box-shadow 0.3s;
@@ -683,20 +679,8 @@ button {
   align-items: stretch;
   flex-wrap: wrap; }
   .event > div {
-    position: relative; }
-  .event__notes {
-    height: 0%;
-    display: block; }
-    .event__notes p {
-      width: 70%;
-      color: #005A7F;
-      font-size: 1.5rem;
-      word-wrap: break-word;
-      position: absolute;
-      bottom: 50%;
-      right: 50%;
-      -webkit-transform: translate(50%, 50%);
-      transform: translate(50%, 50%); }
+    position: relative;
+    width: 33%; }
   .event__name p {
     text-transform: uppercase;
     background-image: linear-gradient(to right, #0091CC, #00B3FF);
@@ -709,6 +693,7 @@ button {
     border-radius: 3rem;
     color: #fff;
     word-wrap: break-word;
+    transition: transform 0.3s;
     position: absolute;
     bottom: 50%;
     right: 50%;
@@ -734,7 +719,7 @@ button {
     bottom: 0;
     color: #005A7F;
     border-right: 3px solid #005A7F; }
-  .event__config, .event__delete {
+  .event__config, .event__delete, .event__notes {
     position: absolute;
     background: none;
     border: none;
@@ -746,17 +731,19 @@ button {
     display: flex;
     opacity: 0;
     transform: translateY(1.2rem); }
-  .event__config:focus, .event__delete:focus {
+  .event__config:focus, .event__delete:focus, .event__notes:focus {
     outline: none; }
   .event:hover {
     border-left: 10px solid #4CCBFF; }
     .event:hover .event__config,
-    .event:hover .event__delete {
+    .event:hover .event__delete,
+    .event:hover .event__notes {
       transform: translateY(0);
       opacity: 1;
       cursor: pointer; }
     .event:hover .event__config:hover,
-    .event:hover .event__delete:hover {
+    .event:hover .event__delete:hover,
+    .event:hover .event__notes:hover {
       color: #005A7F;
       transform: translateY(0) scale(1.1); }
   .event__config {
@@ -765,8 +752,18 @@ button {
   .event__delete {
     top: 35%;
     right: 30%; }
+  .event__notes {
+    top: 35%;
+    right: 10%; }
 
-.hasNote {
-  width: 100%; }
-  .hasNote .event > div {
-    width: 33%; }
+.hasNote .event__config {
+  top: 35%;
+  right: 70%; }
+
+.hasNote .event__delete {
+  top: 35%;
+  right: 40%; }
+
+.hasNote .event__notes {
+  top: 35%;
+  right: 10%; }

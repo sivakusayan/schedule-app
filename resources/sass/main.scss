@@ -163,33 +163,28 @@ table {
     text-align: center;
         
     input {
-        -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
-                box-shadow: 0 .2rem .5rem $color-grey-dark;
+        -webkit-box-shadow: 0 .2rem .4rem $color-grey-medium;
+                box-shadow: 0 .2rem .4rem $color-grey-medium;
         margin-top: 0rem;
         border: none;
         color: $color-white;
-        background: $color-primary-medium-2;
+        background-image: linear-gradient(to right, $color-primary-dark-2 33%, $color-primary-medium-2 66%, $color-primary-light);
+        background-size: 250%;
+        background-position: right;
         padding: 1rem 3rem;
         text-transform: uppercase;
         font-size: 2rem;
         border-radius: 1rem;
-
-        -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-
-        transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
-
-        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-
-        transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.3s;
+        transition: .3s;
     }
 
     input:hover {
-        background-color: $color-primary-dark-1;
+        background-position: center;
         cursor: pointer;
-        -webkit-transform: translateY(.2rem);
-                transform: translateY(.2rem);
-        -webkit-box-shadow: 0 .2rem .2rem $color-grey-dark;
-                box-shadow: 0 .2rem .2rem $color-grey-dark;
+        -webkit-transform: translateY(-.2rem);
+                transform: translateY(-.2rem);
+        -webkit-box-shadow: 0 .5rem .8rem $color-grey-medium;
+                box-shadow: 0 .5rem .8rem $color-grey-medium;
     }
     
     input:focus {
@@ -589,7 +584,7 @@ button {
 }
 
 .eventContainer {
-    margin: 2rem 0;
+    margin: 3rem auto;
 }
 
 .eventContainer:nth-child(odd) { 
@@ -602,7 +597,6 @@ button {
 
 .event {
     height: 15rem;
-    margin: 3rem 0;
     -webkit-box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
             box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
     -webkit-transition: -webkit-box-shadow 0.3s;
@@ -620,22 +614,7 @@ button {
 
     > div {
         position: relative;
-    }
-
-    //-------------------------------------------------------NOTES SECTION
-     
-    &__notes {
-        height: 0%;
-        display: block;
-        
-        p { 
-            width: 70%;
-            color: $color-primary-dark-1;
-            font-size: 1.5rem;
-            word-wrap: break-word;
-            
-            @include center;
-        }
+        width: 33%;
     }
 
     //-------------------------------------------------------NAME SECTION
@@ -652,6 +631,7 @@ button {
         border-radius: 3rem;
         color: $color-white;
         word-wrap: break-word;
+        transition: transform 0.3s;
         
         @include center;
     }
@@ -690,7 +670,8 @@ button {
     //-------------------------------------------------------BUTTON SECTION
     
     &__config,
-    &__delete {
+    &__delete,
+    &__notes {
         position: absolute;
         background: none;
         border: none;
@@ -705,7 +686,8 @@ button {
     }
      
     &__config:focus,
-    &__delete:focus {
+    &__delete:focus,
+    &__notes:focus, {
         outline: none;     
     }
      
@@ -713,14 +695,16 @@ button {
         border-left: 10px solid $color-primary-light;
         
         .event__config,
-        .event__delete {
+        .event__delete,
+        .event__notes {
             transform: translateY(0);
             opacity: 1;
             cursor: pointer;
         }
         
         .event__config:hover,
-        .event__delete:hover {
+        .event__delete:hover,
+        .event__notes:hover {
             color: $color-primary-dark-1;
             transform: translateY(0) scale(1.1);
         }
@@ -735,14 +719,29 @@ button {
         top: 35%;
         right: 30%;
     }
+
+    &__notes {
+        top: 35%;
+        right: 10%;
+    }
 }
 
 //-------------------------------------------------------NOTES MODIFIER
 
 .hasNote {
-    width: 100%;
-    
-    .event > div{
-        width: 33%;
-    } 
+
+    .event__config {
+        top: 35%;
+        right: 70%;
+    }
+
+    .event__delete {
+        top: 35%;
+        right: 40%;
+    }
+
+    .event__notes {
+        top: 35%;
+        right: 10%;
+    }
 }
