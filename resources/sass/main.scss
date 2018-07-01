@@ -207,7 +207,8 @@ table {
 html {
     font-size: 55%;
     font-weight: 400;
-    background-color: $color-white;
+    background-image: url(../img/dust_scratches.png);
+    background-attachment: fixed;
 }
 
 body {
@@ -300,6 +301,7 @@ button {
     &__buttonContainer {
         width: 100%;
         height: 10rem;
+        background-color: $color-white;
         
         @include centerChildren;
         -webkit-box-pack: none;
