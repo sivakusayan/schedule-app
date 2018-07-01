@@ -8,13 +8,15 @@
 let scheduleController = (function () {
 	"use strict"
 
-	let Event, eventDatabase, reservedTimeSlots
+	let eventDatabase, reservedTimeSlots
 
-	Event = function (name, startTime, endTime, notes) {
-		this.name = name
-		this.startTime = startTime
-		this.endTime = endTime
-		this.notes = notes
+	class Event {
+		constructor(name, startTime, endTime, notes) {
+			this.name = name
+			this.startTime = startTime
+			this.endTime = endTime
+			this.notes = notes
+		}
 	}
 
 	eventDatabase = {
@@ -47,8 +49,7 @@ let scheduleController = (function () {
 		},
 
 		validateNoTimeOverlap: function (time, type, activeDay) {
-			let timeSlots
-			timeSlots = reservedTimeSlots[activeDay]
+			let timeSlots = reservedTimeSlots[activeDay]
 
 			//Type 0 if startTime, Type 1 if endTime
 			if (type === 0) {
@@ -69,8 +70,7 @@ let scheduleController = (function () {
 		},
 
 		validateNoSubEvents: function (timeInputs, activeDay) {
-			let timeSlots
-			timeSlots = reservedTimeSlots[activeDay]
+			let timeSlots = reservedTimeSlots[activeDay]
 
 			//Index 0 is startTime, Index 1 is endTime
 			for (let i = 0; i < timeSlots.length; i++) {
@@ -83,14 +83,12 @@ let scheduleController = (function () {
 		},
 
 		addToEventDatabase: function (name, startTime, endTime, notes, activeDay) {
-			let eventObj
+			let eventObj = new Event(name, startTime, endTime, notes)
 
-			eventObj = new Event(name, startTime, endTime, notes)
 			if (eventDatabase[activeDay].length === 0) {
 				eventDatabase[activeDay].push(eventObj)
 			} else { //Linear search to keep database in order
-				let indexToInsert
-				indexToInsert = 0
+				let indexToInsert = 0
 
 				for (let i = 0; i < eventDatabase[activeDay].length; i++) {
 					if (eventObj.startTime > eventDatabase[activeDay][i].startTime) {
@@ -115,8 +113,7 @@ let scheduleController = (function () {
 			if (reservedTimeSlots[activeDay].length === 0) {
 				reservedTimeSlots[activeDay].push([startTime, endTime])
 			} else { //Linear search to keep timeslots in order
-				let indexToInsert
-				indexToInsert = 0
+				let indexToInsert = 0
 
 				for (let i = 0; i < reservedTimeSlots[activeDay].length; i++) {
 					if (startTime > reservedTimeSlots[activeDay][i][0]) {
@@ -157,9 +154,9 @@ let scheduleController = (function () {
 let UIController = (function () {
 	"use strict"
 
-	let DOMobjects, dataToHTML, eventHTMLDatabase, resetEventHTMLDatabase, darkenScreen, lightenScreen, toStandardTime
+	let eventHTMLDatabase
 
-	DOMobjects = {
+	const DOMobjects = {
 		week: document.querySelector(".week"),
 
 		overlay: document.getElementById("overlay"),
@@ -210,7 +207,7 @@ let UIController = (function () {
 		SUN: []
 	}
 
-	dataToHTML = function (eventObj, index) {
+	function dataToHTML (eventObj, index) {
 		let HTML, newHTML
 
 		HTML = "<div id=\"event_%index%\" class=\"eventContainer %noteDetect%\"><div class=\"event\"><div><div class=\"event__time\"><span class=\"event__start\">%startTime%</span><span class=\"event__end\">%endTime%</span></div></div><div><div class=\"event__name\"><p>%name%</p></div></div><div><div class=\"event__buttons\"><button class=\"event__config\"><i id=\"config_%index%\" class=\"fas fa-cog\"></i></button><button class=\"event__delete\"><i id=\"delete_%index%\" class=\"fas fa-times-circle\"></i></button><button class=\"event__notes\"><i id=\"notes_%index%\" class=\"fas fa-sticky-note\"></i></button></div></div></div></div>"
@@ -230,26 +227,26 @@ let UIController = (function () {
 		return newHTML
 	}
 
-	resetEventHTMLDatabase = function (activeDay) {
+	function resetEventHTMLDatabase (activeDay) {
 		eventHTMLDatabase[activeDay] = []
 	}
 
-	darkenScreen = function () {
+	function darkenScreen () {
 		DOMobjects.overlay.classList.remove("overlayOFF")
 		DOMobjects.overlay.classList.add("overlayON")
 	}
 
-	lightenScreen = function () {
+	function lightenScreen () {
 		DOMobjects.overlay.classList.remove("overlayON")
 		DOMobjects.overlay.classList.add("overlayFADE")
 
-		setTimeout(function () {
+		setTimeout(() => {
 			DOMobjects.overlay.classList.remove("overlayFADE")
 			DOMobjects.overlay.classList.add("overlayOFF")
 		}, 300)
 	}
 
-	toStandardTime = function (militaryTime) {
+	function toStandardTime (militaryTime) {
 		let hours, minutes, standardTime
 
 		hours = Number(militaryTime.split(":")[0])
@@ -282,7 +279,7 @@ let UIController = (function () {
 		fadeOut: function (domObj) {
 			lightenScreen()
 			domObj.style.opacity = 0
-			setTimeout(function () {
+			setTimeout(() => {
 				domObj.style.transform = "translateX(-300%)"
 			}, 300)
 		},
@@ -361,13 +358,12 @@ let UIController = (function () {
 let eventController = (function (schedCtrl, UICtrl) {
 	"use strict"
 
-	let activeDay, setupEventListeners, updateUI, addEvent, deleteEvent, cloneRoutine, resetRoutine, selectedEvent, selectedEventIndex, setupConfigureForm, DOMobjects, setValidationMessage
+	let activeDay, selectedEvent, selectedEventIndex
 
-	DOMobjects = UICtrl.getDOMobjects()
+	const DOMobjects = UICtrl.getDOMobjects()
 
-	setValidationMessage = function (timeInputs) {
-		let validityCheck
-		validityCheck = [1, 1]
+	function setValidationMessage (timeInputs) {
+		let validityCheck = [1, 1] //Measures validity of [startTime, endTime]: 1 if valid, 0 if invalid
 
 		for (let i = 0; i < 2; i++) {
 			if (!schedCtrl.validateTimeFormat(timeInputs)) {
@@ -392,14 +388,12 @@ let eventController = (function (schedCtrl, UICtrl) {
 
 	}
 
-	setupEventListeners = function () {
+	function setupEventListeners () {
 
 		/*-------------------------MENU BUTTONS--------------------------------*/
 
-		DOMobjects.btnNew.addEventListener("click", function () {
-			UICtrl.fadeIn(DOMobjects.newEventUI)
-		})
-		DOMobjects.btnNewBack.addEventListener("click", function () {
+		DOMobjects.btnNew.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.newEventUI))
+		DOMobjects.btnNewBack.addEventListener("click", () => {
 			UICtrl.fadeOut(DOMobjects.newEventUI)
 
 			setTimeout(function () {
@@ -407,53 +401,43 @@ let eventController = (function (schedCtrl, UICtrl) {
 			}, 300)
 		})
 
-		DOMobjects.btnClone.addEventListener("click", function () {
-			UICtrl.fadeIn(DOMobjects.cloneRoutineUI)
-		})
-		DOMobjects.btnCloneBack.addEventListener("click", function () {
+		DOMobjects.btnClone.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.cloneRoutineUI))
+		DOMobjects.btnCloneBack.addEventListener("click", () => {
 			UICtrl.fadeOut(DOMobjects.cloneRoutineUI)
 			UICtrl.resetCloneForm()
 		})
 
-		DOMobjects.btnReset.addEventListener("click", function () {
-			UICtrl.fadeIn(DOMobjects.resetRoutineUI)
-		})
-		DOMobjects.btnResetBack.addEventListener("click", function () {
-			UICtrl.fadeOut(DOMobjects.resetRoutineUI)
-		})
+		DOMobjects.btnReset.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.resetRoutineUI))
+		DOMobjects.btnResetBack.addEventListener("click", () => UICtrl.fadeOut(DOMobjects.resetRoutineUI))
 
 		/*------------------------FORM BUTTONS------------------------------*/
 
-		DOMobjects.startTimeInput.addEventListener("input", function () {
-			let timeInputs
-			timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
+		DOMobjects.startTimeInput.addEventListener("input", () => {
+			let timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
 			setValidationMessage(timeInputs)
 		})
-		DOMobjects.endTimeInput.addEventListener("input", function () {
-			let timeInputs
-			timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
+		DOMobjects.endTimeInput.addEventListener("input", () => {
+			let timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
 			setValidationMessage(timeInputs)
 		})
-		DOMobjects.newEventForm.addEventListener("submit", function () {
-			let eventObj
-			eventObj = UICtrl.getInputData()
+		DOMobjects.newEventForm.addEventListener("submit", () => {
+			let eventObj = UICtrl.getInputData()
 			addEvent(eventObj)
 			UICtrl.fadeOut(DOMobjects.newEventUI)
 			UICtrl.resetNewEventForm()
 		})
 
-		DOMobjects.startTimeConfigInput.addEventListener("input", function () {
-			let timeInputs
-			timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
+		DOMobjects.startTimeConfigInput.addEventListener("input", () => {
+			let timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
 			setValidationMessage(timeInputs)
 		})
-		DOMobjects.endTimeConfigInput.addEventListener("input", function () {
-			let timeInputs
-			timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
+		DOMobjects.endTimeConfigInput.addEventListener("input", () => {
+			let timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
 			setValidationMessage(timeInputs)
 		})
-		DOMobjects.configEventForm.addEventListener("submit", function () {
+		DOMobjects.configEventForm.addEventListener("submit", () => {
 			let configuredEventObj
+
 			configuredEventObj = UICtrl.getConfigData()
 			addEvent(configuredEventObj)
 
@@ -462,34 +446,24 @@ let eventController = (function (schedCtrl, UICtrl) {
 
 		DOMobjects.cloneRoutineForm.addEventListener("submit", cloneRoutine)
 
-		DOMobjects.resetRoutineYes.addEventListener("click", function () {
+		DOMobjects.resetRoutineYes.addEventListener("click", () => {
 			resetRoutine()
 			UICtrl.fadeOut(DOMobjects.resetRoutineUI)
 		})
 
-		DOMobjects.resetRoutineNo.addEventListener("click", function () {
-			UICtrl.fadeOut(DOMobjects.resetRoutineUI)
-		})
+		DOMobjects.resetRoutineNo.addEventListener("click", () => UICtrl.fadeOut(DOMobjects.resetRoutineUI))
 
 		/*-------------------------WEEK BUTTONS--------------------------------*/
 
-		DOMobjects.week.addEventListener("click", function (event) {
+		DOMobjects.week.addEventListener("click", (event) => {
 			if (event.target.tagName === "BUTTON") {
-				//Update UI for current day and change clone routine choices
-				document.querySelector(".hidden").classList.remove("hidden")
 
 				activeDay = event.target.textContent
+				changeActiveDay(event)
+				updateCloneRoutineChoices()
 
-				Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, function (current) {
-					if (current.textContent === activeDay) {
-						current.classList.add("hidden")
-					}
-				})
-
-				document.querySelector(".activeDay").classList.remove("activeDay")
-				event.target.classList.add("activeDay")
 				DOMobjects.routineContainer.style.opacity = 0
-				setTimeout(function () {
+				setTimeout(() => {
 					updateUI()
 					DOMobjects.routineContainer.style.opacity = 1
 				}, 600)
@@ -529,7 +503,7 @@ let eventController = (function (schedCtrl, UICtrl) {
 
 	}
 
-	updateUI = function () {
+	function updateUI () {
 		let eventDatabase
 
 		eventDatabase = schedCtrl.getEventDatabase()
@@ -537,7 +511,7 @@ let eventController = (function (schedCtrl, UICtrl) {
 		UICtrl.displayEvents(activeDay)
 	}
 
-	addEvent = function (eventObj) {
+	function addEvent (eventObj) {
 		//1. Transfer data to schedule controller
 		schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes, activeDay)
 		schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay)
@@ -545,13 +519,18 @@ let eventController = (function (schedCtrl, UICtrl) {
 		updateUI()
 	}
 
-	deleteEvent = function (index) {
+	function deleteEvent (index) {
 		schedCtrl.deleteFromEventDatabase(index, activeDay)
 		schedCtrl.deleteTimeSlot(index, activeDay)
 		updateUI()
 	}
 
-	cloneRoutine = function () {
+	function changeActiveDay (event) {
+		document.querySelector(".activeDay").classList.remove("activeDay")
+		event.target.classList.add("activeDay")
+	}
+
+	function cloneRoutine () {
 		let selectedDays
 
 		selectedDays = UICtrl.getSelectedDays()
@@ -561,14 +540,22 @@ let eventController = (function (schedCtrl, UICtrl) {
 		UICtrl.fadeOut(DOMobjects.cloneRoutineUI)
 	}
 
-	resetRoutine = function () {
+	function updateCloneRoutineChoices () {
+		document.querySelector(".hidden").classList.remove("hidden")
+		Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, (current) => {
+			if (current.textContent === activeDay) {
+				current.classList.add("hidden")
+			}
+		})
+	}
+
+	function resetRoutine () {
 		schedCtrl.resetActiveDay(activeDay)
 		updateUI()
 	}
 
-	setupConfigureForm = function (index) {
-		let eventDatabase
-		eventDatabase = schedCtrl.getEventDatabase()
+	function setupConfigureForm (index) {
+		let eventDatabase = schedCtrl.getEventDatabase()
 		selectedEvent = eventDatabase[activeDay][index]
 		UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes)
 
