@@ -118,7 +118,7 @@ const scheduleController = (function () {
       }
     },
 
-    deleteTimeSlo(index, activeDay) {
+    deleteTimeSlot(index, activeDay) {
       reservedTimeSlots[activeDay].splice(index, 1);
     },
 

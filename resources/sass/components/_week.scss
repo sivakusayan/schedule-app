@@ -1,0 +1,22 @@
+
+.week {
+  @include centerChildren;
+
+  li {
+      list-style: none;
+  };
+  
+  &__day {
+      font-size: 2.5rem;
+      margin: 3rem 1rem; 
+      padding: .3rem;
+      width: 12rem;
+      
+      @include dayButton;
+      @include dayFormat;
+  }
+  
+  .activeDay {
+      @include dayButtonActive;
+  }
+}

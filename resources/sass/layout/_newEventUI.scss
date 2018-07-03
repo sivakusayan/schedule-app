@@ -1,0 +1,93 @@
+.newEventUI,
+.configEventUI {
+    height: 63rem;
+    width: 50rem;
+ 
+    @include popUpUI;
+    @include center;
+    @include centerChildren;
+    @include hide;
+    
+    &__back {
+        position: absolute;
+        font-size: 3rem;
+        top: 3%;
+        right: 3%;
+        
+        @include menuButton;
+    }
+    
+    &__form {
+        width: 82%;
+        padding: 1rem;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+    }
+    
+    &__name,
+    &__startTime,
+    &__endTime,
+    &__notes {
+        margin: 6rem 0;
+        
+        label {
+            -webkit-box-shadow: 0 .1rem .1rem $color-black;
+                    box-shadow: 0 .1rem .1rem $color-black;
+            display: inline-block;
+            color: $color-primary-light;
+            margin-right: 2rem;
+            width: 10rem;
+            font-size: 1.7rem;
+            text-align: center;
+            background-color: $color-primary-dark-1;
+            padding: 0.5rem;
+            font-weight: 200;
+            border-radius: 1rem;
+        }
+        
+        input {
+            border: none;
+            border-bottom: 1px solid $color-primary-medium-1;
+            font-family: 'Nunito', sans-serif;
+            color: $color-primary-medium-2;
+            font-size: 1.8rem;
+            transition: all .3s;
+            border-radius: 3px;
+        }
+        
+        textarea{
+            border: 1px solid $color-primary-medium-1;
+            vertical-align: bottom;
+            font-family: 'Nunito', sans-serif;
+            color: $color-primary-medium-2;
+            resize: none;
+            height: 12rem;
+            width: 20rem;
+            padding: 1rem;
+            font-size: 1.8rem;
+            border-radius: 1rem;
+        }
+    
+        input:focus,
+        textarea:focus{
+            outline: none;
+            background-color: rgba($color-primary-medium-1, 0.1); 
+        }
+    }
+    
+    &__name {
+        margin-top: 2rem;
+    }
+    
+    &__notes {
+        label {
+            vertical-align: top;
+        }
+    }
+    
+    &__submit {
+        @include submitButton;
+    }
+}

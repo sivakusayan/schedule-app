@@ -1,0 +1,70 @@
+.cloneRoutineUI {
+  height: 42rem;
+  width: 60rem;
+  font-size: 2rem;
+  
+  @include popUpUI;
+  @include center;
+  @include centerChildren;
+  @include hide;
+  
+  &__back {
+      position: absolute;
+      font-size: 3rem;
+      top: 3%;
+      right: 3%;
+      
+      @include menuButton;
+  }
+  
+  &__text {
+      
+      @include popUpUIText;
+  }
+  
+  .hidden {
+      display: none;
+  }
+  
+  &__daysContainer {
+      list-style: none; 
+      color:  $color-primary-light;
+      margin-bottom: 4rem;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+          flex-wrap: wrap;
+      width: 50rem;
+      
+      @include centerChildren;
+      
+      button {
+          font-size: 2rem;
+          display: inline-block;
+          margin: 1.5rem;
+          padding: .5rem 4rem;
+          width: 10rem;
+          -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
+                  box-shadow: 0 .2rem .5rem $color-grey-dark;
+          
+          @include dayFormat;
+          @include centerChildren;
+          @include dayButton;
+          
+      }
+
+  }
+  
+  &__submit {
+      @include submitButton;
+  }
+  
+  .selected {
+      @include dayButtonActive;  
+      
+      &:hover {
+          cursor: pointer;
+      }
+  }
+}

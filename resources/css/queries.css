@@ -43,8 +43,9 @@
         font-size: 50%;
     }
     
-    .weekContainer {
-        background-color: transparent;
+    .menu__weekContainer {
+        width: auto;
+        height: auto;
     }
     
     .week {

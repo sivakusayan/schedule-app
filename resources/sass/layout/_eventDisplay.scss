@@ -1,0 +1,19 @@
+.routineContainer {
+  width: 40%;
+  margin: 0 auto;
+  -webkit-transition: opacity 0.6s;
+  transition: opacity 0.6s;
+  opacity: 1;
+}
+
+.eventContainer {
+  margin: 3rem auto;
+}
+
+.eventContainer:nth-child(odd) { 
+  .event {background-color: $color-grey-light-1;}
+}
+
+.eventContainer:nth-child(even) {
+  .event {background-color: $color-grey-light-2;}
+}
