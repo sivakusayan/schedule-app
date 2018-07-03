@@ -1,611 +1,584 @@
-/*eslint-env browser*/
-/*eslint linebreak-style: ["error", "windows"]*/
+/* eslint-env browser */
+/* eslint linebreak-style: ["error", "windows"] */
 
 /*-----------------------------------------------------------------------------*/
 /* SCHEDULE CONTROLLER */
 /*-----------------------------------------------------------------------------*/
 
-let scheduleController = (function () {
-	"use strict"
+const scheduleController = (function () {
+  class Event {
+    constructor(name, startTime, endTime, notes) {
+      this.name = name;
+      this.startTime = startTime;
+      this.endTime = endTime;
+      this.notes = notes;
+    }
+  }
 
-	let eventDatabase, reservedTimeSlots
+  const eventDatabase = {
+    MON: [],
+    TUE: [],
+    WED: [],
+    THU: [],
+    FRI: [],
+    SAT: [],
+    SUN: [],
+  };
 
-	class Event {
-		constructor(name, startTime, endTime, notes) {
-			this.name = name
-			this.startTime = startTime
-			this.endTime = endTime
-			this.notes = notes
-		}
-	}
+  const reservedTimeSlots = {
+    MON: [],
+    TUE: [],
+    WED: [],
+    THU: [],
+    FRI: [],
+    SAT: [],
+    SUN: [],
+  };
 
-	eventDatabase = {
-		MON: [],
-		TUE: [],
-		WED: [],
-		THU: [],
-		FRI: [],
-		SAT: [],
-		SUN: []
-	}
+  return {
+    validateTimeFormat(timeInputs) {
+      if (timeInputs[1] !== '') {
+        return timeInputs[0].value < timeInputs[1].value;
+      }
+      return true;
+    },
 
-	reservedTimeSlots = {
-		MON: [],
-		TUE: [],
-		WED: [],
-		THU: [],
-		FRI: [],
-		SAT: [],
-		SUN: []
-	}
+    validateNoTimeOverlap(time, type, activeDay) {
+      const timeSlots = reservedTimeSlots[activeDay];
 
-	return {
-		validateTimeFormat: function (timeInputs) {
-			if (timeInputs[1] !== "") {
-				return timeInputs[0].value < timeInputs[1].value
-			} else {
-				return true
-			}
-		},
+      // Type 0 if startTime, Type 1 if endTime
+      if (type === 0) {
+        for (const [startTime, endTime] of timeSlots) {
+          if (startTime <= time && time < endTime) {
+            return false;
+          }
+        }
+      } else if (type === 1) {
+        for (let i = 0; i < timeSlots.length; i += 1) {
+          if (timeSlots[i][0] < time && time <= timeSlots[i][1]) {
+            return false;
+          }
+        }
+      }
 
-		validateNoTimeOverlap: function (time, type, activeDay) {
-			let timeSlots = reservedTimeSlots[activeDay]
+      return true;
+    },
 
-			//Type 0 if startTime, Type 1 if endTime
-			if (type === 0) {
-				for (let i = 0; i < timeSlots.length; i++) {
-					if (timeSlots[i][0] <= time && time < timeSlots[i][1]) {
-						return false
-					}
-				}
-			} else if (type === 1) {
-				for (let i = 0; i < timeSlots.length; i++) {
-					if (timeSlots[i][0] < time && time <= timeSlots[i][1]) {
-						return false
-					}
-				}
-			}
+    validateNoSubEvents(timeInputs, activeDay) {
+      const timeSlots = reservedTimeSlots[activeDay];
 
-			return true
-		},
+      // Index 0 is startTime, Index 1 is endTime
+      for (let i = 0; i < timeSlots.length; i += 1) {
+        if (timeInputs[0].value <= timeSlots[i][0] && timeSlots[i][1] <= timeInputs[1].value) {
+          return false;
+        }
+      }
 
-		validateNoSubEvents: function (timeInputs, activeDay) {
-			let timeSlots = reservedTimeSlots[activeDay]
+      return true;
+    },
 
-			//Index 0 is startTime, Index 1 is endTime
-			for (let i = 0; i < timeSlots.length; i++) {
-				if (timeInputs[0].value <= timeSlots[i][0] && timeSlots[i][1] <= timeInputs[1].value) {
-					return false
-				}
-			}
+    addToEventDatabase(name, startTime, endTime, notes, activeDay) {
+      const eventObj = new Event(name, startTime, endTime, notes);
 
-			return true
-		},
+      if (eventDatabase[activeDay].length === 0) {
+        eventDatabase[activeDay].push(eventObj);
+      } else { // Linear search to keep database in order
+        let indexToInsert = 0;
 
-		addToEventDatabase: function (name, startTime, endTime, notes, activeDay) {
-			let eventObj = new Event(name, startTime, endTime, notes)
+        for (let i = 0; i < eventDatabase[activeDay].length; i += 1) {
+          if (eventObj.startTime > eventDatabase[activeDay][i].startTime) {
+            indexToInsert += 1;
+          }
+        }
+        eventDatabase[activeDay].splice(indexToInsert, 0, eventObj);
+      }
+    },
 
-			if (eventDatabase[activeDay].length === 0) {
-				eventDatabase[activeDay].push(eventObj)
-			} else { //Linear search to keep database in order
-				let indexToInsert = 0
+    deleteFromEventDatabase(index, activeDay) {
+      eventDatabase[activeDay].splice(index, 1);
+    },
 
-				for (let i = 0; i < eventDatabase[activeDay].length; i++) {
-					if (eventObj.startTime > eventDatabase[activeDay][i].startTime) {
-						indexToInsert += 1
-					}
-				}
-				eventDatabase[activeDay].splice(indexToInsert, 0, eventObj)
-			}
-		},
+    resetActiveDay(activeDay) {
+      eventDatabase[activeDay] = [];
+      reservedTimeSlots[activeDay] = [];
+    },
 
-		deleteFromEventDatabase: function (index, activeDay) {
-			eventDatabase[activeDay].splice(index, 1)
-		},
+    recordTimeSlot(startTime, endTime, activeDay) {
+      if (reservedTimeSlots[activeDay].length === 0) {
+        reservedTimeSlots[activeDay].push([startTime, endTime]);
+      } else { // Linear search to keep timeslots in order
+        let indexToInsert = 0;
 
-		resetActiveDay: function (activeDay) {
-			eventDatabase[activeDay] = []
-			reservedTimeSlots[activeDay] = []
-		},
+        for (let i = 0; i < reservedTimeSlots[activeDay].length; i += 1) {
+          if (startTime > reservedTimeSlots[activeDay][i][0]) {
+            indexToInsert += 1;
+          }
+        }
+        reservedTimeSlots[activeDay].splice(indexToInsert, 0, [startTime, endTime]);
+      }
+    },
 
-		recordTimeSlot: function (startTime, endTime, activeDay) {
+    deleteTimeSlo(index, activeDay) {
+      reservedTimeSlots[activeDay].splice(index, 1);
+    },
 
-			if (reservedTimeSlots[activeDay].length === 0) {
-				reservedTimeSlots[activeDay].push([startTime, endTime])
-			} else { //Linear search to keep timeslots in order
-				let indexToInsert = 0
+    cloneToSelectedDays(activeDay, selectedDays) {
+      const activeDayRoutine = eventDatabase[activeDay];
+      const activeDayTimeSlots = reservedTimeSlots[activeDay];
 
-				for (let i = 0; i < reservedTimeSlots[activeDay].length; i++) {
-					if (startTime > reservedTimeSlots[activeDay][i][0]) {
-						indexToInsert += 1
-					}
-				}
-				reservedTimeSlots[activeDay].splice(indexToInsert, 0, [startTime, endTime])
-			}
-		},
+      for (let i = 0; i < selectedDays.length; i += 1) {
+        eventDatabase[selectedDays[i]] = activeDayRoutine;
+        reservedTimeSlots[selectedDays[i]] = activeDayTimeSlots;
+      }
+    },
 
-		deleteTimeSlot: function (index, activeDay) {
-			reservedTimeSlots[activeDay].splice(index, 1)
-		},
-
-		cloneToSelectedDays: function (activeDay, selectedDays) {
-			let activeDayRoutine, activeDayTimeSlots
-			activeDayRoutine = eventDatabase[activeDay]
-			activeDayTimeSlots = reservedTimeSlots[activeDay]
-
-			for (let i = 0; i < selectedDays.length; i++) {
-				eventDatabase[selectedDays[i]] = activeDayRoutine
-				reservedTimeSlots[selectedDays[i]] = activeDayTimeSlots
-			}
-
-		},
-
-		getEventDatabase: function () {
-			return eventDatabase
-		}
-	}
-
-}())
+    getEventDatabase() {
+      return eventDatabase;
+    },
+  };
+}());
 
 /*-----------------------------------------------------------------------------*/
 /* UI CONTROLLER */
 /*-----------------------------------------------------------------------------*/
 
-let UIController = (function () {
-	"use strict"
+const UIController = (function () {
+  const DOMobjects = {
+    week: document.querySelector('.week'),
 
-	let eventHTMLDatabase
+    overlay: document.getElementById('overlay'),
 
-	const DOMobjects = {
-		week: document.querySelector(".week"),
+    btnNew: document.getElementById('btnNew'),
+    btnNewBack: document.getElementById('btnNewBack'),
+    newEventUI: document.querySelector('.newEventUI'),
+    newEventForm: document.getElementById('newEventForm'),
+    nameInput: document.getElementById('nameInput'),
+    startTimeInput: document.getElementById('startTimeInput'),
+    endTimeInput: document.getElementById('endTimeInput'),
+    notesInput: document.getElementById('notesInput'),
+    newEventSubmit: document.querySelector('.newEventUI__submit'),
 
-		overlay: document.getElementById("overlay"),
+    btnClone: document.getElementById('btnClone'),
+    btnCloneBack: document.getElementById('btnCloneBack'),
+    cloneRoutineUI: document.querySelector('.cloneRoutineUI'),
+    cloneRoutineForm: document.getElementById('cloneRoutineForm'),
+    cloneRoutineDaysContainer: document.querySelector('.cloneRoutineUI__daysContainer'),
+    cloneRoutineDays: document.querySelectorAll('.cloneRoutineUI__day'),
+    cloneRoutineSelectedDays: document.querySelectorAll('.selected'),
 
-		btnNew: document.getElementById("btnNew"),
-		btnNewBack: document.getElementById("btnNewBack"),
-		newEventUI: document.querySelector(".newEventUI"),
-		newEventForm: document.getElementById("newEventForm"),
-		nameInput: document.getElementById("nameInput"),
-		startTimeInput: document.getElementById("startTimeInput"),
-		endTimeInput: document.getElementById("endTimeInput"),
-		notesInput: document.getElementById("notesInput"),
-		newEventSubmit: document.querySelector(".newEventUI__submit"),
+    btnReset: document.getElementById('btnReset'),
+    btnResetBack: document.getElementById('btnResetBack'),
+    resetRoutineUI: document.querySelector('.resetRoutineUI'),
+    resetRoutineYes: document.querySelector('.resetRoutineUI__YES'),
+    resetRoutineNo: document.querySelector('.resetRoutineUI__NO'),
 
-		btnClone: document.getElementById("btnClone"),
-		btnCloneBack: document.getElementById("btnCloneBack"),
-		cloneRoutineUI: document.querySelector(".cloneRoutineUI"),
-		cloneRoutineForm: document.getElementById("cloneRoutineForm"),
-		cloneRoutineDaysContainer: document.querySelector(".cloneRoutineUI__daysContainer"),
-		cloneRoutineDays: document.querySelectorAll(".cloneRoutineUI__day"),
-		cloneRoutineSelectedDays: document.querySelectorAll(".selected"),
+    btnConfigBack: document.getElementById('btnConfigBack'),
+    configEventUI: document.querySelector('.configEventUI'),
+    configEventForm: document.getElementById('configEventForm'),
+    nameConfigInput: document.getElementById('nameConfigInput'),
+    startTimeConfigInput: document.getElementById('startTimeConfigInput'),
+    endTimeConfigInput: document.getElementById('endTimeConfigInput'),
+    notesConfigInput: document.getElementById('notesConfigInput'),
+    configEventSubmit: document.querySelector('.configEventUI__submit'),
 
-		btnReset: document.getElementById("btnReset"),
-		btnResetBack: document.getElementById("btnResetBack"),
-		resetRoutineUI: document.querySelector(".resetRoutineUI"),
-		resetRoutineYes: document.querySelector(".resetRoutineUI__YES"),
-		resetRoutineNo: document.querySelector(".resetRoutineUI__NO"),
+    routineContainer: document.querySelector('.routineContainer'),
+  };
 
-		btnConfigBack: document.getElementById("btnConfigBack"),
-		configEventUI: document.querySelector(".configEventUI"),
-		configEventForm: document.getElementById("configEventForm"),
-		nameConfigInput: document.getElementById("nameConfigInput"),
-		startTimeConfigInput: document.getElementById("startTimeConfigInput"),
-		endTimeConfigInput: document.getElementById("endTimeConfigInput"),
-		notesConfigInput: document.getElementById("notesConfigInput"),
-		configEventSubmit: document.querySelector(".configEventUI__submit"),
+  const eventHTMLDatabase = {
+    MON: [],
+    TUE: [],
+    WED: [],
+    THU: [],
+    FRI: [],
+    SAT: [],
+    SUN: [],
+  };
 
-		routineContainer: document.querySelector(".routineContainer")
-	}
+  function toStandardTime(militaryTime) {
+    let standardTime;
 
-	eventHTMLDatabase = {
-		MON: [],
-		TUE: [],
-		WED: [],
-		THU: [],
-		FRI: [],
-		SAT: [],
-		SUN: []
-	}
+    const hours = Number(militaryTime.split(':')[0]);
+    const minutes = militaryTime.split(':')[1];
 
-	function dataToHTML (eventObj, index) {
-		let HTML, newHTML
+    if (hours > 12) {
+      standardTime = `${hours % 12}:${minutes} PM`;
+    } else if (hours === 12) {
+      standardTime = `${hours}:${minutes} PM`;
+    } else if (hours === 0) {
+      standardTime = `${hours + 12}:${minutes} AM`;
+    } else if (hours <= 12) {
+      standardTime = `${hours}:${minutes} AM`;
+    }
 
-		HTML = "<div id=\"event_%index%\" class=\"eventContainer %noteDetect%\"><div class=\"event\"><div><div class=\"event__time\"><span class=\"event__start\">%startTime%</span><span class=\"event__end\">%endTime%</span></div></div><div><div class=\"event__name\"><p>%name%</p></div></div><div><div class=\"event__buttons\"><button class=\"event__config\"><i id=\"config_%index%\" class=\"fas fa-cog\"></i></button><button class=\"event__delete\"><i id=\"delete_%index%\" class=\"fas fa-times-circle\"></i></button><button class=\"event__notes\"><i id=\"notes_%index%\" class=\"fas fa-sticky-note\"></i></button></div></div></div></div>"
+    return standardTime;
+  }
 
-		if (eventObj.notes.length > 0) {
-			newHTML = HTML.replace("%noteDetect%", "hasNote")
-		} else if (eventObj.notes.length === 0) {
-			newHTML = HTML.replace("%noteDetect%", "")
-			newHTML = newHTML.replace("<button class=\"event__notes\"><i id=\"notes_%index%\" class=\"fas fa-sticky-note\"></i></button>", "")
-		}
+  function dataToHTML(eventObj, index) {
+    let newHTML;
+    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button class="event__config"><i id="config_%index%" class="fas fa-cog"></i></button><button class="event__delete"><i id="delete_%index%" class="fas fa-times-circle"></i></button><button class="event__notes"><i id="notes_%index%" class="fas fa-sticky-note"></i></button></div></div></div></div>';
 
-		newHTML = newHTML.replace("%name%", eventObj.name)
-		newHTML = newHTML.replace("%startTime%", toStandardTime(eventObj.startTime))
-		newHTML = newHTML.replace("%endTime%", toStandardTime(eventObj.endTime))
-		newHTML = newHTML.replace(/%index%/g, index)
+    if (eventObj.notes.length > 0) {
+      newHTML = HTML.replace('%noteDetect%', 'hasNote');
+    } else if (eventObj.notes.length === 0) {
+      newHTML = HTML.replace('%noteDetect%', '');
+      newHTML = newHTML.replace('<button class="event__notes"><i id="notes_%index%" class="fas fa-sticky-note"></i></button>', '');
+    }
 
-		return newHTML
-	}
+    newHTML = newHTML.replace('%name%', eventObj.name);
+    newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
+    newHTML = newHTML.replace('%endTime%', toStandardTime(eventObj.endTime));
+    newHTML = newHTML.replace(/%index%/g, index);
 
-	function resetEventHTMLDatabase (activeDay) {
-		eventHTMLDatabase[activeDay] = []
-	}
+    return newHTML;
+  }
 
-	function darkenScreen () {
-		DOMobjects.overlay.classList.remove("overlayOFF")
-		DOMobjects.overlay.classList.add("overlayON")
-	}
+  function resetEventHTMLDatabase(activeDay) {
+    eventHTMLDatabase[activeDay] = [];
+  }
 
-	function lightenScreen () {
-		DOMobjects.overlay.classList.remove("overlayON")
-		DOMobjects.overlay.classList.add("overlayFADE")
+  function darkenScreen() {
+    DOMobjects.overlay.classList.remove('overlayOFF');
+    DOMobjects.overlay.classList.add('overlayON');
+  }
 
-		setTimeout(() => {
-			DOMobjects.overlay.classList.remove("overlayFADE")
-			DOMobjects.overlay.classList.add("overlayOFF")
-		}, 300)
-	}
+  function lightenScreen() {
+    DOMobjects.overlay.classList.remove('overlayON');
+    DOMobjects.overlay.classList.add('overlayFADE');
 
-	function toStandardTime (militaryTime) {
-		let hours, minutes, standardTime
+    setTimeout(() => {
+      DOMobjects.overlay.classList.remove('overlayFADE');
+      DOMobjects.overlay.classList.add('overlayOFF');
+    }, 300);
+  }
 
-		hours = Number(militaryTime.split(":")[0])
-		minutes = militaryTime.split(":")[1]
+  return {
+    getDOMobjects() {
+      return DOMobjects;
+    },
 
-		if (hours > 12) {
-			standardTime = hours % 12 + ":" + minutes + " PM"
-		} else if (hours === 12) {
-			standardTime = hours + ":" + minutes + " PM"
-		} else if (hours === 0) {
-			standardTime = hours + 12 + ":" + minutes + " AM"
-		} else if (hours <= 12) {
-			standardTime = hours + ":" + minutes + " AM"
-		}
+    fadeIn(domObj) {
+      darkenScreen();
+      domObj.style.transform = 'translate(50%, 50%)';
+      domObj.style.opacity = 1;
+    },
 
-		return standardTime
-	}
+    fadeOut(domObj) {
+      lightenScreen();
+      domObj.style.opacity = 0;
+      setTimeout(() => {
+        domObj.style.transform = 'translateX(-300%)';
+      }, 300);
+    },
 
-	return {
-		getDOMobjects: function () {
-			return DOMobjects
-		},
+    getInputData() {
+      return {
+        name: DOMobjects.nameInput.value,
+        startTime: DOMobjects.startTimeInput.value,
+        endTime: DOMobjects.endTimeInput.value,
+        notes: DOMobjects.notesInput.value,
+      };
+    },
 
-		fadeIn: function (domObj) {
-			darkenScreen()
-			domObj.style.transform = "translate(50%, 50%)"
-			domObj.style.opacity = 1
-		},
+    setConfigData(name, startTime, endTime, notes) {
+      DOMobjects.nameConfigInput.value = name;
+      DOMobjects.startTimeConfigInput.value = startTime;
+      DOMobjects.endTimeConfigInput.value = endTime;
+      DOMobjects.notesConfigInput.value = notes;
+    },
 
-		fadeOut: function (domObj) {
-			lightenScreen()
-			domObj.style.opacity = 0
-			setTimeout(() => {
-				domObj.style.transform = "translateX(-300%)"
-			}, 300)
-		},
+    getConfigData() {
+      return {
+        name: DOMobjects.nameConfigInput.value,
+        startTime: DOMobjects.startTimeConfigInput.value,
+        endTime: DOMobjects.endTimeConfigInput.value,
+        notes: DOMobjects.notesConfigInput.value,
+      };
+    },
 
-		getInputData: function () {
-			return {
-				name: DOMobjects.nameInput.value,
-				startTime: DOMobjects.startTimeInput.value,
-				endTime: DOMobjects.endTimeInput.value,
-				notes: DOMobjects.notesInput.value
-			}
-		},
+    resetNewEventForm() {
+      DOMobjects.startTimeInput.setCustomValidity('');
+      DOMobjects.endTimeInput.setCustomValidity('');
+      DOMobjects.newEventForm.reset();
+    },
 
-		setConfigData: function (name, startTime, endTime, notes) {
-			DOMobjects.nameConfigInput.value = name
-			DOMobjects.startTimeConfigInput.value = startTime
-			DOMobjects.endTimeConfigInput.value = endTime
-			DOMobjects.notesConfigInput.value = notes
-		},
+    updateHTMLDatabase(eventDatabase, activeDay) {
+      resetEventHTMLDatabase(activeDay);
+      for (let i = 0; i < eventDatabase[activeDay].length; i += 1) {
+        const eventHTML = dataToHTML(eventDatabase[activeDay][i], i);
+        eventHTMLDatabase[activeDay].push(eventHTML);
+      }
+    },
 
-		getConfigData: function () {
-			return {
-				name: DOMobjects.nameConfigInput.value,
-				startTime: DOMobjects.startTimeConfigInput.value,
-				endTime: DOMobjects.endTimeConfigInput.value,
-				notes: DOMobjects.notesConfigInput.value
-			}
-		},
+    getSelectedDays() {
+      const selectedDays = [];
 
-		resetNewEventForm: function () {
-			DOMobjects.startTimeInput.setCustomValidity("")
-			DOMobjects.endTimeInput.setCustomValidity("")
-			DOMobjects.newEventForm.reset()
-		},
+      Array.prototype.forEach.call(document.querySelectorAll('.selected'), (current) => {
+        selectedDays.push(current.textContent);
+      });
 
-		updateHTMLDatabase: function (eventDatabase, activeDay) {
-			resetEventHTMLDatabase(activeDay)
-			for (let i = 0; i < eventDatabase[activeDay].length; i++) {
-				let eventHTML = dataToHTML(eventDatabase[activeDay][i], i)
-				eventHTMLDatabase[activeDay].push(eventHTML)
-			}
-		},
+      return selectedDays;
+    },
 
-		getSelectedDays: function () {
-			let selectedDays = []
+    resetCloneForm() {
+      Array.prototype.forEach.call(document.querySelectorAll('.selected'), (current) => {
+        current.classList.remove('selected');
+      });
+    },
 
-			Array.prototype.forEach.call(document.querySelectorAll(".selected"), function (current) {
-				selectedDays.push(current.textContent)
-			})
-
-			return selectedDays
-		},
-
-		resetCloneForm: function () {
-			Array.prototype.forEach.call(document.querySelectorAll(".selected"), function (current) {
-				current.classList.remove("selected")
-			})
-		},
-
-		displayEvents: function (activeDay) {
-			while (DOMobjects.routineContainer.firstChild) {
-				DOMobjects.routineContainer.removeChild(DOMobjects.routineContainer.firstChild)
-			}
-			for (let i = 0; i < eventHTMLDatabase[activeDay].length; i++) {
-				DOMobjects.routineContainer.insertAdjacentHTML("beforeend", eventHTMLDatabase[activeDay][i])
-			}
-		}
-	}
-
-}())
+    displayEvents(activeDay) {
+      while (DOMobjects.routineContainer.firstChild) {
+        DOMobjects.routineContainer.removeChild(DOMobjects.routineContainer.firstChild);
+      }
+      for (let i = 0; i < eventHTMLDatabase[activeDay].length; i += 1) {
+        DOMobjects.routineContainer.insertAdjacentHTML('beforeend', eventHTMLDatabase[activeDay][i]);
+      }
+    },
+  };
+}());
 
 /*-----------------------------------------------------------------------------*/
 /* EVENT CONTROLLER */
 /*-----------------------------------------------------------------------------*/
 
-let eventController = (function (schedCtrl, UICtrl) {
-	"use strict"
+const eventController = (function (schedCtrl, UICtrl) {
+  let activeDay;
+  let selectedEvent;
 
-	let activeDay, selectedEvent, selectedEventIndex
+  const DOMobjects = UICtrl.getDOMobjects();
 
-	const DOMobjects = UICtrl.getDOMobjects()
+  function updateUI() {
+    const eventDatabase = schedCtrl.getEventDatabase();
+    UICtrl.updateHTMLDatabase(eventDatabase, activeDay);
+    UICtrl.displayEvents(activeDay);
+  }
 
-	function setValidationMessage (timeInputs) {
-		let validityCheck = [1, 1] //Measures validity of [startTime, endTime]: 1 if valid, 0 if invalid
+  function addEvent(eventObj) {
+    // 1. Transfer data to schedule controller
+    schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime,
+      eventObj.endTime, eventObj.notes, activeDay);
+    schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay);
+    // 2. Transfer data to UI controller
+    updateUI();
+  }
 
-		for (let i = 0; i < 2; i++) {
-			if (!schedCtrl.validateTimeFormat(timeInputs)) {
-				timeInputs[1].setCustomValidity("End time should be after the Start time.")
-				validityCheck[1] = 0
-			} else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
-				timeInputs[i].setCustomValidity("You can't have overlapping event times.")
-				validityCheck[i] = 0
-			} else if (!schedCtrl.validateNoSubEvents(timeInputs, activeDay)) {
-				timeInputs[1].setCustomValidity("You can't have overlapping event times.")
-				validityCheck[1] = 0
-			}
-		}
+  function deleteEvent(index) {
+    schedCtrl.deleteFromEventDatabase(index, activeDay);
+    schedCtrl.deleteTimeSlot(index, activeDay);
+    updateUI();
+  }
 
-		if (validityCheck[0] === 1) {
-			timeInputs[0].setCustomValidity("")
-		}
+  function changeActiveDay(event) {
+    document.querySelector('.activeDay').classList.remove('activeDay');
+    event.target.classList.add('activeDay');
+  }
 
-		if (validityCheck[1] === 1) {
-			timeInputs[1].setCustomValidity("")
-		}
+  function cloneRoutine() {
+    const selectedDays = UICtrl.getSelectedDays();
+    schedCtrl.cloneToSelectedDays(activeDay, selectedDays);
+    updateUI();
+    UICtrl.resetCloneForm();
+    UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
+  }
 
-	}
+  function updateCloneRoutineChoices() {
+    document.querySelector('.hidden').classList.remove('hidden');
+    Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, (current) => {
+      if (current.textContent === activeDay) {
+        current.classList.add('hidden');
+      }
+    });
+  }
 
-	function setupEventListeners () {
+  function resetRoutine() {
+    schedCtrl.resetActiveDay(activeDay);
+    updateUI();
+  }
 
-		/*-------------------------MENU BUTTONS--------------------------------*/
+  function setupConfigureForm(index) {
+    const eventDatabase = schedCtrl.getEventDatabase();
+    selectedEvent = eventDatabase[activeDay][index];
+    UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime,
+      selectedEvent.endTime, selectedEvent.notes);
 
-		DOMobjects.btnNew.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.newEventUI))
-		DOMobjects.btnNewBack.addEventListener("click", () => {
-			UICtrl.fadeOut(DOMobjects.newEventUI)
+    schedCtrl.deleteFromEventDatabase(index, activeDay);
+    schedCtrl.deleteTimeSlot(index, activeDay);
+  }
 
-			setTimeout(function () {
-				UICtrl.resetNewEventForm()
-			}, 300)
-		})
+  function setValidationMessage(timeInputs) {
+    const validityCheck = [1, 1];
 
-		DOMobjects.btnClone.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.cloneRoutineUI))
-		DOMobjects.btnCloneBack.addEventListener("click", () => {
-			UICtrl.fadeOut(DOMobjects.cloneRoutineUI)
-			UICtrl.resetCloneForm()
-		})
+    for (let i = 0; i < 2; i += 1) {
+      if (!schedCtrl.validateTimeFormat(timeInputs)) {
+        timeInputs[1].setCustomValidity('End time should be after the Start time.');
+        validityCheck[1] = 0;
+      } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
+        timeInputs[i].setCustomValidity("You can't have overlapping event times.");
+        validityCheck[i] = 0;
+      } else if (!schedCtrl.validateNoSubEvents(timeInputs, activeDay)) {
+        timeInputs[1].setCustomValidity("You can't have overlapping event times.");
+        validityCheck[1] = 0;
+      }
+    }
 
-		DOMobjects.btnReset.addEventListener("click", () => UICtrl.fadeIn(DOMobjects.resetRoutineUI))
-		DOMobjects.btnResetBack.addEventListener("click", () => UICtrl.fadeOut(DOMobjects.resetRoutineUI))
+    if (validityCheck[0] === 1) {
+      timeInputs[0].setCustomValidity('');
+    }
 
-		/*------------------------FORM BUTTONS------------------------------*/
+    if (validityCheck[1] === 1) {
+      timeInputs[1].setCustomValidity('');
+    }
+  }
 
-		DOMobjects.startTimeInput.addEventListener("input", () => {
-			let timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
-			setValidationMessage(timeInputs)
-		})
-		DOMobjects.endTimeInput.addEventListener("input", () => {
-			let timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput]
-			setValidationMessage(timeInputs)
-		})
-		DOMobjects.newEventForm.addEventListener("submit", () => {
-			let eventObj = UICtrl.getInputData()
-			addEvent(eventObj)
-			UICtrl.fadeOut(DOMobjects.newEventUI)
-			UICtrl.resetNewEventForm()
-		})
+  function setupEventListeners() {
+    /* -------------------------MENU BUTTONS--------------------------------*/
 
-		DOMobjects.startTimeConfigInput.addEventListener("input", () => {
-			let timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
-			setValidationMessage(timeInputs)
-		})
-		DOMobjects.endTimeConfigInput.addEventListener("input", () => {
-			let timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput]
-			setValidationMessage(timeInputs)
-		})
-		DOMobjects.configEventForm.addEventListener("submit", () => {
-			let configuredEventObj
+    DOMobjects.btnNew.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.newEventUI));
+    DOMobjects.btnNewBack.addEventListener('click', () => {
+      UICtrl.fadeOut(DOMobjects.newEventUI);
 
-			configuredEventObj = UICtrl.getConfigData()
-			addEvent(configuredEventObj)
+      setTimeout(() => {
+        UICtrl.resetNewEventForm();
+      }, 300);
+    });
 
-			UICtrl.fadeOut(DOMobjects.configEventUI)
-		})
+    DOMobjects.btnClone.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.cloneRoutineUI));
+    DOMobjects.btnCloneBack.addEventListener('click', () => {
+      UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
+      UICtrl.resetCloneForm();
+    });
 
-		DOMobjects.cloneRoutineForm.addEventListener("submit", cloneRoutine)
+    DOMobjects.btnReset.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.resetRoutineUI));
+    DOMobjects.btnResetBack.addEventListener('click', () => UICtrl.fadeOut(DOMobjects.resetRoutineUI));
 
-		DOMobjects.resetRoutineYes.addEventListener("click", () => {
-			resetRoutine()
-			UICtrl.fadeOut(DOMobjects.resetRoutineUI)
-		})
+    /* ------------------------FORM BUTTONS------------------------------*/
 
-		DOMobjects.resetRoutineNo.addEventListener("click", () => UICtrl.fadeOut(DOMobjects.resetRoutineUI))
+    DOMobjects.startTimeInput.addEventListener('input', () => {
+      const timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
+      setValidationMessage(timeInputs);
+    });
+    DOMobjects.endTimeInput.addEventListener('input', () => {
+      const timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
+      setValidationMessage(timeInputs);
+    });
+    DOMobjects.newEventForm.addEventListener('submit', () => {
+      const eventObj = UICtrl.getInputData();
+      addEvent(eventObj);
+      UICtrl.fadeOut(DOMobjects.newEventUI);
+      UICtrl.resetNewEventForm();
+    });
 
-		/*-------------------------WEEK BUTTONS--------------------------------*/
+    DOMobjects.startTimeConfigInput.addEventListener('input', () => {
+      const timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+      setValidationMessage(timeInputs);
+    });
+    DOMobjects.endTimeConfigInput.addEventListener('input', () => {
+      const timeInputs = [DOMobjects.startTimeConfigInput, DOMobjects.endTimeConfigInput];
+      setValidationMessage(timeInputs);
+    });
+    DOMobjects.configEventForm.addEventListener('submit', () => {
+      const configuredEventObj = UICtrl.getConfigData();
+      addEvent(configuredEventObj);
 
-		DOMobjects.week.addEventListener("click", (event) => {
-			if (event.target.tagName === "BUTTON") {
+      UICtrl.fadeOut(DOMobjects.configEventUI);
+    });
 
-				activeDay = event.target.textContent
-				changeActiveDay(event)
-				updateCloneRoutineChoices()
+    DOMobjects.cloneRoutineForm.addEventListener('submit', cloneRoutine);
 
-				DOMobjects.routineContainer.style.opacity = 0
-				setTimeout(() => {
-					updateUI()
-					DOMobjects.routineContainer.style.opacity = 1
-				}, 600)
-			}
-		})
+    DOMobjects.resetRoutineYes.addEventListener('click', () => {
+      resetRoutine();
+      UICtrl.fadeOut(DOMobjects.resetRoutineUI);
+    });
 
-		DOMobjects.cloneRoutineDaysContainer.addEventListener("click", function (event) {
-			if (event.target.tagName === "BUTTON") {
-				event.target.classList.toggle("selected")
-			}
-		})
+    DOMobjects.resetRoutineNo.addEventListener('click', () => UICtrl.fadeOut(DOMobjects.resetRoutineUI));
 
-		/*-------------------------EVENT BUTTONS--------------------------------*/
+    /* -------------------------WEEK BUTTONS--------------------------------*/
 
-		DOMobjects.routineContainer.addEventListener("click", function (event) {
+    DOMobjects.week.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+        activeDay = event.target.textContent;
+        changeActiveDay(event);
+        updateCloneRoutineChoices();
 
-			if (event.target.tagName === "I") {
-				let buttonType
-				buttonType = event.target.getAttribute("id").split("_")[0]
-				selectedEventIndex = event.target.getAttribute("id").split("_")[1]
+        DOMobjects.routineContainer.style.opacity = 0;
+        setTimeout(() => {
+          updateUI();
+          DOMobjects.routineContainer.style.opacity = 1;
+        }, 600);
+      }
+    });
 
-				if (buttonType === "config") {
-					setupConfigureForm(selectedEventIndex)
-					UICtrl.fadeIn(DOMobjects.configEventUI)
-				} else if (buttonType === "delete") {
-					deleteEvent(selectedEventIndex)
-				}
-			}
-		})
+    DOMobjects.cloneRoutineDaysContainer.addEventListener('click', (event) => {
+      if (event.target.tagName === 'BUTTON') {
+        event.target.classList.toggle('selected');
+      }
+    });
 
-		DOMobjects.btnConfigBack.addEventListener("click", function () {
-			schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes, activeDay)
-			UICtrl.fadeOut(DOMobjects.configEventUI)
-			DOMobjects.endTimeConfigInput.setCustomValidity("")
-			DOMobjects.startTimeConfigInput.setCustomValidity("")
-		})
+    /* -------------------------EVENT BUTTONS--------------------------------*/
 
-	}
+    DOMobjects.routineContainer.addEventListener('click', (event) => {
+      if (event.target.tagName === 'I') {
+        const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
 
-	function updateUI () {
-		let eventDatabase
+        if (buttonType === 'config') {
+          setupConfigureForm(selectedEventIndex);
+          UICtrl.fadeIn(DOMobjects.configEventUI);
+        } else if (buttonType === 'delete') {
+          deleteEvent(selectedEventIndex);
+        }
+      }
+    });
 
-		eventDatabase = schedCtrl.getEventDatabase()
-		UICtrl.updateHTMLDatabase(eventDatabase, activeDay)
-		UICtrl.displayEvents(activeDay)
-	}
+    DOMobjects.btnConfigBack.addEventListener('click', () => {
+      schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime,
+        selectedEvent.endTime, selectedEvent.notes, activeDay);
+      UICtrl.fadeOut(DOMobjects.configEventUI);
+      DOMobjects.endTimeConfigInput.setCustomValidity('');
+      DOMobjects.startTimeConfigInput.setCustomValidity('');
+    });
+  }
 
-	function addEvent (eventObj) {
-		//1. Transfer data to schedule controller
-		schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime, eventObj.endTime, eventObj.notes, activeDay)
-		schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay)
-		//2. Transfer data to UI controller
-		updateUI()
-	}
+  return {
+    init() {
+      setupEventListeners();
+      activeDay = 'MON';
 
-	function deleteEvent (index) {
-		schedCtrl.deleteFromEventDatabase(index, activeDay)
-		schedCtrl.deleteTimeSlot(index, activeDay)
-		updateUI()
-	}
+      addEvent({
+        name: 'Breakfast',
+        startTime: '07:00',
+        endTime: '07:30',
+        notes: '',
+      });
+      addEvent({
+        name: 'Workout',
+        startTime: '08:15',
+        endTime: '09:00',
+        notes: '4 sets, 15 reps of each: Glute Bridge, Step Up, Squat, Leg Curl',
+      });
+      addEvent({
+        name: 'Algorithms Practice',
+        startTime: '09:00',
+        endTime: '11:30',
+        notes: 'Focus on calculating time complexity',
+      });
+      addEvent({
+        name: 'Lunch',
+        startTime: '11:30',
+        endTime: '12:30',
+        notes: '',
+      });
+      addEvent({
+        name: 'Calligraphy Club',
+        startTime: '14:00',
+        endTime: '15:30',
+        notes: 'Workshop on flourishing',
+      });
 
-	function changeActiveDay (event) {
-		document.querySelector(".activeDay").classList.remove("activeDay")
-		event.target.classList.add("activeDay")
-	}
+      if (/* @cc_on!@ */ false || !!document.documentMode) {
+        DOMobjects.startTimeInput.setAttribute('title', 'Military time XX:XX');
+        DOMobjects.endTimeInput.setAttribute('title', 'Military time XX:XX');
+      }
+    },
+  };
+}(scheduleController, UIController));
 
-	function cloneRoutine () {
-		let selectedDays
-
-		selectedDays = UICtrl.getSelectedDays()
-		schedCtrl.cloneToSelectedDays(activeDay, selectedDays)
-		updateUI()
-		UICtrl.resetCloneForm()
-		UICtrl.fadeOut(DOMobjects.cloneRoutineUI)
-	}
-
-	function updateCloneRoutineChoices () {
-		document.querySelector(".hidden").classList.remove("hidden")
-		Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, (current) => {
-			if (current.textContent === activeDay) {
-				current.classList.add("hidden")
-			}
-		})
-	}
-
-	function resetRoutine () {
-		schedCtrl.resetActiveDay(activeDay)
-		updateUI()
-	}
-
-	function setupConfigureForm (index) {
-		let eventDatabase = schedCtrl.getEventDatabase()
-		selectedEvent = eventDatabase[activeDay][index]
-		UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime, selectedEvent.endTime, selectedEvent.notes)
-
-		schedCtrl.deleteFromEventDatabase(index, activeDay)
-		schedCtrl.deleteTimeSlot(index, activeDay)
-	}
-
-	return {
-		init: function () {
-			setupEventListeners()
-			activeDay = "MON"
-
-			addEvent({
-				name: "Breakfast",
-				startTime: "07:00",
-				endTime: "07:30",
-				notes: ""
-			})
-			addEvent({
-				name: "Workout",
-				startTime: "08:15",
-				endTime: "09:00",
-				notes: "4 sets, 15 reps of each: Glute Bridge, Step Up, Squat, Leg Curl"
-			})
-			addEvent({
-				name: "Algorithms Practice",
-				startTime: "09:00",
-				endTime: "11:30",
-				notes: "Focus on calculating time complexity"
-			})
-			addEvent({
-				name: "Lunch",
-				startTime: "11:30",
-				endTime: "12:30",
-				notes: ""
-			})
-			addEvent({
-				name: "Calligraphy Club",
-				startTime: "14:00",
-				endTime: "15:30",
-				notes: "Workshop on flourishing"
-			})
-
-			if ( /*@cc_on!@*/ false || !!document.documentMode) {
-				DOMobjects.startTimeInput.setAttribute("title", "Military time XX:XX")
-				DOMobjects.endTimeInput.setAttribute("title", "Military time XX:XX")
-			}
-
-		}
-	}
-}(scheduleController, UIController))
-
-eventController.init()
+eventController.init();

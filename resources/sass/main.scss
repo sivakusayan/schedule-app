@@ -263,8 +263,8 @@ button {
 
 .menu {
     height: 20rem;
-    -webkit-box-shadow: 0 .3rem 2rem rgba($color-grey-dark, .8);
-            box-shadow: 0 .3rem 2rem rgba($color-grey-dark, .8);
+    -webkit-box-shadow: 0 1rem 2rem rgba($color-black, .3);
+            box-shadow: 0 1rem 2rem rgba($color-black, .3);
     top: 0;
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -599,8 +599,8 @@ button {
 
 .event {
     height: 15rem;
-    -webkit-box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
-            box-shadow: 0 .3rem 1rem rgba($color-grey-medium, .8);
+    -webkit-box-shadow: 0rem .4rem 1.5rem rgba($color-black, .3);
+            box-shadow: 0rem .4rem 1.5rem rgba($color-black, .3);
     -webkit-transition: -webkit-box-shadow 0.3s;
     transition: -webkit-box-shadow 0.3s;
     border-radius: 1rem;
@@ -685,8 +685,8 @@ button {
         display: flex;
         opacity: 0;
         transform: translateY(1.2rem);
-    }
-     
+    }                                              
+
     &__config:focus,
     &__delete:focus,
     &__notes:focus, {
@@ -695,6 +695,11 @@ button {
      
     &:hover {
         border-left: 10px solid $color-primary-light;
+
+        .event__name p {
+            transform: translate(50%, 50%) scale(1.07);
+            backface-visibility: hidden;
+        }
         
         .event__config,
         .event__delete,
