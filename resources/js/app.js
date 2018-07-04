@@ -215,18 +215,19 @@ const UIController = (function () {
 
   function dataToHTML(eventObj, index) {
     let newHTML;
-    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button class="event__config"><i id="config_%index%" class="fas fa-cog"></i></button><button class="event__delete"><i id="delete_%index%" class="fas fa-times-circle"></i></button><button class="event__notes"><i id="notes_%index%" class="fas fa-sticky-note"></i></button></div></div></div></div>';
+    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button class="event__config"><i id="config_%index%" class="fas fa-cog"></i></button><button class="event__delete"><i id="delete_%index%" class="fas fa-times-circle"></i></button><button class="event__toggleNote"><i id="notes_%index%" class="fas fa-sticky-note"></i></button></div></div><div><div class="event__note"><p>%notes%</p></div></div></div></div>';
 
     if (eventObj.notes.length > 0) {
       newHTML = HTML.replace('%noteDetect%', 'hasNote');
     } else if (eventObj.notes.length === 0) {
       newHTML = HTML.replace('%noteDetect%', '');
-      newHTML = newHTML.replace('<button class="event__notes"><i id="notes_%index%" class="fas fa-sticky-note"></i></button>', '');
+      newHTML = newHTML.replace('<button class="event__toggleNote"><i id="notes_%index%" class="fas fa-sticky-note"></i></button>', '');
     }
 
     newHTML = newHTML.replace('%name%', eventObj.name);
     newHTML = newHTML.replace('%startTime%', toStandardTime(eventObj.startTime));
     newHTML = newHTML.replace('%endTime%', toStandardTime(eventObj.endTime));
+    newHTML = newHTML.replace('%notes%', eventObj.notes);
     newHTML = newHTML.replace(/%index%/g, index);
 
     return newHTML;
@@ -270,9 +271,9 @@ const UIController = (function () {
       }, 300);
     },
 
-    openNotes(eventIndex) {
+    toggleNote(eventIndex) {
       const event = document.getElementById(`event_${eventIndex}`);
-      event.classList.toggle('openNotes');
+      event.classList.toggle('openNote');
     },
 
     getInputData() {
@@ -533,7 +534,7 @@ const eventController = (function (schedCtrl, UICtrl) {
             deleteEvent(selectedEventIndex);
             break;
           case 'notes':
-            UICtrl.openNotes(selectedEventIndex);
+            UICtrl.toggleNote(selectedEventIndex);
             break;
           default:
             console.log('This button type is not programmed yet.');
