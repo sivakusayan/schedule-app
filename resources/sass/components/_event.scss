@@ -1,7 +1,7 @@
 .event {
   height: 15rem;
   -webkit-box-shadow: 0rem .4rem 1.5rem rgba($color-black, .3);
-          box-shadow: 0rem .4rem 1.5rem rgba($color-black, .3);
+  box-shadow: 0rem .4rem 1.5rem rgba($color-black, .3);
   -webkit-transition: -webkit-box-shadow 0.3s;
   transition: -webkit-box-shadow 0.3s;
   border-radius: 1rem;
@@ -11,145 +11,138 @@
 
   @include centerChildren;
   -webkit-box-align: stretch;
-      -ms-flex-align: stretch;
-          align-items: stretch;
-          flex-wrap: wrap;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  flex-wrap: wrap;
 
-  > div {
-      position: relative;
-      width: 33%;
-  }
+  >div {
+    position: relative;
+    width: 33%;
+  } 
 
   //-------------------------------------------------------NAME SECTION
-
-  &__name p{
-      text-transform: uppercase;
-      background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-medium-1);
-      font-size: 2rem;
-      text-align: center;
-      width: 20rem;
-      max-height: 12rem;
-      padding: 1.5rem;
-      overflow: hidden;
-      border-radius: 3rem;
-      color: $color-white;
-      word-wrap: break-word;
-      transition: transform 0.3s;
-      
-      @include center;
-  }
+  
+  &__name p {
+    text-transform: uppercase;
+    background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-medium-1);
+    font-size: 2rem;
+    text-align: center;
+    width: 20rem;
+    max-height: 12rem;
+    padding: 1.5rem;
+    overflow: hidden;
+    border-radius: 3rem;
+    color: $color-white;
+    word-wrap: break-word;
+    transition: transform 0.3s;
+    @include center;
+  } 
 
   //-------------------------------------------------------TIME SECTION
-  
-  &__time {
-      position: relative;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      
-      span {
-          font-size: 2rem;
-          margin: 0 auto;
-          font-weight: 600;
-          vertical-align: middle;
-          padding: 0.6rem 2rem;
-      }
-      
-  }
-  
-  &__start {
-      top: 0;
-      color: $color-primary-medium-1;
-      border-right: 3px solid $color-primary-medium-1;
-  }
-  
-  &__end {
-      bottom: 0;
-      color: $color-primary-dark-1;
-      border-right: 3px solid $color-primary-dark-1;
-  }
 
-  //-------------------------------------------------------BUTTON SECTION
+  &__time {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    span {
+      font-size: 2rem;
+      margin: 0 auto;
+      font-weight: 600;
+      vertical-align: middle;
+      padding: 0.6rem 2rem;
+    }
+  }
+  &__start {
+    top: 0;
+    color: $color-primary-medium-1;
+    border-right: 3px solid $color-primary-medium-1;
+  }
+  &__end {
+    bottom: 0;
+    color: $color-primary-dark-1;
+    border-right: 3px solid $color-primary-dark-1;
+  } 
   
+  //-------------------------------------------------------BUTTON SECTION
+
   &__config,
   &__delete,
   &__notes {
-      position: absolute;
-      background: none;
-      border: none;
-      font-size: 4rem;
-      color: $color-primary-medium-1;
-      transition: all .3s;
-      display: -webkit-box; 
-      display: -ms-flexbox; 
-      display: flex;
-      opacity: 0;
-      transform: translateY(1.2rem);
-  }                                              
-
+    position: absolute;
+    background: none;
+    border: none;
+    font-size: 4rem;
+    color: $color-primary-medium-1;
+    transition: all .3s;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  &__config,
+  &__delete {
+    opacity: 0;
+    transform: translateY(1.2rem)
+  }
   &__config:focus,
   &__delete:focus,
-  &__notes:focus, {
-      outline: none;     
+  &__notes:focus,
+    {
+    outline: none;
   }
-   
   &:hover {
-      border-left: 10px solid $color-primary-light;
+    border-left: 10px solid $color-primary-light;
+    .event__name p {
+      transform: translate(50%, 50%) scale(1.07);
+      backface-visibility: hidden;
+    }
+    .event__config,
+    .event__delete {
+      transform: translateY(0);
+      opacity: 1;
+      cursor: pointer;
+    }
+    .event__notes {
+      right: 70%;
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+    .event__config:hover,
+    .event__delete:hover{
+      color: $color-primary-dark-1;
+      transform: translateY(0) scale(1.1);
+    }
 
-      .event__name p {
-          transform: translate(50%, 50%) scale(1.07);
-          backface-visibility: hidden;
-      }
-      
-      .event__config,
-      .event__delete,
-      .event__notes {
-          transform: translateY(0);
-          opacity: 1;
-          cursor: pointer;
-      }
-      
-      .event__config:hover,
-      .event__delete:hover,
-      .event__notes:hover {
-          color: $color-primary-dark-1;
-          transform: translateY(0) scale(1.1);
-      }
+    .event__notes:hover{
+      color: $color-primary-dark-1;
+      transform: scale(1.15);
+    }
   }
-  
   &__config {
-      top: 35%;
-      right: 60%;
+    top: 35%;
+    right: 55%;
   }
-  
   &__delete {
-      top: 35%;
-      right: 30%;
-  }
-
-  &__notes {
-      top: 35%;
-      right: 10%;
+    top: 35%;
+    right: 25%;
   }
 }
 
 //-------------------------------------------------------NOTES MODIFIER
-
 .hasNote {
 
   .event__config {
-      top: 35%;
-      right: 70%;
+    top: 36%;
+    right: 40%;
   }
-
   .event__delete {
-      top: 35%;
-      right: 40%;
+    top: 36%;
+    right: 10%;
   }
-
   .event__notes {
-      top: 35%;
-      right: 10%;
+    top: 36%;
+    right: 40%;
+    transform: scale(1.3);
   }
 }

@@ -1,12 +1,12 @@
 .menu {
   height: 20rem;
   -webkit-box-shadow: 0 1rem 2rem rgba($color-black, .3);
-          box-shadow: 0 1rem 2rem rgba($color-black, .3);
+  box-shadow: 0 1rem 2rem rgba($color-black, .3);
   top: 0;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   margin-bottom: 5rem;
   z-index: 100;
   position: -webkit-sticky;
@@ -14,44 +14,44 @@
   top: 0;
 
   &__weekContainer {
-      background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-light);
-      width: 100%;
-      height: 10rem;
-      position: fixed;
-      z-index: 200;
-  }
-
-  //-------------------------------------------------------BUTTONS
+    background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-light);
+    width: 100%;
+    height: 10rem;
+    position: fixed;
+    z-index: 200;
+  } 
   
-  &__buttonContainer {
-      width: 100%;
-      height: 10rem;
-      background-color: $color-white;
-      
-      @include centerChildren;
-      -webkit-box-pack: none;
-          -ms-flex-pack: none;
-              justify-content: none;
-  }
+  //-------------------------------------------------------BUTTONS
 
+  &__buttonContainer {
+    width: 100%;
+    height: 10rem;
+    background-color: $color-white;
+    @include centerChildren;
+    -webkit-box-pack: none;
+    -ms-flex-pack: none;
+    justify-content: none;
+  } 
+  
   //-------------------------------------------------------CURRENT DAY DISPLAY
   // Only appears on mobile
   
   &__mobile {
-      position: relative;
-      height: 10rem;
-      background-color: $color-primary-medium-2;
+    position: relative;
+    height: 10rem;
+    background-color: $color-primary-medium-2;
   }
-  
   &__currentDay {
-      background-color: darken($color-primary-dark-1, 10%);
-      font-size: 4rem;
-      padding: .6rem;
-      width: 30rem;
-      text-align: center;
-      
-      @include center;
-      @include dayFormat;
+    background-color: darken($color-primary-dark-1, 10%);
+    font-size: 4rem;
+    padding: .6rem;
+    width: 30rem;
+    text-align: center;
+    text-transform: uppercase;
+    text-transform: uppercase;
+    color: $color-white;
+    font-weight: 200;
+    @include center;
   }
 }
 
@@ -59,19 +59,15 @@
   height: 5rem;
   margin: 0 4rem;
   padding: .5rem;
-
   i {
-      font-size: 3.5rem;
-      margin-right: 1rem;
-      -webkit-transition: margin 0.3s;
-      transition: margin 0.3s;
+    font-size: 3.5rem;
+    margin-right: 1rem;
+    -webkit-transition: margin 0.3s;
+    transition: margin 0.3s;
   }
-  
   span {
-      font-size: 2rem;
+    font-size: 2rem;
   }
-  
   @include menuButton;
   @include centerChildren;
-  
 }

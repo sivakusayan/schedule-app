@@ -270,6 +270,11 @@ const UIController = (function () {
       }, 300);
     },
 
+    openNotes(eventIndex) {
+      const event = document.getElementById(`event_${eventIndex}`);
+      event.classList.toggle('openNotes');
+    },
+
     getInputData() {
       return {
         name: DOMobjects.nameInput.value,
@@ -519,11 +524,20 @@ const eventController = (function (schedCtrl, UICtrl) {
       if (event.target.tagName === 'I') {
         const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
 
-        if (buttonType === 'config') {
-          setupConfigureForm(selectedEventIndex);
-          UICtrl.fadeIn(DOMobjects.configEventUI);
-        } else if (buttonType === 'delete') {
-          deleteEvent(selectedEventIndex);
+        switch (buttonType) {
+          case 'config':
+            setupConfigureForm(selectedEventIndex);
+            UICtrl.fadeIn(DOMobjects.configEventUI);
+            break;
+          case 'delete':
+            deleteEvent(selectedEventIndex);
+            break;
+          case 'notes':
+            UICtrl.openNotes(selectedEventIndex);
+            break;
+          default:
+            console.log('This button type is not programmed yet.');
+            break;
         }
       }
     });

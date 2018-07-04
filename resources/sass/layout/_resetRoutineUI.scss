@@ -1,32 +1,25 @@
 .resetRoutineUI {
-  height: 25rem;
-  width: 40rem;
+  height: 28rem;
+  width: 45rem;
   font-size: 2rem;
- 
+
   @include popUpUI;
   @include center;
   @include centerChildren;
   @include hide;
-  
+
   &__back {
-      position: absolute;
-      font-size: 3rem;
-      top: 3%;
-      right: 3%;
-      
-      @include menuButton;
+    position: absolute;
+    font-size: 3rem;
+    top: 3%;
+    right: 3%;
+    @include menuButton;
   }
   
   &__text {
-      @include popUpUIText;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: $color-primary-medium-1;
+    margin-top: 2rem;
   }
-  
-  &__buttons {
-      @include submitButton;
-      
-      input {
-          margin: 0 2rem;
-      }
-  }
-
 }

@@ -7,20 +7,17 @@
   left: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
-
   &.overlayON {
     opacity: 1;
     z-index: 300;
   }
-  
-  &.overlayFADE { /*Temp state to keep overlay on top while fading*/
+  &.overlayFADE {
+    /*Temp state to keep overlay on top while fading*/
     opacity: 0;
     z-index: 300;
   }
-  
   &.overlayOFF {
     opacity: 0;
     z-index: -1;
-    background-color: red;
   }
 }
