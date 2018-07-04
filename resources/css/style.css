@@ -81,26 +81,24 @@ body {
 .btnSubmit {
   text-align: center; }
   .btnSubmit input {
-    -webkit-box-shadow: 0 0.2rem 0.4rem #707070;
-    box-shadow: 0 0.2rem 0.4rem #707070;
+    box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
     margin: 0 2rem;
     border: none;
     color: #fff;
-    background-image: linear-gradient(to right, #003459 33%, #0091CC 66%, #4CCBFF);
+    background-image: linear-gradient(to right, #005A7F 33%, #0091CC 66%, #4CCBFF);
     background-size: 250%;
     background-position: right;
     padding: 1rem 3rem;
     text-transform: uppercase;
     font-size: 2rem;
-    border-radius: 1rem;
+    border-radius: 2rem;
     transition: .3s; }
   .btnSubmit input:hover {
     background-position: center;
     cursor: pointer;
-    -webkit-transform: translateY(-0.2rem);
-    transform: translateY(-0.2rem);
-    -webkit-box-shadow: 0 0.5rem 0.8rem #707070;
-    box-shadow: 0 0.5rem 0.8rem #707070; }
+    -webkit-transform: translateY(0.2rem);
+    transform: translateY(0.2rem);
+    box-shadow: 0rem 0.2rem 1rem rgba(0, 0, 0, 0.2); }
   .btnSubmit input:focus {
     outline: none; }
 
@@ -188,7 +186,7 @@ body {
   .event__config:focus, .event__delete:focus, .event__toggleNote:focus {
     outline: none; }
   .event:hover {
-    border-left: 10px solid #4CCBFF; }
+    border-left: 10px solid #005A7F; }
     .event:hover .event__name p {
       transform: translate(50%, 50%) scale(1.07);
       backface-visibility: hidden; }
@@ -211,10 +209,10 @@ body {
       transform: scale(1.15); }
   .event__config {
     top: 35%;
-    right: 55%; }
+    right: 60%; }
   .event__delete {
     top: 35%;
-    right: 25%; }
+    right: 20%; }
 
 .hasNote .event > div:last-child {
   position: absolute;
@@ -329,10 +327,9 @@ body {
   height: 42rem;
   width: 60rem;
   font-size: 2rem;
-  background-color: #fff;
+  background-color: white;
   z-index: 400;
-  -webkit-box-shadow: 0 0 5rem;
-  box-shadow: 0 0 5rem;
+  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
   border: 15px solid #005A7F;
   border-radius: 1rem;
   position: relative;
@@ -350,15 +347,14 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-transform: translateX(-300%);
-  transform: translateX(-300%);
+  visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
   .cloneRoutineUI__back {
     position: absolute;
     font-size: 3rem;
-    top: 3%;
+    top: 5%;
     right: 3%;
     color: #00B3FF;
     opacity: 0.5;
@@ -461,10 +457,9 @@ body {
 .configEventUI {
   height: 63rem;
   width: 50rem;
-  background-color: #fff;
+  background-color: white;
   z-index: 400;
-  -webkit-box-shadow: 0 0 5rem;
-  box-shadow: 0 0 5rem;
+  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
   border: 15px solid #005A7F;
   border-radius: 1rem;
   position: relative;
@@ -482,8 +477,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-transform: translateX(-300%);
-  transform: translateX(-300%);
+  visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
@@ -527,15 +521,15 @@ body {
     .configEventUI__startTime label,
     .configEventUI__endTime label,
     .configEventUI__notes label {
-      -webkit-box-shadow: 0 0.1rem 0.1rem #000;
-      box-shadow: 0 0.1rem 0.1rem #000;
+      box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.2);
+      backface-visibility: hidden;
       display: inline-block;
-      color: #4CCBFF;
+      color: #fff;
       margin-right: 2rem;
       width: 10rem;
       font-size: 1.7rem;
       text-align: center;
-      background-color: #005A7F;
+      background-image: linear-gradient(to right, #005A7F, #0091CC);
       padding: 0.5rem;
       font-weight: 200;
       border-radius: 1rem; }
@@ -545,6 +539,7 @@ body {
     .configEventUI__endTime input,
     .configEventUI__notes input {
       border: none;
+      background: transparent;
       border-bottom: 1px solid #00B3FF;
       font-family: 'Nunito', sans-serif;
       color: #0091CC;
@@ -556,6 +551,7 @@ body {
     .configEventUI__startTime textarea,
     .configEventUI__endTime textarea,
     .configEventUI__notes textarea {
+      background: transparent;
       border: 1px solid #00B3FF;
       vertical-align: bottom;
       font-family: 'Nunito', sans-serif;
@@ -685,10 +681,9 @@ body {
   height: 28rem;
   width: 45rem;
   font-size: 2rem;
-  background-color: #fff;
+  background-color: white;
   z-index: 400;
-  -webkit-box-shadow: 0 0 5rem;
-  box-shadow: 0 0 5rem;
+  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
   border: 15px solid #005A7F;
   border-radius: 1rem;
   position: relative;
@@ -706,15 +701,14 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-transform: translateX(-300%);
-  transform: translateX(-300%);
+  visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
   .resetRoutineUI__back {
     position: absolute;
     font-size: 3rem;
-    top: 3%;
+    top: 5%;
     right: 3%;
     color: #00B3FF;
     opacity: 0.5;

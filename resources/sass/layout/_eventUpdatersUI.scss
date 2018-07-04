@@ -30,21 +30,22 @@
   &__notes {
     margin: 6rem 0;
     label {
-      -webkit-box-shadow: 0 .1rem .1rem $color-black;
-      box-shadow: 0 .1rem .1rem $color-black;
+      box-shadow: 0 .4rem 1rem rgba($color-black, .2);
+      backface-visibility: hidden;
       display: inline-block;
-      color: $color-primary-light;
+      color: $color-white;
       margin-right: 2rem;
       width: 10rem;
       font-size: 1.7rem;
       text-align: center;
-      background-color: $color-primary-dark-1;
+      background-image: linear-gradient(to right, $color-primary-dark-1, $color-primary-medium-2);
       padding: 0.5rem;
       font-weight: 200;
       border-radius: 1rem;
     }
     input {
       border: none;
+      background: transparent;
       border-bottom: 1px solid $color-primary-medium-1;
       font-family: 'Nunito', sans-serif;
       color: $color-primary-medium-2;
@@ -53,6 +54,7 @@
       border-radius: 3px;
     }
     textarea {
+      background: transparent;
       border: 1px solid $color-primary-medium-1;
       vertical-align: bottom;
       font-family: 'Nunito', sans-serif;

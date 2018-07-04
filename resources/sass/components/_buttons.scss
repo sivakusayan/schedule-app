@@ -1,27 +1,25 @@
 .btnSubmit {
   text-align: center;
   input {
-    -webkit-box-shadow: 0 .2rem .4rem $color-grey-medium;
-    box-shadow: 0 .2rem .4rem $color-grey-medium;
+    box-shadow: 0 .4rem 1rem rgba($color-black, .2);
     margin: 0 2rem;
     border: none;
     color: $color-white;
-    background-image: linear-gradient(to right, $color-primary-dark-2 33%, $color-primary-medium-2 66%, $color-primary-light);
+    background-image: linear-gradient(to right, $color-primary-dark-1 33%, $color-primary-medium-2 66%, $color-primary-light);
     background-size: 250%;
     background-position: right;
     padding: 1rem 3rem;
     text-transform: uppercase;
     font-size: 2rem;
-    border-radius: 1rem;
+    border-radius: 2rem;
     transition: .3s;
   }
   input:hover {
     background-position: center;
     cursor: pointer;
-    -webkit-transform: translateY(-.2rem);
-    transform: translateY(-.2rem);
-    -webkit-box-shadow: 0 .5rem .8rem $color-grey-medium;
-    box-shadow: 0 .5rem .8rem $color-grey-medium;
+    -webkit-transform: translateY(.2rem);
+    transform: translateY(.2rem);
+    box-shadow: 0rem .2rem 1rem rgba($color-black, .2);
   }
   input:focus {
     outline: none;

@@ -259,7 +259,7 @@ const UIController = (function () {
 
     fadeIn(domObj) {
       darkenScreen();
-      domObj.style.transform = 'translate(50%, 50%)';
+      domObj.style.visibility = 'visible';
       domObj.style.opacity = 1;
     },
 
@@ -267,7 +267,7 @@ const UIController = (function () {
       lightenScreen();
       domObj.style.opacity = 0;
       setTimeout(() => {
-        domObj.style.transform = 'translateX(-300%)';
+        domObj.style.visibility = 'hidden';
       }, 300);
     },
 

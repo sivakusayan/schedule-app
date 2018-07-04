@@ -100,7 +100,7 @@
     outline: none;
   }
   &:hover {
-    border-left: 10px solid $color-primary-light;
+    border-left: 10px solid $color-primary-dark-1;
     .event__name p {
       transform: translate(50%, 50%) scale(1.07);
       backface-visibility: hidden;
@@ -130,11 +130,11 @@
   }
   &__config {
     top: 35%;
-    right: 55%;
+    right: 60%;
   }
   &__delete {
     top: 35%;
-    right: 25%;
+    right: 20%;
   }
 }
 

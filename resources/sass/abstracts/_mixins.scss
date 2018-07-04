@@ -19,8 +19,7 @@
 }
 
 @mixin hide {
-  -webkit-transform: translateX(-300%);
-          transform: translateX(-300%);
+  visibility: hidden;
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
@@ -75,10 +74,9 @@
 }
 
 @mixin popUpUI {
-  background-color: $color-white;
+  background-color: white;
   z-index: 400;
-  -webkit-box-shadow: 0 0 5rem;
-          box-shadow: 0 0 5rem;
+  box-shadow: 0 0 5rem rgba($color-black, .7);
   border: 15px solid $color-primary-dark-1;
   border-radius: 1rem;
   position: relative; 
