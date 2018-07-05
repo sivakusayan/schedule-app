@@ -182,6 +182,7 @@ const UIController = (function () {
     configEventSubmit: document.querySelector('.configEventUI__submit'),
 
     routineContainer: document.querySelector('.routineContainer'),
+    openNoteEvents: document.querySelectorAll('.openNote'),
   };
 
   const eventHTMLDatabase = {
@@ -339,6 +340,16 @@ const UIController = (function () {
         DOMobjects.routineContainer.insertAdjacentHTML('beforeend', eventHTMLDatabase[activeDay][i]);
       }
     },
+
+    deleteFromDisplay(index) {
+      const eventDOM = document.getElementById(`event_${index}`);
+      eventDOM.firstChild.style.opacity = 0;
+      eventDOM.firstChild.style.height = 0;
+      eventDOM.style.margin = 0;
+      setTimeout(() => {
+        eventDOM.parentNode.removeChild(eventDOM);
+      }, 300);
+    },
   };
 }());
 
@@ -370,7 +381,7 @@ const eventController = (function (schedCtrl, UICtrl) {
   function deleteEvent(index) {
     schedCtrl.deleteFromEventDatabase(index, activeDay);
     schedCtrl.deleteTimeSlot(index, activeDay);
-    updateUI();
+    UICtrl.deleteFromDisplay(index);
   }
 
   function changeActiveDay(event) {
@@ -381,7 +392,6 @@ const eventController = (function (schedCtrl, UICtrl) {
   function cloneRoutine() {
     const selectedDays = UICtrl.getSelectedDays();
     schedCtrl.cloneToSelectedDays(activeDay, selectedDays);
-    updateUI();
     UICtrl.resetCloneForm();
     UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
   }

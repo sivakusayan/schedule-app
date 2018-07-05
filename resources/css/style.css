@@ -111,8 +111,9 @@ body {
   border-radius: 1rem;
   border-right: 10px solid transparent;
   border-left: 10px solid transparent;
-  transition: box-shadow 0.3s, border-left .3s;
+  transition: border-left .3s, opacity .3s, height .3s, background-color 0.5s;
   position: relative;
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -442,10 +443,14 @@ body {
   margin: 0 auto;
   -webkit-transition: opacity 0.6s;
   transition: opacity 0.6s;
-  opacity: 1; }
+  opacity: 1;
+  display: flex;
+  flex-direction: column; }
 
 .eventContainer {
-  margin: 3rem auto; }
+  margin: 1.5rem auto;
+  width: 100%;
+  transition: padding .3s, margin .3s; }
 
 .eventContainer:nth-child(odd) .event {
   background-color: #f6f6f6; }
