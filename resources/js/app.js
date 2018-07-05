@@ -120,6 +120,7 @@ const scheduleController = (function () {
 
     deleteTimeSlot(index, activeDay) {
       reservedTimeSlots[activeDay].splice(index, 1);
+      console.log(reservedTimeSlots);
     },
 
     cloneToSelectedDays(activeDay, selectedDays) {
@@ -127,8 +128,8 @@ const scheduleController = (function () {
       const activeDayTimeSlots = reservedTimeSlots[activeDay];
 
       for (let i = 0; i < selectedDays.length; i += 1) {
-        eventDatabase[selectedDays[i]] = activeDayRoutine;
-        reservedTimeSlots[selectedDays[i]] = activeDayTimeSlots;
+        eventDatabase[selectedDays[i]] = activeDayRoutine.slice();
+        reservedTimeSlots[selectedDays[i]] = activeDayTimeSlots.slice();
       }
     },
 
@@ -182,7 +183,6 @@ const UIController = (function () {
     configEventSubmit: document.querySelector('.configEventUI__submit'),
 
     routineContainer: document.querySelector('.routineContainer'),
-    openNoteEvents: document.querySelectorAll('.openNote'),
   };
 
   const eventHTMLDatabase = {
@@ -378,10 +378,28 @@ const eventController = (function (schedCtrl, UICtrl) {
     updateUI();
   }
 
+  function updateIndices() {
+    const eventArray = Array.from(document.querySelectorAll('.eventContainer'));
+    console.log(eventArray);
+    for (let i = 0; i < eventArray.length; i += 1) {
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      /*RUN REGEX REPLACEMENT HERE TO REPLACE ID EVERYWHERE IN HTML */
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+      /*------------------------------------------------------------*/
+    }
+  }
+
   function deleteEvent(index) {
+    console.log('deleting event');
     schedCtrl.deleteFromEventDatabase(index, activeDay);
     schedCtrl.deleteTimeSlot(index, activeDay);
     UICtrl.deleteFromDisplay(index);
+    setTimeout(updateIndices, 300);
   }
 
   function changeActiveDay(event) {
@@ -514,7 +532,7 @@ const eventController = (function (schedCtrl, UICtrl) {
         activeDay = event.target.textContent;
         changeActiveDay(event);
         updateCloneRoutineChoices();
-
+        console.log(activeDay);
         DOMobjects.routineContainer.style.opacity = 0;
         setTimeout(() => {
           updateUI();
@@ -541,6 +559,7 @@ const eventController = (function (schedCtrl, UICtrl) {
             UICtrl.fadeIn(DOMobjects.configEventUI);
             break;
           case 'delete':
+            console.log('Event directed to delete branch');
             deleteEvent(selectedEventIndex);
             break;
           case 'notes':
