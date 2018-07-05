@@ -8,8 +8,21 @@
 html {
   background-image: url(../img/dust_scratches.png);
   background-attachment: fixed;
+  overscroll-behavior-y: none;
+  -ms-scroll-chaining: none;
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+body {
+  overscroll-behavior-y: none;
 }
 
 button {
   -webkit-tap-highlight-color: rgba($color-black, 0);
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
