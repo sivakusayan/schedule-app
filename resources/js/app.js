@@ -216,13 +216,13 @@ const UIController = (function () {
 
   function dataToHTML(eventObj, index) {
     let newHTML;
-    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button id="config_%index%" class="event__config"><i class="fas fa-cog"></i></button><button id="delete_%index%" class="event__delete"><i class="fas fa-times-circle"></i></button><button id="notes_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button></div></div><div><div class="event__note"><p>%notes%</p></div></div></div></div>';
+    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button id="config_%index%" class="event__config"><i class="fas fa-cog"></i></button><button id="note_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button><button id="delete_%index%" class="event__delete"><i class="fas fa-times-circle"></i></button></div></div><div><div class="event__note"><p>%notes%</p></div></div></div></div>';
 
     if (eventObj.notes.length > 0) {
       newHTML = HTML.replace('%noteDetect%', 'hasNote');
     } else if (eventObj.notes.length === 0) {
       newHTML = HTML.replace('%noteDetect%', '');
-      newHTML = newHTML.replace('<button id="notes_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button>', '');
+      newHTML = newHTML.replace('<button id="note_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button>', '');
     }
 
     newHTML = newHTML.replace('%name%', eventObj.name);
@@ -380,21 +380,18 @@ const eventController = (function (schedCtrl, UICtrl) {
 
   function updateIndices() {
     const eventArray = Array.from(document.querySelectorAll('.eventContainer'));
+
     for (let i = 0; i < eventArray.length; i += 1) {
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
-      /*RUN REGEX REPLACEMENT HERE TO REPLACE ID EVERYWHERE IN HTML */
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
-      /*------------------------------------------------------------*/
+      eventArray[i].setAttribute('id', `event_${i}`);
+      eventArray[i].querySelector('.event__config').setAttribute('id', `config_${i}`);
+      eventArray[i].querySelector('.event__delete').setAttribute('id', `delete_${i}`);
+      if (eventArray[i].querySelector('.event__toggleNote')) {
+        eventArray[i].querySelector('.event__toggleNote').setAttribute('id', `note_${i}`);
+      }
     }
   }
 
   function deleteEvent(index) {
-    console.log('deleting event');
     schedCtrl.deleteFromEventDatabase(index, activeDay);
     schedCtrl.deleteTimeSlot(index, activeDay);
     UICtrl.deleteFromDisplay(index);
@@ -438,7 +435,6 @@ const eventController = (function (schedCtrl, UICtrl) {
   }
 
   function detectButtonType(event) {
-    console.log(event.target.tagName);
     if (event.target.tagName === 'BUTTON') {
       const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
 
@@ -454,7 +450,6 @@ const eventController = (function (schedCtrl, UICtrl) {
           UICtrl.toggleNote(selectedEventIndex);
           break;
         default:
-          console.log('This button type is not programmed yet.');
           break;
       }
     }
