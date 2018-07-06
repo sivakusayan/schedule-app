@@ -12,9 +12,11 @@
     text-transform: uppercase;
     color: $color-white;
     font-weight: 200;
-    @include dayButton;
   }
   .activeDay {
-    @include dayButtonActive;
+    opacity: 1;
+    background-color: $color-primary-dark-2;
+    transform: translateY(.2rem);
+    box-shadow: 0 .2rem .5rem rgba($color-black, .4);
   }
 }

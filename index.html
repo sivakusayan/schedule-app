@@ -19,8 +19,8 @@
   <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
   <div id="overlay" class="overlay overlayOFF">
-    <div class="newEventUI">
-      <button id="btnNewBack" class="newEventUI__back">
+    <div class="newEventUI popUpUI">
+      <button id="btnNewBack" class="newEventUI__back btnMenu">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="newEventForm" class="newEventUI__form" onsubmit="return false" autocomplete="off">
@@ -46,8 +46,8 @@
       </form>
     </div>
 
-    <div class="configEventUI">
-      <button id="btnConfigBack" class="configEventUI__back">
+    <div class="configEventUI popUpUI">
+      <button id="btnConfigBack" class="configEventUI__back btnMenu">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="configEventForm" class="configEventUI__form" onsubmit="return false" autocomplete="off">
@@ -73,8 +73,8 @@
       </form>
     </div>
 
-    <div class="cloneRoutineUI">
-      <button id="btnCloneBack" class="cloneRoutineUI__back">
+    <div class="cloneRoutineUI popUpUI">
+      <button id="btnCloneBack" class="cloneRoutineUI__back btnMenu">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="cloneRoutineForm" onsubmit="return false">
@@ -83,25 +83,25 @@
         </div>
         <ul class="cloneRoutineUI__daysContainer">
           <li>
-            <button class="cloneRoutineUI__day hidden" type="button">MON</button>
+            <button class="cloneRoutineUI__day btnDay hidden" type="button">MON</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">TUE</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">TUE</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">WED</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">WED</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">THU</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">THU</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">FRI</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">FRI</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">SAT</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">SAT</button>
           </li>
           <li>
-            <button class="cloneRoutineUI__day" type="button">SUN</button>
+            <button class="cloneRoutineUI__day btnDay" type="button">SUN</button>
           </li>
         </ul>
         <div class="btnSubmit">
@@ -110,8 +110,8 @@
       </form>
     </div>
 
-    <div class="resetRoutineUI">
-      <button id="btnResetBack" class="resetRoutineUI__back">
+    <div class="resetRoutineUI popUpUI">
+      <button id="btnResetBack" class="resetRoutineUI__back btnMenu">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="resetRoutineForm" onsubmit="return false">
@@ -134,41 +134,41 @@
     <div class="menu__weekContainer">
       <ul class="week">
         <li>
-          <button class="week__day activeDay">MON</button>
+          <button class="week__day btnDay activeDay">MON</button>
         </li>
         <li>
-          <button class="week__day">TUE</button>
+          <button class="week__day btnDay">TUE</button>
         </li>
         <li>
-          <button class="week__day">WED</button>
+          <button class="week__day btnDay">WED</button>
+        </li> 
+        <li>
+          <button class="week__day btnDay">THU</button>
         </li>
         <li>
-          <button class="week__day">THU</button>
+          <button class="week__day btnDay">FRI</button>
         </li>
         <li>
-          <button class="week__day">FRI</button>
+          <button class="week__day btnDay">SAT</button>
         </li>
         <li>
-          <button class="week__day">SAT</button>
-        </li>
-        <li>
-          <button class="week__day">SUN</button>
+          <button class="week__day btnDay">SUN</button>
         </li>
       </ul>
     </div>
     <div class="menu__mobile">
       <h1 class="menu__currentDay">MONDAY</h1>
     </div>
-    <div class="menu__buttonContainer">
-      <button id="btnNew" class="btn">
+    <div class="menu__btnContainer">
+      <button id="btnNew" class="btnMenu">
         <i class="far fa-plus-square"></i>
         <span>New Event</span>
       </button>
-      <button id="btnClone" class="btn">
+      <button id="btnClone" class="btnMenu">
         <i class="far fa-clone"></i>
         <span>Clone Routine</span>
       </button>
-      <button id="btnReset" class="btn" onsubmit="return false">
+      <button id="btnReset" class="btnMenu" onsubmit="return false">
         <i class="fas fa-undo-alt"></i>
         <span>Reset Routine</span>
       </button>

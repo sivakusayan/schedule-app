@@ -1,57 +1,59 @@
 .cloneRoutineUI {
-    height: 42rem;
-    width: 60rem;
-    font-size: 2rem;
-    @include popUpUI;
-    @include center;
+  height: 42rem;
+  width: 60rem;
+  font-size: 2rem;
+  @include center;
+  @include centerChildren;
+  @include hide;
+  &__back {
+    position: absolute;
+    font-size: 3rem;
+    top: 5%;
+    right: 3%;
+  }
+  &__text {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: $color-primary-medium-1;
+    margin-top: 2rem;
+  }
+  .hidden {
+    display: none;
+  }
+  &__daysContainer {
+    list-style: none;
+    color: $color-primary-light;
+    margin-bottom: 4rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 50rem;
     @include centerChildren;
-    @include hide;
-    &__back {
-        position: absolute;
-        font-size: 3rem;
-        top: 5%;
-        right: 3%;
-        @include menuButton;
+
+    button {
+      font-size: 2rem;
+      display: inline-block;
+      margin: 1.5rem;
+      padding: .5rem 4rem;
+      width: 10rem;
+      text-transform: uppercase;
+      color: $color-white;
+      font-weight: 200;
+      -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
+      box-shadow: 0 .2rem .5rem $color-grey-dark;
+      @include centerChildren;
     }
-    &__text {
-        text-align: center;
-        margin-bottom: 3rem;
-        color: $color-primary-medium-1;
-        margin-top: 2rem;
+  }
+
+  .selected {
+    opacity: 1;
+    background-color: $color-primary-dark-2;
+    transform: translateY(.2rem);
+    box-shadow: 0 .2rem .5rem rgba($color-black, .4);
+    &:hover {
+      cursor: pointer;
     }
-    .hidden {
-        display: none;
-    }
-    &__daysContainer {
-        list-style: none;
-        color: $color-primary-light;
-        margin-bottom: 4rem;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-        width: 50rem;
-        @include centerChildren;
-        button {
-            font-size: 2rem;
-            display: inline-block;
-            margin: 1.5rem;
-            padding: .5rem 4rem;
-            width: 10rem;
-            text-transform: uppercase;
-            color: $color-white;
-            font-weight: 200;
-            -webkit-box-shadow: 0 .2rem .5rem $color-grey-dark;
-            box-shadow: 0 .2rem .5rem $color-grey-dark;
-            @include centerChildren;
-            @include dayButton;
-        }
-    }
-    .selected {
-        @include dayButtonActive;
-        &:hover {
-            cursor: pointer;
-        }
-    }
+  }
 }

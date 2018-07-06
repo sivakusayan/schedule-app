@@ -22,7 +22,7 @@
   
   //-------------------------------------------------------BUTTONS
 
-  &__buttonContainer {
+  &__btnContainer {
     width: 100%;
     height: 10rem;
     background-color: $color-white;
@@ -30,6 +30,23 @@
     -webkit-box-pack: none;
     -ms-flex-pack: none;
     justify-content: none;
+
+    button {
+      height: 5rem;
+      margin: 0 4rem;
+      padding: .5rem;
+      
+      i {
+        font-size: 3.5rem;
+        margin-right: 1rem;
+        -webkit-transition: margin 0.3s;
+        transition: margin 0.3s;
+      }
+      span {
+        font-size: 2rem;
+      }
+      @include centerChildren;
+    }
   } 
   
   //-------------------------------------------------------CURRENT DAY DISPLAY
@@ -53,21 +70,4 @@
     font-weight: 200;
     @include center;
   }
-}
-
-.btn {
-  height: 5rem;
-  margin: 0 4rem;
-  padding: .5rem;
-  i {
-    font-size: 3.5rem;
-    margin-right: 1rem;
-    -webkit-transition: margin 0.3s;
-    transition: margin 0.3s;
-  }
-  span {
-    font-size: 2rem;
-  }
-  @include menuButton;
-  @include centerChildren;
 }

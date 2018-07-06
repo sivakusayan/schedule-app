@@ -104,6 +104,14 @@
     {
     outline: none;
   }
+
+  @media (hover: none) {
+    &__config,
+    &__delete{
+      opacity: 1;
+    }
+  }
+
   &:hover {
     border-left: 10px solid $color-primary-dark-1;
     .event__name p {
@@ -116,21 +124,11 @@
       opacity: 1;
       cursor: pointer;
     }
-    .event__toggleNote {
-      right: 40%;
-      transform: scale(1.05);
-      cursor: pointer;
-    }
     .event__config:hover,
     .event__delete:hover{
       color: $color-primary-dark-1;
       transform: translateY(0) scale(1.1);
       backface-visibility: hidden;
-    }
-
-    .event__toggleNote:hover{
-      color: $color-primary-dark-1;
-      transform: scale(1.15);
     }
   }
   &__config {
@@ -176,6 +174,24 @@
     right: 40%;
     transform: scale(1.3);
   }
+
+  &:hover {
+    .event__toggleNote {
+      transform: scale(1.05);
+      cursor: pointer;
+    }
+    .event__toggleNote:hover{
+      color: $color-primary-dark-1;
+      transform: scale(1.15);
+    }
+  }
+
+  @media (hover: none) {
+    .event__toggleNote {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
 }
 
 //-------------------------------------------------------OPEN NOTES MODIFIER
@@ -185,7 +201,7 @@
     opacity: 0;
   }
   .event__name p{
-    transform: translate(-58%, 50%) scale(0.78);
+    transform: translate(-80%, 50%) scale(0.85);
   }
   .event__note {
     opacity: 1;
@@ -195,7 +211,7 @@
   }
   &:hover {
     .event__name p{
-      transform: translate(-58%, 50%) scale(0.85);
+      transform: translate(-80%, 50%) scale(0.92);
     }
     .event__toggleNote:hover {
       color: $color-primary-medium-1;

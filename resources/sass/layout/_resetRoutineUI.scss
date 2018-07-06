@@ -3,7 +3,6 @@
   width: 45rem;
   font-size: 2rem;
 
-  @include popUpUI;
   @include center;
   @include centerChildren;
   @include hide;
@@ -13,7 +12,6 @@
     font-size: 3rem;
     top: 5%;
     right: 3%;
-    @include menuButton;
   }
   
   &__text {

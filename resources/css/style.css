@@ -65,12 +65,28 @@ table {
   box-sizing: border-box; }
 
 html {
+  font-size: 55%;
   background-image: url(../img/dust_scratches.png);
   background-attachment: fixed;
   overscroll-behavior-y: none;
   -ms-scroll-chaining: none;
   overflow-x: hidden;
   width: 100vw; }
+  @media (max-width: 84.375em) {
+    html {
+      font-size: 50%; } }
+  @media (max-width: 75em) {
+    html {
+      font-size: 45%; } }
+  @media (max-width: 56.25em) {
+    html {
+      font-size: 40%; } }
+  @media (min-width: 93.75em) {
+    html {
+      font-size: 60%; } }
+  @media (min-width: 103.125em) {
+    html {
+      font-size: 70%; } }
 
 body {
   overscroll-behavior-y: none; }
@@ -84,7 +100,6 @@ button {
   /* make scrollbar transparent */ }
 
 html {
-  font-size: 55%;
   font-weight: 400; }
 
 body {
@@ -112,6 +127,37 @@ body {
     transform: translateY(0.2rem);
     box-shadow: 0rem 0.2rem 1rem rgba(0, 0, 0, 0.2); }
   .btnSubmit input:focus {
+    outline: none; }
+
+.btnDay {
+  background-color: #005A7F;
+  font-family: inherit;
+  border: none;
+  border-radius: 2rem;
+  transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
+  opacity: 0.5;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
+  .btnDay:hover:not(.selected):not(.activeDay) {
+    opacity: 1;
+    cursor: pointer;
+    transform: translateY(-0.2rem);
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
+  .btnDay:focus {
+    outline: none; }
+
+.btnMenu {
+  color: #00B3FF;
+  opacity: 0.5;
+  -webkit-transition: opacity 0.3s;
+  transition: all 0.3s;
+  background: none;
+  border: none; }
+  .btnMenu:hover {
+    cursor: pointer;
+    opacity: 1;
+    color: #005A7F;
+    transform: scale(1.05); }
+  .btnMenu:focus {
     outline: none; }
 
 .event {
@@ -200,6 +246,9 @@ body {
     transform: translateY(1.2rem); }
   .event__config:focus, .event__delete:focus, .event__toggleNote:focus {
     outline: none; }
+  @media (hover: none) {
+    .event__config, .event__delete {
+      opacity: 1; } }
   .event:hover {
     border-left: 10px solid #005A7F; }
     .event:hover .event__name p {
@@ -210,18 +259,11 @@ body {
       transform: translateY(0);
       opacity: 1;
       cursor: pointer; }
-    .event:hover .event__toggleNote {
-      right: 40%;
-      transform: scale(1.05);
-      cursor: pointer; }
     .event:hover .event__config:hover,
     .event:hover .event__delete:hover {
       color: #005A7F;
       transform: translateY(0) scale(1.1);
       backface-visibility: hidden; }
-    .event:hover .event__toggleNote:hover {
-      color: #005A7F;
-      transform: scale(1.15); }
   .event__config {
     top: 35%;
     right: 60%; }
@@ -260,11 +302,24 @@ body {
   right: 40%;
   transform: scale(1.3); }
 
+.hasNote:hover .event__toggleNote {
+  transform: scale(1.05);
+  cursor: pointer; }
+
+.hasNote:hover .event__toggleNote:hover {
+  color: #005A7F;
+  transform: scale(1.15); }
+
+@media (hover: none) {
+  .hasNote .event__toggleNote {
+    opacity: 1;
+    transform: scale(1.05); } }
+
 .openNote .event__time {
   opacity: 0; }
 
 .openNote .event__name p {
-  transform: translate(-58%, 50%) scale(0.78); }
+  transform: translate(-80%, 50%) scale(0.85); }
 
 .openNote .event__note {
   opacity: 1; }
@@ -273,7 +328,7 @@ body {
   color: #005A7F; }
 
 .openNote:hover .event__name p {
-  transform: translate(-58%, 50%) scale(0.85); }
+  transform: translate(-80%, 50%) scale(0.92); }
 
 .openNote:hover .event__toggleNote:hover {
   color: #00B3FF; }
@@ -298,6 +353,14 @@ body {
     opacity: 0;
     z-index: -1; }
 
+.popUpUI {
+  background-color: #fff;
+  z-index: 400;
+  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
+  border: 15px solid #005A7F;
+  border-radius: 1rem;
+  position: relative; }
+
 .week {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -317,21 +380,7 @@ body {
     width: 12rem;
     text-transform: uppercase;
     color: #fff;
-    font-weight: 200;
-    background-color: #005A7F;
-    font-family: inherit;
-    border: none;
-    border-radius: 2rem;
-    transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
-    opacity: 0.5;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
-    .week__day:hover:not(.selected):not(.activeDay) {
-      opacity: 1;
-      cursor: pointer;
-      transform: translateY(-0.2rem);
-      box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
-    .week__day:focus {
-      outline: none; }
+    font-weight: 200; }
   .week .activeDay {
     opacity: 1;
     background-color: #003459;
@@ -342,12 +391,6 @@ body {
   height: 42rem;
   width: 60rem;
   font-size: 2rem;
-  background-color: white;
-  z-index: 400;
-  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
-  border: 15px solid #005A7F;
-  border-radius: 1rem;
-  position: relative;
   position: absolute;
   bottom: 50%;
   right: 50%;
@@ -370,20 +413,7 @@ body {
     position: absolute;
     font-size: 3rem;
     top: 5%;
-    right: 3%;
-    color: #00B3FF;
-    opacity: 0.5;
-    -webkit-transition: opacity 0.3s;
-    transition: all 0.3s;
-    background: none;
-    border: none; }
-    .cloneRoutineUI__back:hover {
-      cursor: pointer;
-      opacity: 1;
-      color: #005A7F;
-      transform: scale(1.05); }
-    .cloneRoutineUI__back:focus {
-      outline: none; }
+    right: 3%; }
   .cloneRoutineUI__text {
     text-align: center;
     margin-bottom: 3rem;
@@ -429,21 +459,7 @@ body {
       justify-content: center;
       -webkit-box-align: center;
       -ms-flex-align: center;
-      align-items: center;
-      background-color: #005A7F;
-      font-family: inherit;
-      border: none;
-      border-radius: 2rem;
-      transition: opacity 0.3s, background-color 0.3s, transform .3s, box-shadow .3s;
-      opacity: 0.5;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3); }
-      .cloneRoutineUI__daysContainer button:hover:not(.selected):not(.activeDay) {
-        opacity: 1;
-        cursor: pointer;
-        transform: translateY(-0.2rem);
-        box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2); }
-      .cloneRoutineUI__daysContainer button:focus {
-        outline: none; }
+      align-items: center; }
   .cloneRoutineUI .selected {
     opacity: 1;
     background-color: #003459;
@@ -453,13 +469,16 @@ body {
       cursor: pointer; }
 
 .routineContainer {
-  width: 40%;
+  width: 50%;
   margin: 0 auto;
   -webkit-transition: opacity 0.6s;
   transition: opacity 0.6s;
   opacity: 1;
   display: flex;
   flex-direction: column; }
+  @media (max-width: 65.625em) {
+    .routineContainer {
+      width: 70%; } }
 
 .eventContainer {
   margin: 1.5rem auto;
@@ -476,12 +495,6 @@ body {
 .configEventUI {
   height: 63rem;
   width: 50rem;
-  background-color: white;
-  z-index: 400;
-  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
-  border: 15px solid #005A7F;
-  border-radius: 1rem;
-  position: relative;
   position: absolute;
   bottom: 50%;
   right: 50%;
@@ -505,22 +518,7 @@ body {
     position: absolute;
     font-size: 3rem;
     top: 3%;
-    right: 3%;
-    color: #00B3FF;
-    opacity: 0.5;
-    -webkit-transition: opacity 0.3s;
-    transition: all 0.3s;
-    background: none;
-    border: none; }
-    .newEventUI__back:hover,
-    .configEventUI__back:hover {
-      cursor: pointer;
-      opacity: 1;
-      color: #005A7F;
-      transform: scale(1.05); }
-    .newEventUI__back:focus,
-    .configEventUI__back:focus {
-      outline: none; }
+    right: 3%; }
   .newEventUI__form,
   .configEventUI__form {
     width: 82%;
@@ -625,7 +623,7 @@ body {
     width: 100%;
     height: 10rem;
     z-index: 200; }
-  .menu__buttonContainer {
+  .menu__btnContainer {
     width: 100%;
     height: 10rem;
     background-color: #fff;
@@ -641,6 +639,26 @@ body {
     -webkit-box-pack: none;
     -ms-flex-pack: none;
     justify-content: none; }
+    .menu__btnContainer button {
+      height: 5rem;
+      margin: 0 4rem;
+      padding: .5rem;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center; }
+      .menu__btnContainer button i {
+        font-size: 3.5rem;
+        margin-right: 1rem;
+        -webkit-transition: margin 0.3s;
+        transition: margin 0.3s; }
+      .menu__btnContainer button span {
+        font-size: 2rem; }
   .menu__mobile {
     position: relative;
     height: 10rem;
@@ -662,50 +680,10 @@ body {
     -webkit-transform: translate(50%, 50%);
     transform: translate(50%, 50%); }
 
-.btn {
-  height: 5rem;
-  margin: 0 4rem;
-  padding: .5rem;
-  color: #00B3FF;
-  opacity: 0.5;
-  -webkit-transition: opacity 0.3s;
-  transition: all 0.3s;
-  background: none;
-  border: none;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center; }
-  .btn i {
-    font-size: 3.5rem;
-    margin-right: 1rem;
-    -webkit-transition: margin 0.3s;
-    transition: margin 0.3s; }
-  .btn span {
-    font-size: 2rem; }
-  .btn:hover {
-    cursor: pointer;
-    opacity: 1;
-    color: #005A7F;
-    transform: scale(1.05); }
-  .btn:focus {
-    outline: none; }
-
 .resetRoutineUI {
   height: 28rem;
   width: 45rem;
   font-size: 2rem;
-  background-color: white;
-  z-index: 400;
-  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
-  border: 15px solid #005A7F;
-  border-radius: 1rem;
-  position: relative;
   position: absolute;
   bottom: 50%;
   right: 50%;
@@ -728,20 +706,7 @@ body {
     position: absolute;
     font-size: 3rem;
     top: 5%;
-    right: 3%;
-    color: #00B3FF;
-    opacity: 0.5;
-    -webkit-transition: opacity 0.3s;
-    transition: all 0.3s;
-    background: none;
-    border: none; }
-    .resetRoutineUI__back:hover {
-      cursor: pointer;
-      opacity: 1;
-      color: #005A7F;
-      transform: scale(1.05); }
-    .resetRoutineUI__back:focus {
-      outline: none; }
+    right: 3%; }
   .resetRoutineUI__text {
     text-align: center;
     margin-bottom: 3rem;

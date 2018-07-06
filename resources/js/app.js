@@ -446,7 +446,7 @@ const eventController = (function (schedCtrl, UICtrl) {
         case 'delete':
           deleteEvent(selectedEventIndex);
           break;
-        case 'notes':
+        case 'note':
           UICtrl.toggleNote(selectedEventIndex);
           break;
         default:
