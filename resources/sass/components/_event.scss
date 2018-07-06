@@ -88,6 +88,10 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+
+    i {
+      pointer-events: none;
+    }
   }
   &__config,
   &__delete {

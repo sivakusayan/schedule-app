@@ -120,7 +120,6 @@ const scheduleController = (function () {
 
     deleteTimeSlot(index, activeDay) {
       reservedTimeSlots[activeDay].splice(index, 1);
-      console.log(reservedTimeSlots);
     },
 
     cloneToSelectedDays(activeDay, selectedDays) {
@@ -173,6 +172,8 @@ const UIController = (function () {
     resetRoutineYes: document.querySelector('.resetRoutineUI__YES'),
     resetRoutineNo: document.querySelector('.resetRoutineUI__NO'),
 
+    routineContainer: document.querySelector('.routineContainer'),
+
     btnConfigBack: document.getElementById('btnConfigBack'),
     configEventUI: document.querySelector('.configEventUI'),
     configEventForm: document.getElementById('configEventForm'),
@@ -182,7 +183,6 @@ const UIController = (function () {
     notesConfigInput: document.getElementById('notesConfigInput'),
     configEventSubmit: document.querySelector('.configEventUI__submit'),
 
-    routineContainer: document.querySelector('.routineContainer'),
   };
 
   const eventHTMLDatabase = {
@@ -216,13 +216,13 @@ const UIController = (function () {
 
   function dataToHTML(eventObj, index) {
     let newHTML;
-    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button class="event__config"><i id="config_%index%" class="fas fa-cog"></i></button><button class="event__delete"><i id="delete_%index%" class="fas fa-times-circle"></i></button><button class="event__toggleNote"><i id="notes_%index%" class="fas fa-sticky-note"></i></button></div></div><div><div class="event__note"><p>%notes%</p></div></div></div></div>';
+    const HTML = '<div id="event_%index%" class="eventContainer %noteDetect%"><div class="event"><div><div class="event__time"><span class="event__start">%startTime%</span><span class="event__end">%endTime%</span></div></div><div><div class="event__name"><p>%name%</p></div></div><div><div class="event__buttons"><button id="config_%index%" class="event__config"><i class="fas fa-cog"></i></button><button id="delete_%index%" class="event__delete"><i class="fas fa-times-circle"></i></button><button id="notes_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button></div></div><div><div class="event__note"><p>%notes%</p></div></div></div></div>';
 
     if (eventObj.notes.length > 0) {
       newHTML = HTML.replace('%noteDetect%', 'hasNote');
     } else if (eventObj.notes.length === 0) {
       newHTML = HTML.replace('%noteDetect%', '');
-      newHTML = newHTML.replace('<button class="event__toggleNote"><i id="notes_%index%" class="fas fa-sticky-note"></i></button>', '');
+      newHTML = newHTML.replace('<button id="notes_%index%" class="event__toggleNote"><i class="fas fa-sticky-note"></i></button>', '');
     }
 
     newHTML = newHTML.replace('%name%', eventObj.name);
@@ -380,7 +380,6 @@ const eventController = (function (schedCtrl, UICtrl) {
 
   function updateIndices() {
     const eventArray = Array.from(document.querySelectorAll('.eventContainer'));
-    console.log(eventArray);
     for (let i = 0; i < eventArray.length; i += 1) {
       /*------------------------------------------------------------*/
       /*------------------------------------------------------------*/
@@ -436,6 +435,29 @@ const eventController = (function (schedCtrl, UICtrl) {
 
     schedCtrl.deleteFromEventDatabase(index, activeDay);
     schedCtrl.deleteTimeSlot(index, activeDay);
+  }
+
+  function detectButtonType(event) {
+    console.log(event.target.tagName);
+    if (event.target.tagName === 'BUTTON') {
+      const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
+
+      switch (buttonType) {
+        case 'config':
+          setupConfigureForm(selectedEventIndex);
+          UICtrl.fadeIn(DOMobjects.configEventUI);
+          break;
+        case 'delete':
+          deleteEvent(selectedEventIndex);
+          break;
+        case 'notes':
+          UICtrl.toggleNote(selectedEventIndex);
+          break;
+        default:
+          console.log('This button type is not programmed yet.');
+          break;
+      }
+    }
   }
 
   function setValidationMessage(timeInputs) {
@@ -532,7 +554,6 @@ const eventController = (function (schedCtrl, UICtrl) {
         activeDay = event.target.textContent;
         changeActiveDay(event);
         updateCloneRoutineChoices();
-        console.log(activeDay);
         DOMobjects.routineContainer.style.opacity = 0;
         setTimeout(() => {
           updateUI();
@@ -550,26 +571,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     /* -------------------------EVENT BUTTONS--------------------------------*/
 
     DOMobjects.routineContainer.addEventListener('click', (event) => {
-      if (event.target.tagName === 'I') {
-        const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
-
-        switch (buttonType) {
-          case 'config':
-            setupConfigureForm(selectedEventIndex);
-            UICtrl.fadeIn(DOMobjects.configEventUI);
-            break;
-          case 'delete':
-            console.log('Event directed to delete branch');
-            deleteEvent(selectedEventIndex);
-            break;
-          case 'notes':
-            UICtrl.toggleNote(selectedEventIndex);
-            break;
-          default:
-            console.log('This button type is not programmed yet.');
-            break;
-        }
-      }
+      detectButtonType(event);
     });
 
     DOMobjects.btnConfigBack.addEventListener('click', () => {

@@ -193,6 +193,8 @@ body {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex; }
+    .event__config i, .event__delete i, .event__toggleNote i {
+      pointer-events: none; }
   .event__config, .event__delete {
     opacity: 0;
     transform: translateY(1.2rem); }
