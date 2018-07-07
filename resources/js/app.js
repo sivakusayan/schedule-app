@@ -36,7 +36,8 @@ const scheduleController = (function () {
   };
 
   return {
-    validateTimeFormat(timeInputs) {
+    validateTimeRange(timeInputs) {
+      // Checks if start time is before end time
       if (timeInputs[1] !== '') {
         return timeInputs[0].value < timeInputs[1].value;
       }
@@ -44,6 +45,7 @@ const scheduleController = (function () {
     },
 
     validateNoTimeOverlap(time, type, activeDay) {
+      // Checks if time is inside an existing event's range
       const timeSlots = reservedTimeSlots[activeDay];
 
       // Type 0 if startTime, Type 1 if endTime
@@ -65,6 +67,7 @@ const scheduleController = (function () {
     },
 
     validateNoSubEvents(timeInputs, activeDay) {
+      // Checks if an existing event's range is inside the requested time range
       const timeSlots = reservedTimeSlots[activeDay];
 
       // Index 0 is startTime, Index 1 is endTime
@@ -171,6 +174,11 @@ const UIController = (function () {
     resetRoutineUI: document.querySelector('.resetRoutineUI'),
     resetRoutineYes: document.querySelector('.resetRoutineUI__YES'),
     resetRoutineNo: document.querySelector('.resetRoutineUI__NO'),
+
+    btnOptions: document.getElementById('btnOptions'),
+    btnOptionsBack: document.getElementById('btnOptionsBack'),
+
+    weekContainer: document.querySelector('.menu__weekContainer'),
 
     routineContainer: document.querySelector('.routineContainer'),
 
@@ -332,6 +340,11 @@ const UIController = (function () {
       });
     },
 
+    toggleOptionsMenu() {
+      console.log('running');
+      DOMobjects.weekContainer.classList.toggle('menuOpen');
+    },
+
     displayEvents(activeDay) {
       while (DOMobjects.routineContainer.firstChild) {
         DOMobjects.routineContainer.removeChild(DOMobjects.routineContainer.firstChild);
@@ -434,7 +447,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     schedCtrl.deleteTimeSlot(index, activeDay);
   }
 
-  function detectButtonType(event) {
+  function determineButtonEvent(event) {
     if (event.target.tagName === 'BUTTON') {
       const [buttonType, selectedEventIndex] = event.target.getAttribute('id').split('_');
 
@@ -459,7 +472,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     const validityCheck = [1, 1];
 
     for (let i = 0; i < 2; i += 1) {
-      if (!schedCtrl.validateTimeFormat(timeInputs)) {
+      if (!schedCtrl.validateTimeRange(timeInputs)) {
         timeInputs[1].setCustomValidity('End time should be after the Start time.');
         validityCheck[1] = 0;
       } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
@@ -501,7 +514,12 @@ const eventController = (function (schedCtrl, UICtrl) {
     DOMobjects.btnReset.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.resetRoutineUI));
     DOMobjects.btnResetBack.addEventListener('click', () => UICtrl.fadeOut(DOMobjects.resetRoutineUI));
 
-    /* ------------------------FORM BUTTONS------------------------------*/
+    DOMobjects.btnOptions.addEventListener('touchstart', () => {
+      UICtrl.toggleOptionsMenu();
+    });
+    // DOMobjects.btnOptionsBack.addEventListener('click', () => UICtrl.toggleOptionsMenu);
+
+    /* ------------------------FORM INPUTS------------------------------*/
 
     DOMobjects.startTimeInput.addEventListener('input', () => {
       const timeInputs = [DOMobjects.startTimeInput, DOMobjects.endTimeInput];
@@ -566,7 +584,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     /* -------------------------EVENT BUTTONS--------------------------------*/
 
     DOMobjects.routineContainer.addEventListener('click', (event) => {
-      detectButtonType(event);
+      determineButtonEvent(event);
     });
 
     DOMobjects.btnConfigBack.addEventListener('click', () => {
@@ -614,6 +632,7 @@ const eventController = (function (schedCtrl, UICtrl) {
         notes: 'Workshop on flourishing',
       });
 
+      // Provides fallback for IE not having time input
       if (/* @cc_on!@ */ false || !!document.documentMode) {
         DOMobjects.startTimeInput.setAttribute('title', 'Military time XX:XX');
         DOMobjects.endTimeInput.setAttribute('title', 'Military time XX:XX');

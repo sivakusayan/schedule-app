@@ -105,13 +105,6 @@
     outline: none;
   }
 
-  @media (hover: none) {
-    &__config,
-    &__delete{
-      opacity: 1;
-    }
-  }
-
   &:hover {
     border-left: 10px solid $color-primary-dark-1;
     .event__name p {
@@ -138,6 +131,20 @@
   &__delete {
     top: 35%;
     right: 20%;
+  }
+  @media only screen and (hover: none) {
+    &__config,
+    &__delete {
+      transform: translateY(0);
+      color: rgba($color-primary-medium-1, .5);
+      opacity: 1;
+    }
+    &__config {
+      right: 40%;
+    }
+    &__delete {
+      right: 10%;
+    }
   }
 }
 
@@ -186,10 +193,14 @@
     }
   }
 
-  @media (hover: none) {
+  @media only screen and (hover: none) {
     .event__toggleNote {
       opacity: 1;
       transform: scale(1.05);
+      right: 70%;
+    }
+    .event__config {
+      right: 40%;
     }
   }
 }

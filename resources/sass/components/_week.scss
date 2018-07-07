@@ -1,5 +1,9 @@
 .week {
   @include centerChildren;
+
+  @include respond-shrink(43.75em) {
+    flex-direction: column;
+  }
   li {
     list-style: none;
   }
@@ -12,6 +16,13 @@
     text-transform: uppercase;
     color: $color-white;
     font-weight: 200;
+
+    @include respond-shrink(43.75em) {
+      font-size: 3rem;
+      padding: 1rem;
+      width: 18rem;
+      border-radius: 3rem;
+    }
   }
   .activeDay {
     opacity: 1;

@@ -246,9 +246,6 @@ body {
     transform: translateY(1.2rem); }
   .event__config:focus, .event__delete:focus, .event__toggleNote:focus {
     outline: none; }
-  @media (hover: none) {
-    .event__config, .event__delete {
-      opacity: 1; } }
   .event:hover {
     border-left: 10px solid #005A7F; }
     .event:hover .event__name p {
@@ -270,6 +267,15 @@ body {
   .event__delete {
     top: 35%;
     right: 20%; }
+  @media only screen and (hover: none) {
+    .event__config, .event__delete {
+      transform: translateY(0);
+      color: rgba(0, 179, 255, 0.5);
+      opacity: 1; }
+    .event__config {
+      right: 40%; }
+    .event__delete {
+      right: 10%; } }
 
 .hasNote .event > div:last-child {
   position: absolute;
@@ -310,10 +316,13 @@ body {
   color: #005A7F;
   transform: scale(1.15); }
 
-@media (hover: none) {
+@media only screen and (hover: none) {
   .hasNote .event__toggleNote {
     opacity: 1;
-    transform: scale(1.05); } }
+    transform: scale(1.05);
+    right: 70%; }
+  .hasNote .event__config {
+    right: 40%; } }
 
 .openNote .event__time {
   opacity: 0; }
@@ -371,6 +380,9 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center; }
+  @media (max-width: 43.75em) {
+    .week {
+      flex-direction: column; } }
   .week li {
     list-style: none; }
   .week__day {
@@ -381,6 +393,12 @@ body {
     text-transform: uppercase;
     color: #fff;
     font-weight: 200; }
+    @media (max-width: 43.75em) {
+      .week__day {
+        font-size: 3rem;
+        padding: 1rem;
+        width: 18rem;
+        border-radius: 3rem; } }
   .week .activeDay {
     opacity: 1;
     background-color: #003459;
@@ -479,6 +497,9 @@ body {
   @media (max-width: 65.625em) {
     .routineContainer {
       width: 70%; } }
+  @media (max-width: 43.75em) {
+    .routineContainer {
+      width: 80%; } }
 
 .eventContainer {
   margin: 1.5rem auto;
@@ -623,6 +644,18 @@ body {
     width: 100%;
     height: 10rem;
     z-index: 200; }
+    @media (max-width: 43.75em) {
+      .menu__weekContainer {
+        position: absolute;
+        width: 25rem;
+        padding: 2rem;
+        padding-top: 20rem;
+        height: 100vh;
+        right: -50%;
+        box-shadow: 0 0 5rem rgba(0, 0, 0, 0.7);
+        transition: right .3s; }
+        .menu__weekContainer.menuOpen {
+          right: 0; } }
   .menu__btnContainer {
     width: 100%;
     height: 10rem;
@@ -659,21 +692,29 @@ body {
         transition: margin 0.3s; }
       .menu__btnContainer button span {
         font-size: 2rem; }
+    .menu__btnContainer button:last-child {
+      display: none; }
+      @media (max-width: 43.75em) {
+        .menu__btnContainer button:last-child {
+          display: flex; } }
   .menu__mobile {
     position: relative;
     height: 10rem;
-    background-color: #0091CC;
+    background-image: linear-gradient(to right, #0091CC, #4CCBFF);
     display: none; }
+    @media (max-width: 43.75em) {
+      .menu__mobile {
+        display: block; } }
   .menu__currentDay {
     background-color: #00364c;
-    font-size: 4rem;
-    padding: .6rem;
-    width: 30rem;
+    font-size: 3.5rem;
+    padding: 1.2rem 5rem;
     text-align: center;
     text-transform: uppercase;
     text-transform: uppercase;
     color: #fff;
     font-weight: 200;
+    border-radius: 3rem;
     position: absolute;
     bottom: 50%;
     right: 50%;
@@ -709,6 +750,6 @@ body {
     right: 3%; }
   .resetRoutineUI__text {
     text-align: center;
-    margin-bottom: 3rem;
     color: #00B3FF;
-    margin-top: 2rem; }
+    margin: 1rem auto 4rem auto;
+    width: 70%; }

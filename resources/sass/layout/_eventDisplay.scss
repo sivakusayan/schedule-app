@@ -10,6 +10,10 @@
   @include respond-shrink(65.625em) {
     width: 70%;
   }
+
+  @include respond-shrink(43.75em) {
+    width: 80%;
+  }
 }
 
 .eventContainer {
