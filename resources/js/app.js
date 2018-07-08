@@ -178,7 +178,7 @@ const UIController = (function () {
     btnOptions: document.getElementById('btnOptions'),
     btnOptionsBack: document.getElementById('btnOptionsBack'),
 
-    weekContainer: document.querySelector('.menu__weekContainer'),
+    weekContainer: document.querySelector('.weekContainer'),
 
     routineContainer: document.querySelector('.routineContainer'),
 
@@ -341,7 +341,7 @@ const UIController = (function () {
     },
 
     toggleOptionsMenu() {
-      console.log('running');
+      darkenScreen();
       DOMobjects.weekContainer.classList.toggle('menuOpen');
     },
 
@@ -514,7 +514,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     DOMobjects.btnReset.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.resetRoutineUI));
     DOMobjects.btnResetBack.addEventListener('click', () => UICtrl.fadeOut(DOMobjects.resetRoutineUI));
 
-    DOMobjects.btnOptions.addEventListener('touchstart', () => {
+    DOMobjects.btnOptions.addEventListener('click', () => {
       UICtrl.toggleOptionsMenu();
     });
     // DOMobjects.btnOptionsBack.addEventListener('click', () => UICtrl.toggleOptionsMenu);
@@ -563,7 +563,7 @@ const eventController = (function (schedCtrl, UICtrl) {
     /* -------------------------WEEK BUTTONS--------------------------------*/
 
     DOMobjects.week.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON') {
+      if (event.target.tagName === 'BUTTON' && activeDay !== event.target.textContent) {
         activeDay = event.target.textContent;
         changeActiveDay(event);
         updateCloneRoutineChoices();

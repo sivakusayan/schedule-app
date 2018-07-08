@@ -17,7 +17,7 @@
     color: $color-primary-medium-1;
     margin-top: 2rem;
   }
-  .hidden {
+  .hidden { //Hides day that is currently active
     display: none;
   }
   &__daysContainer {
@@ -47,7 +47,7 @@
     }
   }
 
-  .selected {
+  .selected { 
     opacity: 1;
     background-color: $color-primary-dark-2;
     transform: translateY(.2rem);
