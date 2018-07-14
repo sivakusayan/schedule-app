@@ -1,6 +1,6 @@
 .popUpUI {
   background-color: $color-white;
-  z-index: 400;
+  z-index: $layer-3;
   box-shadow: 0 0 5rem rgba($color-black, .7);
   border: 15px solid $color-primary-dark-1;
   border-radius: 1rem;

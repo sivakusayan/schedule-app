@@ -12,7 +12,7 @@
   position: -webkit-sticky;
   position: sticky;
   top: 10rem; //Height of week container
-  z-index: 100;
+  z-index: $layer-1;
 
   @include respond-shrink(43.75em) {
     height: 20rem; //Make room for Mobile and Button Container components
@@ -82,8 +82,8 @@
     font-size: 3.5rem;
     padding: 1.2rem 5rem;
     text-align: center;
-    text-transform: uppercase;
-    text-transform: uppercase;
+    text-transform: $mainTextDisplay;
+    text-transform: $mainTextDisplay;
     color: $color-white;
     font-weight: 200;
     border-radius: 3rem;

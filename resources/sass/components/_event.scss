@@ -29,7 +29,7 @@
   //-------------------------------------------------------NAME SECTION
   
   &__name p {
-    text-transform: uppercase;
+    text-transform: $mainTextDisplay;
     background-image: linear-gradient(to right, $color-primary-medium-2, $color-primary-medium-1);
     font-size: 2rem;
     text-align: center;

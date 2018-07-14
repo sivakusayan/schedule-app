@@ -9,15 +9,15 @@
   transition: opacity 0.3s;
   &.overlayON {
     opacity: 1;
-    z-index: 300;
+    z-index: $layer-2;
   }
   &.overlayFADE {
     /*Temp state to keep overlay on top while fading*/
     opacity: 0;
-    z-index: 300;
+    z-index: $layer-2;
   }
   &.overlayOFF {
     opacity: 0;
-    z-index: -1;
+    z-index: $layer-below;
   }
 }

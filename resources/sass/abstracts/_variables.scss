@@ -1,3 +1,6 @@
+/*-------------------------------------------------*/
+/* COLORS */
+/*-------------------------------------------------*/
 
 $color-primary-dark-2: #003459;
 $color-primary-dark-1: #005A7F;
@@ -28,3 +31,18 @@ $color-black: #000;
     --color-white: #fff;
     --color-black: #000;
 }
+
+/*-------------------------------------------------*/
+/* STACKING CONTEXTS (z-index) */
+/*-------------------------------------------------*/
+
+$layer-3: 300; //Lie above overlay
+$layer-2: 200; //Lie above menu 
+$layer-1: 100; //Lie above event displays
+$layer-below: -1; //Hide Element
+
+/*-------------------------------------------------*/
+/* TEXT STYLE */
+/*-------------------------------------------------*/
+
+$mainTextDisplay: uppercase;
