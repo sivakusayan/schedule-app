@@ -13,6 +13,7 @@ html {
   -ms-scroll-chaining: none;
   overflow-x: hidden;
   width: 100vw;
+  height: 100vh;
 
   @include respond-shrink(84.375em) {
     font-size: 50%;
@@ -22,6 +23,10 @@ html {
   }
   @include respond-shrink(56.25em) {
     font-size: 40%;
+  }
+
+  @include respond-shrink(35em) {
+    font-size: 35%;
   }
 
   @include respond-grow(93.75em) {

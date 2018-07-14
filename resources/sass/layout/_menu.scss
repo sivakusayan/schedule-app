@@ -17,6 +17,10 @@
   @include respond-shrink(43.75em) {
     height: 20rem; //Make room for Mobile and Button Container components
     top: 0rem; //Week container pops off, stick to top
+
+    .desktopText {
+      display: none; //Shortens text on smaller screens
+    }
   }
   
   //-------------------------------------------------------BUTTONS
@@ -25,6 +29,7 @@
     width: 100%;
     height: 10rem;
     background-color: $color-white;
+    overflow-x: hidden;
     @include centerChildren;
     -webkit-box-pack: none;
     -ms-flex-pack: none;
@@ -32,8 +37,6 @@
 
     @include respond-shrink(43.75em) {
       background-color: $color-grey-light-1;
-      border-bottom-left-radius: 100rem;
-      border-bottom-right-radius: 100rem;
     }
 
     button {
@@ -87,3 +90,4 @@
     @include center;
   }
 }
+

@@ -22,6 +22,10 @@
     width: 33%;
   } 
 
+  @include respond-shrink(35em) {
+    border: none;
+  }
+
   //-------------------------------------------------------NAME SECTION
   
   &__name p {
@@ -38,6 +42,11 @@
     word-wrap: break-word;
     transition: transform 0.3s;
     @include center;
+
+    @include respond-shrink(35em) {
+      padding: 1rem;
+      width: 18rem;
+    }
   } 
 
   //-------------------------------------------------------TIME SECTION

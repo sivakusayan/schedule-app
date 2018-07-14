@@ -11,18 +11,20 @@
   top: 0;
 
   @include respond-shrink(43.75em) {
-    position: absolute;
+    position: fixed;
     width: 25rem;
     padding: 2rem;
     padding-top: 20rem;
     height: 100vh;
-    right: -50%;
+    right: 0;
+    opacity: 0;
     box-shadow: 0 0 5rem rgba($color-black, .7);
-    transition: right .3s;
-    z-index: 400;
+    z-index: -1;
+    transition: opacity 0.3s;
 
     &.menuOpen {//Reveals the menu in mobile layout
-      right: 0;
+      z-index: 400;
+      opacity: 1;
     }
   }
 }
