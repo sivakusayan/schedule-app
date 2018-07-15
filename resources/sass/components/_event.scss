@@ -22,10 +22,6 @@
     width: 33%;
   } 
 
-  @include respond-shrink(35em) {
-    border: none;
-  }
-
   //-------------------------------------------------------NAME SECTION
   
   &__name p {
@@ -98,6 +94,7 @@
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    backface-visibility: hidden;
 
     i {
       pointer-events: none;
@@ -115,25 +112,6 @@
     outline: none;
   }
 
-  &:hover {
-    border-left: 10px solid $color-primary-dark-1;
-    .event__name p {
-      transform: translate(50%, 50%) scale(1.07);
-      backface-visibility: hidden;
-    }
-    .event__config,
-    .event__delete {
-      transform: translateY(0);
-      opacity: 1;
-      cursor: pointer;
-    }
-    .event__config:hover,
-    .event__delete:hover{
-      color: $color-primary-dark-1;
-      transform: translateY(0) scale(1.1);
-      backface-visibility: hidden;
-    }
-  }
   &__config {
     top: 35%;
     right: 60%;
@@ -155,6 +133,34 @@
     &__delete {
       right: 10%;
     }
+  }
+
+  //-------------------------------------------------------HOVER EFFECT
+
+  @media only screen and (hover: hover) {
+    &:hover {
+      border-left: 10px solid $color-primary-dark-1;
+      .event__name p {
+        transform: translate(50%, 50%) scale(1.07);
+        backface-visibility: hidden;
+      }
+      .event__config,
+      .event__delete {
+        transform: translateY(0);
+        opacity: 1;
+        cursor: pointer;
+      }
+      .event__config:hover,
+      .event__delete:hover{
+        color: $color-primary-dark-1;
+        transform: translateY(0) scale(1.1);
+        backface-visibility: hidden;
+      }
+    }
+  }
+
+  @include respond-shrink(35em) {
+    border: none;
   }
 }
 
@@ -180,7 +186,7 @@
 
   .event__config {
     top: 36%;
-    right: 70%;
+    right: 40%;
   }
   .event__delete {
     top: 36%;
@@ -188,29 +194,25 @@
   }
   .event__toggleNote {
     top: 36%;
-    right: 40%;
+    right: 70%;
     transform: scale(1.3);
   }
 
-  &:hover {
-    .event__toggleNote {
-      transform: scale(1.05);
-      cursor: pointer;
-    }
-    .event__toggleNote:hover{
-      color: $color-primary-dark-1;
-      transform: scale(1.15);
-    }
-  }
+  @media only screen and (hover: hover) {
+    &:hover {
+      .event__toggleNote {
+        transform: scale(1.05);
+        cursor: pointer;
+        right: 40%;
+      }
+      .event__toggleNote:hover{
+        color: $color-primary-dark-1;
+        transform: scale(1.15);
+      }
 
-  @media only screen and (hover: none) {
-    .event__toggleNote {
-      opacity: 1;
-      transform: scale(1.05);
-      right: 70%;
-    }
-    .event__config {
-      right: 40%;
+      .event__config {
+        right: 70%;
+      }
     }
   }
 }
@@ -230,12 +232,15 @@
   .event__toggleNote {
     color: $color-primary-dark-1;
   }
-  &:hover {
-    .event__name p{
-      transform: translate(-80%, 50%) scale(0.92);
-    }
-    .event__toggleNote:hover {
-      color: $color-primary-medium-1;
+
+  @media only screen and (hover: hover) {
+    &:hover {
+      .event__name p{
+        transform: translate(-80%, 50%) scale(0.92);
+      }
+      .event__toggleNote:hover {
+        color: $color-primary-medium-1;
+      }
     }
   }
 }
