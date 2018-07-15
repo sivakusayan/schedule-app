@@ -77,8 +77,9 @@
       display: block;
     }
   }
-  &__currentDay {
+  &__activeDay {
     background-color: darken($color-primary-dark-1, 10%);
+    width: 32rem;
     font-size: 3.5rem;
     padding: 1.2rem 5rem;
     text-align: center;

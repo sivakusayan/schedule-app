@@ -148,6 +148,7 @@ const scheduleController = (function () {
 const UIController = (function () {
   const DOMobjects = {
     week: document.querySelector('.week'),
+    activeDayDisplay: document.querySelector('.menu__activeDay'),
 
     overlay: document.getElementById('overlay'),
 
@@ -322,6 +323,37 @@ const UIController = (function () {
         const eventHTML = dataToHTML(eventDatabase[activeDay][i], i);
         eventHTMLDatabase[activeDay].push(eventHTML);
       }
+    },
+
+    changeActiveDayDisplay(activeDay) {
+      let dayName;
+      switch (activeDay) {
+        case 'MON':
+          dayName = 'MONDAY';
+          break;
+        case 'TUE':
+          dayName = 'TUESDAY';
+          break;
+        case 'WED':
+          dayName = 'WEDNESDAY';
+          break;
+        case 'THU':
+          dayName = 'THURSDAY';
+          break;
+        case 'FRI':
+          dayName = 'FRIDAY';
+          break;
+        case 'SAT':
+          dayName = 'SATURDAY';
+          break;
+        case 'SUN':
+          dayName = 'SUNDAY';
+          break;
+        default:
+          dayName = 'UNDEFINED';
+          break;
+      }
+      DOMobjects.activeDayDisplay.textContent = dayName;
     },
 
     getSelectedDays() {
@@ -566,6 +598,7 @@ const eventController = (function (schedCtrl, UICtrl) {
       if (event.target.tagName === 'BUTTON' && activeDay !== event.target.textContent) {
         activeDay = event.target.textContent;
         changeActiveDay(event);
+        UICtrl.changeActiveDayDisplay(activeDay);
         updateCloneRoutineChoices();
         DOMobjects.routineContainer.style.opacity = 0;
         setTimeout(() => {
