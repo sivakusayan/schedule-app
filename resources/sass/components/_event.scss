@@ -199,19 +199,20 @@
   }
 
   @media only screen and (hover: hover) {
+    .event__toggleNote {
+      right: 40%;
+    }
+    .event__config {
+      right: 70%;
+    }
     &:hover {
       .event__toggleNote {
         transform: scale(1.05);
         cursor: pointer;
-        right: 40%;
       }
       .event__toggleNote:hover{
         color: $color-primary-dark-1;
         transform: scale(1.15);
-      }
-
-      .event__config {
-        right: 70%;
       }
     }
   }
