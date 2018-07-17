@@ -120,6 +120,8 @@
     top: 35%;
     right: 20%;
   }
+
+  //Formats buttons to appear if hover isn't available
   @media only screen and (hover: none) {
     &__config,
     &__delete {
@@ -137,7 +139,7 @@
 
   //-------------------------------------------------------HOVER EFFECT
 
-  @media only screen and (hover: hover) {
+  @media only screen and (hover: hover){
     &:hover {
       border-left: 10px solid $color-primary-dark-1;
       .event__name p {
@@ -159,20 +161,18 @@
     }
   }
 
+  //Removes weird movement of event due to 100% width
   @include respond-shrink(35em) {
     border: none;
+    &:hover {
+      border-left: none;
+    }
   }
 }
 
 //-------------------------------------------------------NOTES MODIFIER
 
 .hasNote {
-
-  .event>div:last-child {
-    position: absolute;
-    width: 28%;
-    @include center;
-  }
 
   .event__note {
     opacity: 0;
@@ -182,6 +182,9 @@
     line-height: 2.5rem;
     word-wrap: break-word;
     transition: opacity 0.3s;
+    position: absolute;
+    width: 28%;
+    @include center;
   }
 
   .event__config {

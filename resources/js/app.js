@@ -372,8 +372,13 @@ const UIController = (function () {
       });
     },
 
-    toggleOptionsMenu() {
+    openOptionsMenu() {
       darkenScreen();
+      DOMobjects.weekContainer.classList.toggle('menuOpen');
+    },
+
+    closeOptionsMenu() {
+      lightenScreen();
       DOMobjects.weekContainer.classList.toggle('menuOpen');
     },
 
@@ -546,10 +551,8 @@ const eventController = (function (schedCtrl, UICtrl) {
     DOMobjects.btnReset.addEventListener('click', () => UICtrl.fadeIn(DOMobjects.resetRoutineUI));
     DOMobjects.btnResetBack.addEventListener('click', () => UICtrl.fadeOut(DOMobjects.resetRoutineUI));
 
-    DOMobjects.btnOptions.addEventListener('click', () => {
-      UICtrl.toggleOptionsMenu();
-    });
-    // DOMobjects.btnOptionsBack.addEventListener('click', () => UICtrl.toggleOptionsMenu);
+    DOMobjects.btnOptions.addEventListener('click', UICtrl.openOptionsMenu);
+    DOMobjects.btnOptionsBack.addEventListener('click', UICtrl.closeOptionsMenu);
 
     /* ------------------------FORM INPUTS------------------------------*/
 

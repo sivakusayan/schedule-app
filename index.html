@@ -19,7 +19,7 @@
 
   <div id="overlay" class="overlay overlayOFF">
     <div class="newEventUI popUpUI">
-      <button id="btnNewBack" class="newEventUI__back btnMenu">
+      <button id="btnNewBack" class="newEventUI__back btn btn--blue">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="newEventForm" class="newEventUI__form" onsubmit="return false" autocomplete="off">
@@ -46,7 +46,7 @@
     </div>
 
     <div class="configEventUI popUpUI">
-      <button id="btnConfigBack" class="configEventUI__back btnMenu">
+      <button id="btnConfigBack" class="configEventUI__back btn btn--blue">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="configEventForm" class="configEventUI__form" onsubmit="return false" autocomplete="off">
@@ -73,7 +73,7 @@
     </div>
 
     <div class="cloneRoutineUI popUpUI">
-      <button id="btnCloneBack" class="cloneRoutineUI__back btnMenu">
+      <button id="btnCloneBack" class="cloneRoutineUI__back btn btn--blue">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="cloneRoutineForm" onsubmit="return false">
@@ -110,7 +110,7 @@
     </div>
 
     <div class="resetRoutineUI popUpUI">
-      <button id="btnResetBack" class="resetRoutineUI__back btnMenu">
+      <button id="btnResetBack" class="resetRoutineUI__back btn btn--blue">
         <i class="far fa-times-circle"></i>
       </button>
       <form id="resetRoutineForm" onsubmit="return false">
@@ -130,6 +130,7 @@
   <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
   <div class="weekContainer">
+    <button id="btnOptionsBack" class="week__back btn btn--white"><i class="far fa-times-circle"></i></button>
     <ul class="week">
       <li>
         <button class="week__day btnDay activeDay">MON</button>
@@ -156,19 +157,19 @@
   </div>
   <menu class="menu">
     <div class="menu__btnContainer">
-      <button id="btnNew" class="btnMenu">
+      <button id="btnNew" class="btn btn--blue">
         <i class="far fa-plus-square"></i>
         <span>New <span class="desktopText">Event</span></span>
       </button>
-      <button id="btnClone" class="btnMenu">
+      <button id="btnClone" class="btn btn--blue">
         <i class="far fa-clone"></i>
         <span>Clone <span class="desktopText">Routine</span></span>
       </button>
-      <button id="btnReset" class="btnMenu" onsubmit="return false">
+      <button id="btnReset" class="btn btn--blue" onsubmit="return false">
         <i class="fas fa-undo-alt"></i>
         <span>Reset <span class="desktopText">Routine</span></span>
       </button>
-      <button id="btnOptions" class="btnMenu">
+      <button id="btnOptions" class="btn btn--blue">
         <i class="fas fa-bars"></i>
         <span>Options</span>
       </button>

@@ -20,7 +20,7 @@
     opacity: 0;
     box-shadow: 0 0 5rem rgba($color-black, .7);
     z-index: $layer-below;
-    transition: opacity 0.3s;
+    transition: opacity 0.3s, z-index 0.3s;
 
     &.menuOpen {//Reveals the menu in mobile layout
       z-index: $layer-3;
@@ -55,10 +55,23 @@
       border-radius: 3rem;
     }
   }
+
   .activeDay {
     opacity: 1;
     background-color: $color-primary-dark-2;
     transform: translateY(.2rem);
     box-shadow: 0 .2rem .5rem rgba($color-black, .4);
+  }
+
+  &__back {
+    display: none;
+
+    @include respond-shrink(43.75em) {
+      display: inline-block;
+      position: absolute;
+      top: 5%;
+      left: 37%;
+      font-size: 6rem;
+    }
   }
 }
