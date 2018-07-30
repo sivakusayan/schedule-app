@@ -3,10 +3,11 @@
         "browser": true
     },
 
-    "extends": "airbnb",
+    "extends": "airbnb-base",
 
     "rules": {
         "no-restricted-syntax": ["error", "ForInStatement", "LabeledStatement", "WithStatement"],
-        "no-param-reassign": [2, { "props": false }]
+        "no-param-reassign": [2, { "props": false }],
+        "linebreak-style": ["error", "windows"]
     }
 }     

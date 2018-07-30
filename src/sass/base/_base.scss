@@ -33,7 +33,16 @@ html {
     font-size: 60%;
   }
   @include respond-grow(103.125em) {
+    font-size: 65%;
+  }
+  @include respond-grow(112.5em) {
     font-size: 70%;
+  }
+  @include respond-grow(128.125em) {
+    font-size: 85%;
+  }
+  @include respond-grow(146.875em) {
+    font-size: 100%;
   }
 }
 
