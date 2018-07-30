@@ -405,22 +405,42 @@ const UIController = (function () {
 /*-----------------------------------------------------------------------------*/
 
 const eventController = (function (schedCtrl, UICtrl) {
-  let activeDay;
-  let selectedEvent;
+  const state = {
+    activeDay: 'MON',
+    selectedEvent: null,
+    eventDatabase: {
+      MON: [],
+      TUE: [],
+      WED: [],
+      THU: [],
+      FRI: [],
+      SAT: [],
+      SUN: [],
+    },
+    reservedTimeSlots: {
+      MON: [],
+      TUE: [],
+      WED: [],
+      THU: [],
+      FRI: [],
+      SAT: [],
+      SUN: [],
+    },
+  };
 
   const DOMobjects = UICtrl.getDOMobjects();
 
   function updateUI() {
     const eventDatabase = schedCtrl.getEventDatabase();
-    UICtrl.updateHTMLDatabase(eventDatabase, activeDay);
-    UICtrl.displayEvents(activeDay);
+    UICtrl.updateHTMLDatabase(eventDatabase, state.activeDay);
+    UICtrl.displayEvents(state.activeDay);
   }
 
   function addEvent(eventObj) {
     // 1. Transfer data to schedule controller
     schedCtrl.addToEventDatabase(eventObj.name, eventObj.startTime,
-      eventObj.endTime, eventObj.notes, activeDay);
-    schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, activeDay);
+      eventObj.endTime, eventObj.notes, state.activeDay);
+    schedCtrl.recordTimeSlot(eventObj.startTime, eventObj.endTime, state.activeDay);
     // 2. Transfer data to UI controller
     updateUI();
   }
@@ -439,8 +459,8 @@ const eventController = (function (schedCtrl, UICtrl) {
   }
 
   function deleteEvent(index) {
-    schedCtrl.deleteFromEventDatabase(index, activeDay);
-    schedCtrl.deleteTimeSlot(index, activeDay);
+    schedCtrl.deleteFromEventDatabase(index, state.activeDay);
+    schedCtrl.deleteTimeSlot(index, state.activeDay);
     UICtrl.deleteFromDisplay(index);
     setTimeout(updateIndices, 300);
   }
@@ -452,7 +472,7 @@ const eventController = (function (schedCtrl, UICtrl) {
 
   function cloneRoutine() {
     const selectedDays = UICtrl.getSelectedDays();
-    schedCtrl.cloneToSelectedDays(activeDay, selectedDays);
+    schedCtrl.cloneToSelectedDays(state.activeDay, selectedDays);
     UICtrl.resetCloneForm();
     UICtrl.fadeOut(DOMobjects.cloneRoutineUI);
   }
@@ -460,25 +480,25 @@ const eventController = (function (schedCtrl, UICtrl) {
   function updateCloneRoutineChoices() {
     document.querySelector('.hidden').classList.remove('hidden');
     Array.prototype.forEach.call(DOMobjects.cloneRoutineDays, (current) => {
-      if (current.textContent === activeDay) {
+      if (current.textContent === state.activeDay) {
         current.classList.add('hidden');
       }
     });
   }
 
   function resetRoutine() {
-    schedCtrl.resetActiveDay(activeDay);
+    schedCtrl.resetActiveDay(state.activeDay);
     updateUI();
   }
 
   function setupConfigureForm(index) {
     const eventDatabase = schedCtrl.getEventDatabase();
-    selectedEvent = eventDatabase[activeDay][index];
-    UICtrl.setConfigData(selectedEvent.name, selectedEvent.startTime,
-      selectedEvent.endTime, selectedEvent.notes);
+    state.selectedEvent = eventDatabase[state.activeDay][index];
+    UICtrl.setConfigData(state.selectedEvent.name, state.selectedEvent.startTime,
+      state.selectedEvent.endTime, state.selectedEvent.notes);
 
-    schedCtrl.deleteFromEventDatabase(index, activeDay);
-    schedCtrl.deleteTimeSlot(index, activeDay);
+    schedCtrl.deleteFromEventDatabase(index, state.activeDay);
+    schedCtrl.deleteTimeSlot(index, state.activeDay);
   }
 
   function determineButtonEvent(event) {
@@ -509,10 +529,10 @@ const eventController = (function (schedCtrl, UICtrl) {
       if (!schedCtrl.validateTimeRange(timeInputs)) {
         timeInputs[1].setCustomValidity('End time should be after the Start time.');
         validityCheck[1] = 0;
-      } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, activeDay)) {
+      } else if (!schedCtrl.validateNoTimeOverlap(timeInputs[i].value, i, state.activeDay)) {
         timeInputs[i].setCustomValidity("You can't have overlapping event times.");
         validityCheck[i] = 0;
-      } else if (!schedCtrl.validateNoSubEvents(timeInputs, activeDay)) {
+      } else if (!schedCtrl.validateNoSubEvents(timeInputs, state.activeDay)) {
         timeInputs[1].setCustomValidity("You can't have overlapping event times.");
         validityCheck[1] = 0;
       }
@@ -595,10 +615,10 @@ const eventController = (function (schedCtrl, UICtrl) {
     /* -------------------------WEEK BUTTONS--------------------------------*/
 
     DOMobjects.week.addEventListener('click', (event) => {
-      if (event.target.tagName === 'BUTTON' && activeDay !== event.target.textContent) {
-        activeDay = event.target.textContent;
+      if (event.target.tagName === 'BUTTON' && state.activeDay !== event.target.textContent) {
+        state.activeDay = event.target.textContent;
         changeActiveDay(event);
-        UICtrl.changeActiveDayDisplay(activeDay);
+        UICtrl.changeActiveDayDisplay(state.activeDay);
         updateCloneRoutineChoices();
         DOMobjects.routineContainer.style.opacity = 0;
         setTimeout(() => {
@@ -621,8 +641,8 @@ const eventController = (function (schedCtrl, UICtrl) {
     });
 
     DOMobjects.btnConfigBack.addEventListener('click', () => {
-      schedCtrl.addToEventDatabase(selectedEvent.name, selectedEvent.startTime,
-        selectedEvent.endTime, selectedEvent.notes, activeDay);
+      schedCtrl.addToEventDatabase(state.selectedEvent.name, state.selectedEvent.startTime,
+        state.selectedEvent.endTime, state.selectedEvent.notes, state.activeDay);
       UICtrl.fadeOut(DOMobjects.configEventUI);
       DOMobjects.endTimeConfigInput.setCustomValidity('');
       DOMobjects.startTimeConfigInput.setCustomValidity('');
@@ -632,7 +652,7 @@ const eventController = (function (schedCtrl, UICtrl) {
   return {
     init() {
       setupEventListeners();
-      activeDay = 'MON';
+      state.activeDay = 'MON';
 
       addEvent({
         name: 'Breakfast',
