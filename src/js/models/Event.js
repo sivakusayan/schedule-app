@@ -1,8 +1,9 @@
+import TimeSlot from './TimeSlot';
+
 export default class Event {
   constructor(name, startTime, endTime, notes) {
     this.name = name;
-    this.startTime = startTime;
-    this.endTime = endTime;
+    this.timeSlot = new TimeSlot(startTime, endTime);
     this.notes = notes;
   }
 }
