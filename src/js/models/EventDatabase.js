@@ -1,6 +1,28 @@
-import Database from './Database';
+export default class EventDatabase {
+  constructor() {
+    this.MON = [];
+    this.TUE = [];
+    this.WED = [];
+    this.THU = [];
+    this.FRI = [];
+    this.SAT = [];
+    this.SUN = [];
+  }
 
-export default class EventDatabase extends Database {
+  deleteFromDatabase(index, activeDay) {
+    this[activeDay].splice(index, 1);
+  }
+
+  resetActiveDay(activeDay) {
+    this[activeDay] = [];
+  }
+
+  cloneToSelectedDays(activeDay, selectedDays) {
+    selectedDays.forEach((selectedDay) => {
+      this[selectedDay] = this[activeDay].slice();
+    });
+  }
+
   addToDatabase(event, activeDay) {
     if (this[activeDay].length === 0) {
       // If no events, just push
@@ -15,5 +37,9 @@ export default class EventDatabase extends Database {
       });
       this[activeDay].splice(indexToInsert, 0, event);
     }
+  }
+
+  getTimeSlots(activeDay) {
+    return this[activeDay].map(event => event.timeSlot);
   }
 }
