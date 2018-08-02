@@ -1,4 +1,3 @@
-import TimeSlot from './models/TimeSlot';
 import Event from './models/Event';
 import EventDatabase from './models/EventDatabase';
 
