@@ -1,6 +1,6 @@
 import { DOMobjects } from './base';
 
-export const renderEvent = (event, index) => {
+const renderEvent = (event, index) => {
   const markup = `
   <div id="event_${index}" class="eventContainer ${event.notes ? 'hasNote' : ''}">
     <div class="event">
@@ -42,6 +42,10 @@ export const renderEvent = (event, index) => {
   DOMobjects.routineContainer.insertAdjacentHTML('beforeend', markup);
 };
 
+export const renderSchedule = (events) => {
+  events.forEach((event, index) => renderEvent(event, index));
+};
+
 export const deleteEvent = (index) => {
   const eventDOM = document.getElementById(`event_${index}`);
   eventDOM.firstChild.style.opacity = 0;
@@ -52,7 +56,16 @@ export const deleteEvent = (index) => {
   }, 300);
 };
 
+export const clearEvents = () => {
+  DOMobjects.routineContainer.innerHTML = '';
+};
+
 export const toggleNote = (eventIndex) => {
   const event = document.getElementById(`event_${eventIndex}`);
   event.classList.toggle('openNote');
+};
+
+export const updateIndices = () => {
+  const eventArray = Array.from(document.querySelectorAll('.eventContainer'));
+  eventArray.forEach((event, index) => event.setAttribute('id', `event_${index}`));
 };
