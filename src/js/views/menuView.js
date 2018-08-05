@@ -10,14 +10,14 @@ export const closeOptionsMenu = () => {
   base.DOMobjects.weekContainer.classList.toggle('menuOpen');
 };
 
-// Updates active day class for buttons
 const changeActiveDayButton = (clickEvent) => {
+  // Updates active day class for buttons
   document.querySelector('.activeDay').classList.remove('activeDay');
   clickEvent.target.classList.add('activeDay');
 };
 
-// Changes active day display in mobile layout
 const changeActiveDayLabel = () => {
+  // Changes active day display in mobile layout
   let dayName;
   const activeDay = document.querySelector('.activeDay').textContent;
   switch (activeDay) {

@@ -29,6 +29,7 @@ export const resetNewEventForm = () => {
 };
 
 export const getSelectedDays = () => {
+  // Find days that were selected for cloning
   const selectedDays = [];
 
   Array.prototype.forEach.call(document.querySelectorAll('.selected'), (current) => {
@@ -38,7 +39,17 @@ export const getSelectedDays = () => {
   return selectedDays;
 };
 
+export const updateCloneRoutineChoices = (state) => {
+  // Unhide the original active day
+  document.querySelector('.hidden').classList.remove('hidden');
+
+  // Hide the new active day
+  const cloneDayButtons = Array.from(DOMobjects.cloneRoutineDays);
+  cloneDayButtons.find(day => day.textContent === state.activeDay).classList.add('hidden');
+};
+
 export const resetCloneForm = () => {
+  // Unselect selected days if exiting clone form
   Array.prototype.forEach.call(document.querySelectorAll('.selected'), (current) => {
     current.classList.remove('selected');
   });
