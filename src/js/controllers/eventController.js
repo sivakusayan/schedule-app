@@ -30,6 +30,11 @@ export const resetRoutine = (state) => {
   eventView.clearEvents();
 };
 
+export const refreshSchedule = (state) => {
+  eventView.clearSchedule();
+  eventView.renderSchedule(state.eventDatabase);
+};
+
 // eventView.renderEvent({
 //   name: 'Breakfast',
 //   timeSlot: {

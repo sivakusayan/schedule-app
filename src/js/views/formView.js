@@ -8,11 +8,11 @@ export const getInputData = () => ({
 });
 
 
-export const setConfigData = (name, startTime, endTime, notes) => {
-  DOMobjects.nameConfigInput.value = name;
-  DOMobjects.startTimeConfigInput.value = startTime;
-  DOMobjects.endTimeConfigInput.value = endTime;
-  DOMobjects.notesConfigInput.value = notes;
+export const setConfigData = (event) => {
+  DOMobjects.nameConfigInput.value = event.name;
+  DOMobjects.startTimeConfigInput.value = event.timeSlot.startTime;
+  DOMobjects.endTimeConfigInput.value = event.timeSlot.endTime;
+  DOMobjects.notesConfigInput.value = event.notes;
 };
 
 export const getConfigData = () => ({
@@ -39,13 +39,13 @@ export const getSelectedDays = () => {
   return selectedDays;
 };
 
-export const updateCloneRoutineChoices = (state) => {
+export const updateCloneRoutineChoices = (activeDay) => {
   // Unhide the original active day
   document.querySelector('.hidden').classList.remove('hidden');
 
   // Hide the new active day
   const cloneDayButtons = Array.from(DOMobjects.cloneRoutineDays);
-  cloneDayButtons.find(day => day.textContent === state.activeDay).classList.add('hidden');
+  cloneDayButtons.find(day => day.textContent === activeDay).classList.add('hidden');
 };
 
 export const resetCloneForm = () => {

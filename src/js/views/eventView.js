@@ -58,7 +58,7 @@ export const deleteEvent = (index) => {
   }, 300);
 };
 
-export const clearEvents = () => {
+export const clearSchedule = () => {
   DOMobjects.routineContainer.innerHTML = '';
 };
 
