@@ -14,22 +14,22 @@ export default class TimeSlot {
 
   validateNoTimeOverlap(timeSlots) {
     // Checks if timeSlot overlaps an existing timeSlot
-    for (const [startTime, endTime] of timeSlots) {
+    for (const { startTime, endTime } of timeSlots) {
       // Check if startTime is valid
       if (startTime <= this.startTime && this.startTime < endTime) {
-        return false;
+        return 'INVALID_START';
       }
       // Check if endTime is valid
       if (startTime < this.endTime && this.endTime <= endTime) {
-        return false;
+        return 'INVALID_END';
       }
     }
-    return true;
+    return 'OK';
   }
 
   validateNoSubEvents(timeSlots) {
     // Checks if timeSlot swallows an existing timeSlot
-    for (const [startTime, endTime] of timeSlots) {
+    for (const { startTime, endTime } of timeSlots) {
       if (this.startTime <= startTime && endTime <= this.endTime) {
         return false;
       }

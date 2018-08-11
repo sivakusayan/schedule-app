@@ -2,8 +2,10 @@ import { DOMobjects } from './base';
 
 export const getInputData = () => ({
   name: DOMobjects.nameInput.value,
-  startTime: DOMobjects.startTimeInput.value,
-  endTime: DOMobjects.endTimeInput.value,
+  timeSlot: {
+    startTime: DOMobjects.startTimeInput.value,
+    endTime: DOMobjects.endTimeInput.value,
+  },
   notes: DOMobjects.notesInput.value,
 });
 

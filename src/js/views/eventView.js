@@ -1,4 +1,4 @@
-import { DOMobjects } from './base';
+import { DOMobjects, toStandardTime } from './base';
 
 const renderEvent = (event, index) => {
   const markup = `
@@ -6,8 +6,8 @@ const renderEvent = (event, index) => {
     <div class="event">
       <div>
         <div class="event__time">
-          <span class="event__start">${event.timeSlot.startTime}</span>
-          <span class="event__end">${event.timeSlot.endTime}</span>
+          <span class="event__start">${toStandardTime(event.timeSlot.startTime)}</span>
+          <span class="event__end">${toStandardTime(event.timeSlot.endTime)}</span>
         </div>
       </div>
       <div>

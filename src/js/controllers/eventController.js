@@ -1,4 +1,3 @@
-import Event from '../models/Event';
 import { DOMobjects } from '../views/base';
 import * as eventView from '../views/eventView';
 import * as formView from '../views/formView';
@@ -7,7 +6,7 @@ export const addEvent = (event, state) => {
   // Add to database model
   state.eventDatabase.addToDatabase(event, state.activeDay);
   // Prepare UI for schedule update
-  eventView.clearEvents();
+  eventView.clearSchedule();
   // Render events into UI
   eventView.renderSchedule(state.eventDatabase[state.activeDay]);
 };
@@ -32,7 +31,7 @@ export const resetRoutine = (state) => {
 
 export const refreshSchedule = (state) => {
   eventView.clearSchedule();
-  eventView.renderSchedule(state.eventDatabase);
+  eventView.renderSchedule(state.eventDatabase[state.activeDay]);
 };
 
 // eventView.renderEvent({
