@@ -21,12 +21,12 @@ export const cloneRoutine = (state) => {
   const selectedDays = formView.getSelectedDays();
   state.eventDatabase.cloneToSelectedDays(state.activeDay, selectedDays);
   formView.resetCloneForm();
-  formView.fadeOut(DOMobjects.cloneRoutineUI);
+  fadeOut(DOMobjects.cloneRoutineUI);
 };
 
 export const resetRoutine = (state) => {
   state.eventDatabase.resetActiveDay(state.activeDay);
-  eventView.clearEvents();
+  eventView.clearSchedule();
 };
 
 export const refreshSchedule = (state) => {

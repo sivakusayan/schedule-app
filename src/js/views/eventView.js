@@ -49,8 +49,8 @@ export const renderSchedule = (events) => {
 export const deleteEvent = (index) => {
   const eventDOM = document.getElementById(`event_${index}`);
   // Animation for deleting event
-  eventDOM.firstChild.style.opacity = 0;
-  eventDOM.firstChild.style.height = 0;
+  eventDOM.firstElementChild.style.opacity = 0;
+  eventDOM.firstElementChild.style.height = 0;
   eventDOM.style.margin = 0;
   // Delete event after animation over
   setTimeout(() => {

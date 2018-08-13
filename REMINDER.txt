@@ -1,0 +1,6 @@
+LEARN REGEX TO DO FOLLOWING REPLACEMENTS
+
+Routine => Schedule
+routine => schedule
+
+FOR CONSISTENCY.

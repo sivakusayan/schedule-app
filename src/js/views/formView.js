@@ -19,8 +19,10 @@ export const setConfigData = (event) => {
 
 export const getConfigData = () => ({
   name: DOMobjects.nameConfigInput.value,
-  startTime: DOMobjects.startTimeConfigInput.value,
-  endTime: DOMobjects.endTimeConfigInput.value,
+  timeSlot: {
+    startTime: DOMobjects.startTimeConfigInput.value,
+    endTime: DOMobjects.endTimeConfigInput.value,
+  },
   notes: DOMobjects.notesConfigInput.value,
 });
 
