@@ -6,10 +6,12 @@ import * as menuView from './views/menuView';
 import * as eventView from './views/eventView';
 
 const state = {
-  activeDay: 'FRI',
+  activeDay: 'MON',
   selectedEvent: null,
   eventDatabase: new EventDatabase(),
 };
+
+window.state = state;
 
 const addEvent = (event) => {
   // Add to database
@@ -44,6 +46,9 @@ const refreshSchedule = () => {
   eventView.clearSchedule();
   eventView.renderSchedule(state.eventDatabase[state.activeDay]);
 };
+
+state.eventDatabase.readData();
+refreshSchedule();
 
 const setupConfigureForm = (index) => {
   // Saves event that is being configured

@@ -11,16 +11,22 @@ export default class EventDatabase {
 
   deleteFromDatabase(index, activeDay) {
     this[activeDay].splice(index, 1);
+    // Update local storage
+    this.persistData(activeDay);
   }
 
   resetActiveDay(activeDay) {
     this[activeDay] = [];
+    // Update local storage
+    this.persistData(activeDay);
   }
 
   cloneToSelectedDays(activeDay, selectedDays) {
     selectedDays.forEach((selectedDay) => {
       this[selectedDay] = this[activeDay].slice();
     });
+    // Update local storage
+    selectedDays.forEach(selectedDay => this.persistData(selectedDay));
   }
 
   addToDatabase(event, activeDay) {
@@ -37,9 +43,23 @@ export default class EventDatabase {
       });
       this[activeDay].splice(indexToInsert, 0, event);
     }
+
+    // Update local storage
+    this.persistData(activeDay);
   }
 
   getTimeSlots(activeDay) {
     return this[activeDay].map(event => event.timeSlot);
+  }
+
+  persistData(activeDay) {
+    localStorage.setItem(activeDay, JSON.stringify(this[activeDay]));
+  }
+
+  readData() {
+    Object.keys(this).forEach((day) => {
+      const dayStorage = JSON.parse(localStorage.getItem(day));
+      if (dayStorage) this[day] = dayStorage;
+    });
   }
 }

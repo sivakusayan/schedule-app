@@ -37,7 +37,6 @@ export const changeActiveDay = (clickEvent) => {
   changeActiveDayButton(clickEvent);
   changeActiveDayLabel();
 
-  console.log(base.getWindowWidth());
   // Checks if window has changed to mobile layout or not
   if (base.getWindowWidth() <= 43.75) {
     // Close menu after user has chosen a day
