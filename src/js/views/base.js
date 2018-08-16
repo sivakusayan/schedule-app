@@ -16,24 +16,24 @@ export const DOMobjects = {
 
   btnClone: document.getElementById('btnClone'),
   btnCloneBack: document.getElementById('btnCloneBack'),
-  cloneRoutineUI: document.querySelector('.cloneRoutineUI'),
-  cloneRoutineForm: document.getElementById('cloneRoutineForm'),
-  cloneRoutineDaysContainer: document.querySelector('.cloneRoutineUI__daysContainer'),
-  cloneRoutineDays: document.querySelectorAll('.cloneRoutineUI__day'),
-  cloneRoutineSelectedDays: document.querySelectorAll('.selected'),
+  cloneScheduleUI: document.querySelector('.cloneScheduleUI'),
+  cloneScheduleForm: document.getElementById('cloneScheduleForm'),
+  cloneScheduleDaysContainer: document.querySelector('.cloneScheduleUI__daysContainer'),
+  cloneScheduleDays: document.querySelectorAll('.cloneScheduleUI__day'),
+  cloneScheduleSelectedDays: document.querySelectorAll('.selected'),
 
   btnReset: document.getElementById('btnReset'),
   btnResetBack: document.getElementById('btnResetBack'),
-  resetRoutineUI: document.querySelector('.resetRoutineUI'),
-  resetRoutineYes: document.querySelector('.resetRoutineUI__YES'),
-  resetRoutineNo: document.querySelector('.resetRoutineUI__NO'),
+  resetScheduleUI: document.querySelector('.resetScheduleUI'),
+  resetScheduleYes: document.querySelector('.resetScheduleUI__YES'),
+  resetScheduleNo: document.querySelector('.resetScheduleUI__NO'),
 
   btnOptions: document.getElementById('btnOptions'),
   btnOptionsBack: document.getElementById('btnOptionsBack'),
 
   weekContainer: document.querySelector('.weekContainer'),
 
-  routineContainer: document.querySelector('.routineContainer'),
+  scheduleContainer: document.querySelector('.scheduleContainer'),
 
   btnConfigBack: document.getElementById('btnConfigBack'),
   configEventUI: document.querySelector('.configEventUI'),
@@ -63,12 +63,12 @@ export const toStandardTime = (militaryTime) => {
   return standardTime;
 };
 
-const darkenScreen = () => {
+export const darkenScreen = () => {
   DOMobjects.overlay.classList.remove('overlayOFF');
   DOMobjects.overlay.classList.add('overlayON');
 };
 
-const lightenScreen = () => {
+export const lightenScreen = () => {
   DOMobjects.overlay.classList.remove('overlayON');
   DOMobjects.overlay.classList.add('overlayFADE');
 
@@ -91,3 +91,6 @@ export const fadeOut = (domObj) => {
     domObj.style.visibility = 'hidden';
   }, 300);
 };
+
+// Returns window width in EM units
+export const getWindowWidth = () => window.innerWidth / 16;

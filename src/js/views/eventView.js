@@ -39,7 +39,7 @@ const renderEvent = (event, index) => {
   </div>
   `;
 
-  DOMobjects.routineContainer.insertAdjacentHTML('beforeend', markup);
+  DOMobjects.scheduleContainer.insertAdjacentHTML('beforeend', markup);
 };
 
 export const renderSchedule = (events) => {
@@ -59,7 +59,7 @@ export const deleteEvent = (index) => {
 };
 
 export const clearSchedule = () => {
-  DOMobjects.routineContainer.innerHTML = '';
+  DOMobjects.scheduleContainer.innerHTML = '';
 };
 
 export const toggleNote = (eventIndex) => {

@@ -49,11 +49,20 @@
         margin-right: 1rem;
         -webkit-transition: margin 0.3s;
         transition: margin 0.3s;
+        @include respond-shrink(21.875em) {
+          font-size: 3rem;
+        }
       }
       span {
         font-size: 2rem;
+        @include respond-shrink(21.875em) {
+          font-size: 1.8rem;
+        }
       }
       @include centerChildren;
+      @include respond-shrink(26.25em) {
+        margin: 0 2rem;
+      }
     }
 
     button:last-child{ //Hides the btnOptions, reveals for mobile layout

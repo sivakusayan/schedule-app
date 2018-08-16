@@ -473,7 +473,7 @@ body {
         left: 37%;
         font-size: 6rem; } }
 
-.cloneRoutineUI {
+.cloneScheduleUI {
   height: 42rem;
   width: 60rem;
   font-size: 2rem;
@@ -495,19 +495,19 @@ body {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
-  .cloneRoutineUI__back {
+  .cloneScheduleUI__back {
     position: absolute;
     font-size: 3rem;
     top: 5%;
     right: 3%; }
-  .cloneRoutineUI__text {
+  .cloneScheduleUI__text {
     text-align: center;
     margin-bottom: 3rem;
     color: #00B3FF;
     margin-top: 2rem; }
-  .cloneRoutineUI .hidden {
+  .cloneScheduleUI .hidden {
     display: none; }
-  .cloneRoutineUI__daysContainer {
+  .cloneScheduleUI__daysContainer {
     list-style: none;
     color: #4CCBFF;
     margin-bottom: 4rem;
@@ -526,7 +526,7 @@ body {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center; }
-    .cloneRoutineUI__daysContainer button {
+    .cloneScheduleUI__daysContainer button {
       font-size: 2rem;
       display: inline-block;
       margin: 1.5rem;
@@ -546,15 +546,15 @@ body {
       -webkit-box-align: center;
       -ms-flex-align: center;
       align-items: center; }
-  .cloneRoutineUI .selected {
+  .cloneScheduleUI .selected {
     opacity: 1;
     background-color: #003459;
     transform: translateY(0.2rem);
     box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.4); }
-    .cloneRoutineUI .selected:hover {
+    .cloneScheduleUI .selected:hover {
       cursor: pointer; }
 
-.routineContainer {
+.scheduleContainer {
   width: 50%;
   margin: 0 auto;
   -webkit-transition: opacity 0.6s;
@@ -563,13 +563,13 @@ body {
   display: flex;
   flex-direction: column; }
   @media (max-width: 65.625em) {
-    .routineContainer {
+    .scheduleContainer {
       width: 70%; } }
   @media (max-width: 43.75em) {
-    .routineContainer {
+    .scheduleContainer {
       width: 80%; } }
   @media (max-width: 35em) {
-    .routineContainer {
+    .scheduleContainer {
       width: 100%; } }
 
 .eventContainer {
@@ -755,8 +755,17 @@ body {
         margin-right: 1rem;
         -webkit-transition: margin 0.3s;
         transition: margin 0.3s; }
+        @media (max-width: 21.875em) {
+          .menu__btnContainer button i {
+            font-size: 3rem; } }
       .menu__btnContainer button span {
         font-size: 2rem; }
+        @media (max-width: 21.875em) {
+          .menu__btnContainer button span {
+            font-size: 1.8rem; } }
+      @media (max-width: 26.25em) {
+        .menu__btnContainer button {
+          margin: 0 2rem; } }
     .menu__btnContainer button:last-child {
       display: none; }
       @media (max-width: 43.75em) {
@@ -786,7 +795,7 @@ body {
     -webkit-transform: translate(50%, 50%);
     transform: translate(50%, 50%); }
 
-.resetRoutineUI {
+.resetScheduleUI {
   height: 28rem;
   width: 45rem;
   font-size: 2rem;
@@ -808,12 +817,12 @@ body {
   opacity: 0;
   -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s; }
-  .resetRoutineUI__back {
+  .resetScheduleUI__back {
     position: absolute;
     font-size: 3rem;
     top: 5%;
     right: 3%; }
-  .resetRoutineUI__text {
+  .resetScheduleUI__text {
     text-align: center;
     color: #00B3FF;
     margin: 1rem auto 4rem auto;

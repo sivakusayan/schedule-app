@@ -29,10 +29,10 @@ const deleteEvent = (index) => {
   setTimeout(eventView.updateIndices, 300);
 };
 
-const cloneRoutine = (selectedDays) => {
+const cloneSchedule = (selectedDays) => {
   state.eventDatabase.cloneToSelectedDays(state.activeDay, selectedDays);
   formView.resetCloneForm();
-  fadeOut(DOMobjects.cloneRoutineUI);
+  fadeOut(DOMobjects.cloneScheduleUI);
 };
 
 const resetSchedule = () => {
@@ -101,21 +101,24 @@ DOMobjects.btnNewBack.addEventListener('click', () => {
   }, 300);
 });
 
-DOMobjects.btnClone.addEventListener('click', () => fadeIn(DOMobjects.cloneRoutineUI));
+DOMobjects.btnClone.addEventListener('click', () => fadeIn(DOMobjects.cloneScheduleUI));
 DOMobjects.btnCloneBack.addEventListener('click', () => {
   // Fade out animation
-  fadeOut(DOMobjects.cloneRoutineUI);
+  fadeOut(DOMobjects.cloneScheduleUI);
   // Reset form after animation is done
   setTimeout(() => {
     formView.resetCloneForm();
   }, 300);
 });
 
-DOMobjects.btnReset.addEventListener('click', () => fadeIn(DOMobjects.resetRoutineUI));
-DOMobjects.btnResetBack.addEventListener('click', () => fadeOut(DOMobjects.resetRoutineUI));
+DOMobjects.btnReset.addEventListener('click', () => fadeIn(DOMobjects.resetScheduleUI));
+DOMobjects.btnResetBack.addEventListener('click', () => fadeOut(DOMobjects.resetScheduleUI));
 
 DOMobjects.btnOptions.addEventListener('click', formView.openOptionsMenu);
 DOMobjects.btnOptionsBack.addEventListener('click', formView.closeOptionsMenu);
+
+DOMobjects.btnOptions.addEventListener('click', menuView.openOptionsMenu);
+DOMobjects.btnOptionsBack.addEventListener('click', menuView.closeOptionsMenu);
 
 /* ------------------------FORM INPUTS------------------------------*/
 
@@ -148,17 +151,17 @@ DOMobjects.configEventForm.addEventListener('submit', () => {
   fadeOut(DOMobjects.configEventUI);
 });
 
-DOMobjects.cloneRoutineForm.addEventListener('submit', () => {
+DOMobjects.cloneScheduleForm.addEventListener('submit', () => {
   const selectedDays = formView.getSelectedDays();
-  cloneRoutine(selectedDays);
+  cloneSchedule(selectedDays);
 });
 
-DOMobjects.resetRoutineYes.addEventListener('click', () => {
+DOMobjects.resetScheduleYes.addEventListener('click', () => {
   resetSchedule(state);
-  fadeOut(DOMobjects.resetRoutineUI);
+  fadeOut(DOMobjects.resetScheduleUI);
 });
 
-DOMobjects.resetRoutineNo.addEventListener('click', () => fadeOut(DOMobjects.resetRoutineUI));
+DOMobjects.resetScheduleNo.addEventListener('click', () => fadeOut(DOMobjects.resetScheduleUI));
 
 /* -------------------------WEEK BUTTONS--------------------------------*/
 
@@ -169,17 +172,17 @@ DOMobjects.week.addEventListener('click', (e) => {
     // Change displayed active day
     menuView.changeActiveDay(e);
     // Disable selecting active day for cloning
-    formView.updateCloneRoutineChoices(state.activeDay);
+    formView.updateCloneScheduleChoices(state.activeDay);
     // Switch active day's schedule
-    DOMobjects.routineContainer.style.opacity = 0;
+    DOMobjects.scheduleContainer.style.opacity = 0;
     setTimeout(() => {
       refreshSchedule(state);
-      DOMobjects.routineContainer.style.opacity = 1;
+      DOMobjects.scheduleContainer.style.opacity = 1;
     }, 600);
   }
 });
 
-DOMobjects.cloneRoutineDaysContainer.addEventListener('click', (event) => {
+DOMobjects.cloneScheduleDaysContainer.addEventListener('click', (event) => {
   if (event.target.tagName === 'BUTTON') {
     event.target.classList.toggle('selected');
   }
@@ -187,7 +190,7 @@ DOMobjects.cloneRoutineDaysContainer.addEventListener('click', (event) => {
 
 /* -------------------------EVENT BUTTONS--------------------------------*/
 
-DOMobjects.routineContainer.addEventListener('click', (event) => {
+DOMobjects.scheduleContainer.addEventListener('click', (event) => {
   if (event.target.tagName === 'BUTTON') {
     // Find what action to perform
     const buttonType = event.target.className;
@@ -199,7 +202,7 @@ DOMobjects.routineContainer.addEventListener('click', (event) => {
       fadeIn(DOMobjects.configEventUI);
     } else if (buttonType === 'event__delete') {
       deleteEvent(selectedEventIndex, state);
-    } else if (buttonType === 'event__note') {
+    } else if (buttonType === 'event__toggleNote') {
       eventView.toggleNote(selectedEventIndex);
     }
   }

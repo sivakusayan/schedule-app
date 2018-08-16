@@ -43,12 +43,12 @@ export const getSelectedDays = () => {
   return selectedDays;
 };
 
-export const updateCloneRoutineChoices = (activeDay) => {
+export const updateCloneScheduleChoices = (activeDay) => {
   // Unhide the original active day
   document.querySelector('.hidden').classList.remove('hidden');
 
   // Hide the new active day
-  const cloneDayButtons = Array.from(DOMobjects.cloneRoutineDays);
+  const cloneDayButtons = Array.from(DOMobjects.cloneScheduleDays);
   cloneDayButtons.find(day => day.textContent === activeDay).classList.add('hidden');
 };
 
