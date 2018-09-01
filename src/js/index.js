@@ -11,8 +11,6 @@ const state = {
   eventDatabase: new EventDatabase(),
 };
 
-window.state = state;
-
 const addEvent = (event) => {
   // Add to database
   state.eventDatabase.addToDatabase(event, state.activeDay);
@@ -47,9 +45,6 @@ const refreshSchedule = () => {
   eventView.renderSchedule(state.eventDatabase[state.activeDay]);
 };
 
-state.eventDatabase.readData();
-refreshSchedule();
-
 const setupConfigureForm = (index) => {
   // Saves event that is being configured
   state.selectedEvent = state.eventDatabase[state.activeDay][index];
@@ -59,7 +54,7 @@ const setupConfigureForm = (index) => {
   state.eventDatabase.deleteFromDatabase(index, state.activeDay);
 };
 
-function setValidationMessage(timeInputs) {
+const setValidationMessage = (timeInputs) => {
   // Tracks validity of [startTimeInput, endTimeInput]
   const validityCheck = [1, 1];
   // Potential timeslot to add
@@ -88,7 +83,60 @@ function setValidationMessage(timeInputs) {
   // Reset validity if valid
   if (validityCheck[0] === 1) timeInputs[0].setCustomValidity('');
   if (validityCheck[1] === 1) timeInputs[1].setCustomValidity('');
-}
+};
+
+const init = () => {
+  // If user visited app before
+  if (false) {
+    // Read data from local storage
+    state.eventDatabase.readData();
+    refreshSchedule();
+  } else {
+    // Record first visit
+    localStorage.setItem('visitedScheduleApp', true);
+    // Initialize default data
+    addEvent({
+      name: 'Breakfast',
+      timeSlot: {
+        startTime: '07:00',
+        endTime: '07:30',
+      },
+      notes: '',
+    });
+    addEvent({
+      name: 'Study Algorithms',
+      timeSlot: {
+        startTime: '08:00',
+        endTime: '10:00',
+      },
+      notes: 'Exercises 1, 5, 8, 14 on Page 314',
+    });
+    addEvent({
+      name: 'Workout',
+      timeSlot: {
+        startTime: '10:30',
+        endTime: '11:30',
+      },
+      notes: '',
+    });
+    addEvent({
+      name: 'Lunch',
+      timeSlot: {
+        startTime: '11:45',
+        endTime: '13:00',
+      },
+      notes: 'JBBQ with Brandon and Laura',
+    });
+    addEvent({
+      name: 'Reading',
+      timeSlot: {
+        startTime: '13:30',
+        endTime: '15:00',
+      },
+      notes: 'Buy \'The Dark Tower\' while still on sale',
+    });
+  }
+};
 
 /*-------------------------------------------*/
 /* EVENT LISTENERS */
@@ -219,3 +267,9 @@ DOMobjects.btnConfigBack.addEventListener('click', () => {
   DOMobjects.endTimeConfigInput.setCustomValidity('');
   DOMobjects.startTimeConfigInput.setCustomValidity('');
 });
+
+/*-------------------------------------------*/
+/* INITIALIZE */
+/*-------------------------------------------*/
+
+init();

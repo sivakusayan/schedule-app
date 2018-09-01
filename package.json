@@ -14,7 +14,7 @@
     "build:css": "npm-run-all compile:sass prefix:css compress:css",
 
     "dev": "webpack --mode development",
-    "build": "webpack --mode production"
+    "build:js": "webpack --mode production"
   },
   "author": "Sayan Sivakumaran",
   "license": "ISC",
