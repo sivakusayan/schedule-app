@@ -11,12 +11,12 @@
   margin-bottom: 5rem;
   position: -webkit-sticky;
   position: sticky;
-  top: 10rem; //Height of week container
+  top: 10rem; //Offset for height of week container
   z-index: $layer-1;
 
   @include respond-shrink(43.75em) {
-    height: 20rem; //Make room for Mobile and Button Container components
-    top: 0rem; //Week container pops off, stick to top
+    height: 20rem; //Make room for Button Container and new Mobile Container components
+    top: 0rem; //Week container pops off into hamburger menu, make this stick to top
 
     .desktopText {
       display: none; //Shortens text on smaller screens

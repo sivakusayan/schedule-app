@@ -87,7 +87,7 @@ const setValidationMessage = (timeInputs) => {
 
 const init = () => {
   // If user visited app before
-  if (false) {
+  if (localStorage.getItem('visitedScheduleApp')) {
     // Read data from local storage
     state.eventDatabase.readData();
     refreshSchedule();
