@@ -1,7 +1,8 @@
 .newEventUI,
 .configEventUI {
-  height: 63rem;
+  height: auto;
   width: 50rem;
+  padding: 3rem 0;
   @include center;
   @include centerChildren;
   @include hide;
@@ -20,6 +21,10 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
+
+    @include respond-shrink(35em) {
+      
+    }
   }
 
   &__name,
@@ -40,6 +45,12 @@
       padding: 0.5rem;
       font-weight: 200;
       border-radius: 1rem;
+
+      @include respond-shrink(35em) {
+        font-size: 2.2rem;
+        width: 14rem;
+        padding: 1rem 2rem;
+      }
     }
     input {
       border: none;
@@ -50,6 +61,13 @@
       font-size: 1.8rem;
       transition: all .3s;
       border-radius: 3px;
+
+      @include respond-shrink(35em) {
+        font-size: 2rem;
+      }
+      @include respond-shrink(21.875em) {
+        font-size: 1.8rem;
+      }
     }
     textarea {
       background: transparent;
@@ -59,10 +77,17 @@
       color: $color-primary-medium-2;
       resize: none;
       height: 12rem;
-      width: 20rem;
+      width: auto;
       padding: 1rem;
       font-size: 1.8rem;
       border-radius: 1rem;
+
+      @include respond-shrink(35em) {
+        font-size: 2rem;
+      }
+      @include respond-shrink(21.875em) {
+        font-size: 1.8rem;
+      }
     }
     input:focus,
     textarea:focus {
@@ -81,4 +106,18 @@
       vertical-align: top;
     }
   }
+
+  @include respond-shrink(35em) {
+    width: 70%;
+  }
+  @include respond-shrink(29.375em) {
+    width: 80%;
+  }
+  @include respond-shrink(26.25em) {
+    width: 95%;
+  }
+  @include respond-shrink(21.875em) {
+    width: 100%;
+  }
+
 }
