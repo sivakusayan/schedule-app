@@ -5,6 +5,8 @@
   @include center;
   @include centerChildren;
   @include hide;
+
+  // Button to go back to main view
   &__back {
     position: absolute;
     font-size: 3rem;
