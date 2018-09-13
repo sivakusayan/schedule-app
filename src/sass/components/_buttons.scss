@@ -1,3 +1,4 @@
+// General buttons
 .btn {
   opacity: 0.5;
   -webkit-transition: opacity 0.3s;
@@ -17,6 +18,7 @@
   }
 }
 
+// Coloring general buttons blue
 .btn--blue {
   color: $color-primary-medium-1;
 
@@ -25,6 +27,7 @@
   }
 }
 
+// Coloring general buttons white
 .btn--white {
   color: $color-white;
 
@@ -33,6 +36,7 @@
   }
 }
 
+// Buttons corresponding to days of the week
 .btnDay {
   background-color: $color-primary-dark-1;
   font-family: inherit;
@@ -55,6 +59,7 @@
   }
 }
 
+// Submit buttons for forms
 .btnSubmit {
   text-align: center;
   input {

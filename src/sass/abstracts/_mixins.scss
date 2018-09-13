@@ -1,3 +1,5 @@
+// Center an element vertically and horizontally with respect to parent. 
+// NOTE: Make sure to set parent position relative.
 @mixin center {
   position: absolute;
   bottom: 50%;
@@ -6,6 +8,7 @@
   transform: translate(50%, 50%);
 }
 
+// Center the children of an element.
 @mixin centerChildren {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -18,6 +21,7 @@
           align-items: center;
 }
 
+// Hide an element.
 @mixin hide {
   visibility: hidden;
   opacity: 0;
@@ -25,10 +29,12 @@
   transition: opacity 0.3s;
 }
 
+// Media query when screen width gets smaller
 @mixin respond-shrink($breakpoint) {
   @media (max-width: $breakpoint) {@content};
 }
 
+// Media query when screen width gets bigger
 @mixin respond-grow($breakpoint) {
   @media (min-width: $breakpoint) {@content};
 }

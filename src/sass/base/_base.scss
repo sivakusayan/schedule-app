@@ -46,10 +46,12 @@ html {
   }
 }
 
+// Remove rubber banding behaviour in various browsers
 body {
   overscroll-behavior-y: none;
 }
 
+// Remove outline when tapping buttons on mobile
 button {
   -webkit-tap-highlight-color: rgba($color-black, 0);
 }

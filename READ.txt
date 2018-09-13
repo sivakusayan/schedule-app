@@ -1,0 +1,1 @@
+comment out the scss, starting from _event.scss
