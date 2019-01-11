@@ -167,11 +167,11 @@ DOMobjects.btnCloneBack.addEventListener('click', () => {
 DOMobjects.btnReset.addEventListener('click', () => fadeIn(DOMobjects.resetScheduleUI));
 DOMobjects.btnResetBack.addEventListener('click', () => fadeOut(DOMobjects.resetScheduleUI));
 
-DOMobjects.btnOptions.addEventListener('click', formView.openOptionsMenu);
-DOMobjects.btnOptionsBack.addEventListener('click', formView.closeOptionsMenu);
+DOMobjects.btnDays.addEventListener('click', formView.openOptionsMenu);
+DOMobjects.btnDaysBack.addEventListener('click', formView.closeOptionsMenu);
 
-DOMobjects.btnOptions.addEventListener('click', menuView.openOptionsMenu);
-DOMobjects.btnOptionsBack.addEventListener('click', menuView.closeOptionsMenu);
+DOMobjects.btnDays.addEventListener('click', menuView.openOptionsMenu);
+DOMobjects.btnDaysBack.addEventListener('click', menuView.closeOptionsMenu);
 
 /* ------------------------FORM INPUTS------------------------------*/
 

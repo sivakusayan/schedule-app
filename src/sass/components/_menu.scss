@@ -67,7 +67,7 @@
       }
     }
 
-    button:last-child{ //Hides the btnOptions, reveals for mobile layout
+    button:last-child{ //Hides the btnDays, reveals for mobile layout
       display: none; 
 
       @include respond-shrink(43.75em) {

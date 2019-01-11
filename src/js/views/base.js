@@ -28,8 +28,8 @@ export const DOMobjects = {
   resetScheduleYes: document.querySelector('.resetScheduleUI__YES'),
   resetScheduleNo: document.querySelector('.resetScheduleUI__NO'),
 
-  btnOptions: document.getElementById('btnOptions'),
-  btnOptionsBack: document.getElementById('btnOptionsBack'),
+  btnDays: document.getElementById('btnDays'),
+  btnDaysBack: document.getElementById('btnDaysBack'),
 
   weekContainer: document.querySelector('.weekContainer'),
 

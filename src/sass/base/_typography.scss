@@ -2,6 +2,12 @@ html {
   font-weight: 400;
 }
 
+@font-face {
+  font-display: auto;
+  font-family: 'Nunito';
+  src: local('Nunito'), url(https://fonts.googleapis.com/css?family=Nunito:200,400);
+}
+
 body {
   font-family: 'Nunito', sans-serif;
 }
