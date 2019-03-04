@@ -25,6 +25,10 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
+      {
+        use: ['style-loader', 'css-loader?url=false'],
+        test: /\.css$/,
+      },
     ],
   },
 };

@@ -22,10 +22,6 @@
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-
-    @include respond-shrink(35em) {
-      
-    }
   }
 
   &__name,
@@ -115,9 +111,6 @@
     width: 80%;
   }
   @include respond-shrink(26.25em) {
-    width: 95%;
-  }
-  @include respond-shrink(21.875em) {
     width: 100%;
   }
 

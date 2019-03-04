@@ -5,6 +5,8 @@ import * as formView from './views/formView';
 import * as menuView from './views/menuView';
 import * as eventView from './views/eventView';
 
+import 'typeface-nunito';
+
 const state = {
   activeDay: 'MON',
   selectedEvent: null,
